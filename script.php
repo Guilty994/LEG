@@ -90,18 +90,14 @@
                     
                     $html = new simple_html_dom();
                     $html -> load($response);
-
-                    foreach($html->find('div') as $div){
-                        if($div->class == 'app-stat'){
-                            foreach($div->find('span') as $span){
-                                if($span->class == 'num'){
-                                    echo $span->innertext." <br>";
-                                }
-                            }
+                    foreach($html->find('td') as $td){
+                        if($td->class == 'right num-f italic'){
+                            echo "Avg players last 30 days: ".$td->innertext."<br>"; //avg players last 30 days
+                        }
+                        if($td->class == 'right num italic'){
+                            echo "Peak players: ".$td->innertext."<br>"; //peak players
                         }
                     }  
-
-
                 }else{
                     echo "No result found!";
                 }
