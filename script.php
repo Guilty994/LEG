@@ -6,6 +6,9 @@
     
     if(isset($_GET["scraping_targ"])){
 
+        if($_GET["scraping_targ"]=="steam_charts")
+            $_GET["scraping_targ"] = "steam";
+
         switch($scraping_targ = $_GET["scraping_targ"]){
             //script test
             case "test_script":
@@ -52,6 +55,8 @@
                 }
                 if(isset($link)){
                     //ruba informazioni da steam
+                    $appId = str_replace("https://store.steampowered.com/app/", "", $link);//steam appid per il gioco
+                    $appId = substr($appId, 0, strpos($appId, "/"));
                     $curl = curl_init($link);
                     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
                     $response = curl_exec($curl);
@@ -66,19 +71,42 @@
 
                     foreach($html->find('div') as $div){
                         if($div->class == 'apphub_AppName'){
-                            echo "Game name ".$div->innertext;
+                            $steam_game_name = $div->innertext; //nome del gioco corretto
+                            echo "Game name: ".$steam_game_name." <br>";
+                            break;
                         }
                     }
+
+                    //steam charts
+                    echo "Source Steamcharts... <br>";
+                    $curl = curl_init("https://steamcharts.com/app/".$appId);
+                    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($curl);
+                    if(curl_errno($curl)){
+                        echo 'Scraper error: ' . curl_error($curl);
+                        exit;
+                    }
+                    curl_close($curl);
+                    
+                    $html = new simple_html_dom();
+                    $html -> load($response);
+
+                    foreach($html->find('div') as $div){
+                        if($div->class == 'app-stat'){
+                            foreach($div->find('span') as $span){
+                                if($span->class == 'num'){
+                                    echo $span->innertext." <br>";
+                                }
+                            }
+                        }
+                    }  
+
+
                 }else{
                     echo "No result found!";
                 }
                 
                 
-            break;
-
-            //steamcharts
-            case "steam_charts":
-            
             break;
 
             //twitch
