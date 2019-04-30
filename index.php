@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Document</title>
 </head>
 <body>
-    <form action="/LEG/script.php" target="_blank" method="get">
-        <input type="radio" name="scraping_targ" value="test_script" checked> Script di test <br>
-        <input type="radio" name="scraping_targ" value="steam"> Steam <br>
-        <input type="radio" name="scraping_targ" value="steam_charts"> Steam Charts<br>
-        <input type="radio" name="scraping_targ" value="twtich"> Twitch <br>
-        <input type="radio" name="scraping_targ" value="youtube"> YouTube <br>
-        <input type="submit" value="Submit">
-    </form>
+    <input type="text" placeholder="Nome del gioco" id="nomeGioco"><button onclick="cerca()">Cerca</button>
+    <div id="resultDiv"></div>
+    <script>
+        function cerca(){
+            $.ajax({
+            url:"./controller.php?game=" + $("#nomeGioco").val(),
+            success: function(response){
+                $("#resultDiv").html(response);
+            }
+        });
+        }
+    </script>
 </body>
 </html>
+
