@@ -7,9 +7,9 @@
         }else{
             $game = $_GET["game"];
 
-            echo "Source Steam... <br>";
+            echo "<h2>Source Steam... </h2>";
             require "wrappers/wrapper_steam.php";
-            echo "Source Steamcharts... <br>";
+            echo "<h2>Source Steamcharts... </h2>";
             include "wrappers/wrapper_steamcharts.php";
         }       
     }else{

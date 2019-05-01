@@ -13,10 +13,10 @@
     $html -> load($response);
     foreach($html->find('td') as $td){
         if($td->class == 'right num-f italic'){
-            echo "Avg players last 30 days: ".$td->innertext."<br>"; //avg players last 30 days
+            echo "<b>Avg players last 30 days: </b>".$td->innertext."<br>"; //avg players last 30 days
         }
         if($td->class == 'right num italic'){
-            echo "Peak players: ".$td->innertext."<br>"; //peak players
+            echo "<b>Peak players: </b>".$td->innertext."<br>"; //peak players
         }
     }
 ?>
