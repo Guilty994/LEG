@@ -11,6 +11,14 @@
             require "wrappers/wrapper_steam.php";
             echo "<h2>Source Steamcharts... </h2>";
             include "wrappers/wrapper_steamcharts.php";
+			echo "<h2>Kinguin price..</h2>";
+			include "wrappers/wrapper_kinguin.php";
+			echo "<h2> Greenman Gaming price..</h2>";
+			include "wrappers/wrapper_greenman.php";
+			echo "<h2> G2A price..</h2>";
+			include "wrappers/wrapper_g2a.php";
+			
+			
         }       
     }else{
         echo "Error in the GET request.";
