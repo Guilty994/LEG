@@ -20,8 +20,8 @@
 <body>
     <!-- Barra di ricerca -->
     <div class="row" style="margin-top:1%">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+        <div class="col-md-5"></div>
+        <div class="col-md-2">
             <div class="search-form">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco"
@@ -30,12 +30,41 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-5"></div>
+    </div>
+    <!-- Barra logo -->
+    <div class="row">
+        <div class="col-md-12">
+            <h1>LEG</h1>
+        </div>
+    </div>
+    <div class="row" id="ricercheRecenti">
+        <div class="col-md-12">
+            <h3>Ricerche recenti:</h3>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <!-- TODO: Usare offset invece della colonna vuota -->
+                <div class="col-md-10">
+                    <table>
+                        <thead></thead>
+                        <tbody id="tbodyRicercheRecenti">
+                            <p>Nessuna ricerca recente</p>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- TODO: Usare offset invece della colonna vuota -->
+                <div class="col-md-1"></div>
+            </div>
+        </div>
     </div>
     <!-- Tutto il resto -->
     <div class="row">
-        <div class="col-md-12">
+        <!-- Locandina -->
+        <div class="col-md-3">
             <div id="resultDiv"></div>
+        </div>
+
+        <div class="col-md-9">
         </div>
     </div>
 
@@ -57,6 +86,7 @@
         function handle(e) {
             if (e.keyCode === 13) {
                 e.preventDefault(); // Ensure it is only this code that rusn
+                $("#ricercheRecenti").hide(500);
                 cerca();
             }
         }

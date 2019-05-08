@@ -3,6 +3,8 @@
     //Steam(Nome, Id, Descrizione, Genere, Sviluppatore, Editore, Screenshot, DataRilascio, TrendDiApprezzamento, ScoreMetaCritic)
     //Steam($steam_game_name, $appId, $steam_game_description, $steam_game_genere, $steam_game_developer, $steam_game_publisher, )
 
+    $toReturn = array(); // Array dove mettere le cose
+
     $curl = curl_init("https://store.steampowered.com/search/?term=".$game);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     $response = curl_exec($curl);
@@ -47,6 +49,7 @@
                 break;
             }
         }
+        $toReturn["gameName"] = $steam_game_name;
         echo "<b>Game name: </b>".$steam_game_name." <br>";
 
         //descrizione gioco
@@ -57,6 +60,7 @@
                 break;
             }
         }   
+        $toReturn["gameDescription"] = $steam_game_description;
         echo "<b>Game description: </b>".$steam_game_description." <br>";
         
         //genere
@@ -75,6 +79,7 @@
             }
         }   
 
+        $toReturn["gameGenere"] = $steam_game_genere;
         echo "<b>Game genere: </b>".$steam_game_genere." <br>";
 
         //developer
@@ -87,6 +92,7 @@
             }
         }  
         
+        $toReturn["gameDeveloper"] = $steam_game_developer;
         echo "<b>Game developer: </b>".$steam_game_developer." <br>";
         
         //publisher ######################
