@@ -57,11 +57,10 @@
 			$gameprice = $price->first_child()->attr['data-no-tax-price'];
 		}
 	}
-	echo "<b>BEST PRICE FROM KINGUIN.IT: </b><br>";
-	echo "<b>Game URL: </b>".$gameurl." <br>";
-	echo "<b>Game price: </b>".$gameprice." <br>";
+	$toReturn['KinguinGameUrl'] = $gameurl;
+	$toReturn['KinguinGamePrice'] = $gameprice;
 	}else {
-		echo "<b>No price available from Kinguin.it: </b> <br>";	
+		$toReturn['KinguinError'] = "NO PRICE AVALAIBLE";	
 	}
 
 ?>
