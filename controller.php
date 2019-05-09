@@ -5,6 +5,7 @@
         if($_GET["game"]==""){
             echo "No game searched.";
         }else{
+            $toReturn = array(); // Array dove mettere le cose
             $game = $_GET["game"];
 
             echo "<h2>Source Steam... </h2>";
@@ -17,7 +18,9 @@
 			include "wrappers/wrapper_greenman.php";
 			echo "<h2> G2A price..</h2>";
 			include "wrappers/wrapper_g2a.php";
-			
+            
+            echo "JSON"; // Da rimuovere quando verranno rimosse le altre echo
+            echo json_encode($toReturn);
 			
         }       
     }else{

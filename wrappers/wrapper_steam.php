@@ -3,8 +3,6 @@
     //Steam(Nome, Id, Descrizione, Genere, Sviluppatore, Editore, Screenshot, DataRilascio, TrendDiApprezzamento, ScoreMetaCritic)
     //Steam($steam_game_name, $appId, $steam_game_description, $steam_game_genere, $steam_game_developer, $steam_game_publisher, )
 
-    $toReturn = array(); // Array dove mettere le cose
-
     $curl = curl_init("https://store.steampowered.com/search/?term=".$game);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     $response = curl_exec($curl);

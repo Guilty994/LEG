@@ -61,10 +61,16 @@
     <div class="row">
         <!-- Locandina -->
         <div class="col-md-3">
-            <div id="resultDiv"></div>
-        </div>
 
+        </div>
         <div class="col-md-9">
+            
+        </div>
+    </div>
+    <!-- Test -->
+    <div class="row">
+        <div class="col-md-12">
+            <div id="resultDiv"></div>
         </div>
     </div>
 
@@ -95,7 +101,10 @@
             $.ajax({
                 url: "./controller.php?game=" + $("#nomeGioco").val(),
                 success: function (response) {
-                    $("#resultDiv").html(response);
+                    console.log(JSON.parse(response.split("JSON")[1]));
+                    $("#resultDiv").html(response.split("JSON")[
+                    0]); // TODO: Modificare quando verranno tolte le altre echo
+
                 }
             });
         }
