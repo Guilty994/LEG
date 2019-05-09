@@ -90,12 +90,10 @@
 		}	
 	}
 	if(isset($finalResult)){
-		
-		echo "<b>BEST PRICE FROM GREENMANGAMING.com: </b><br>";
-		echo "<b>Game URL: </b>".$finalResult['GameUrl'][0]." <br>";
-		echo "<b>Game price: </b>".$finalResult['GamePrice'][0]." <br>";
+		$toReturn['GreenManGameUrl'] = $finalResult['GameUrl'][0];
+		$toReturn['GreenManGamePrice'] = $finalResult['GamePrice'][0];
 	}else{
-		
+		$toReturn['GreenManError'] = "NO PRICE AVALAIBLE";	
 	}
 	
 	
