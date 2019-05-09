@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+    $cookie_name = "lastagecheckage";
+    $cookie_value = "1-0-2000";
+    $cookie_domain = "store.steampowered.com";
+    $cookie_secure = 1;
+    $cookie_httponly = 1;
+    setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/", $cookie_domain, $cookie_secure, $cookie_httponly);
+    
+?>
 <html lang="en">
 
 <head>

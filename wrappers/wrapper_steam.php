@@ -3,7 +3,7 @@
     //Steam(Nome, Id, Descrizione, Genere, Sviluppatore, Publisher, Screenshot, DataRilascio, TrendDiApprezzamento, ScoreMetaCritic, ImmagineCopertina)
     //Steam($steam_game_name, $appId, $steam_game_description, $steam_game_genere, $steam_game_developer, $steam_game_publisher, $steam_screenshot, $steam_release_data, $staem_trend, $steam_metacritic, $steam_image )
 
-    $curl = curl_init("https://store.steampowered.com/search/?term=".$game);
+    $curl = curl_init("https://store.steampowered.com/search/?term=".$game."&category1=998");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     $response = curl_exec($curl);
     if(curl_errno($curl)){
@@ -18,14 +18,16 @@
     foreach($html->find('div') as $div){
         if($div->id == 'search_result_container'){
             foreach($div->find('a') as $a){
-            $link = $a->href;
-            break;
+                $link = $a->href;
+                break;
             }
         }
     }
 
     if(isset($link)){
         //ruba informazioni da steam
+        $link = substr($link, 0, strpos($link, "?"));
+        
         $appId = str_replace("https://store.steampowered.com/app/", "", $link);//steam appid per il gioco
         $appId = substr($appId, 0, strpos($appId, "/"));
         $curl = curl_init($link);
@@ -73,7 +75,6 @@
                 break;
             }
         }   
-
         $toReturn["gameGenere"] = $steam_game_genere;
         echo "<b>Game genere: </b>";
         $len = count($steam_game_genere);
@@ -115,9 +116,7 @@
                             $not_publisher = 1;
                     }
                 }                
-                
             }
-            
         }
 
         $toReturn["gamePublisher"] = $steam_game_publisher;    
@@ -131,7 +130,6 @@
                 echo $pub."<br>";
             $i++;
         }
-
 
         //steam screenshot
         $steam_screenshot = array();
@@ -150,7 +148,6 @@
         foreach($steam_screenshot as $scr){
             echo $scr."<br>";
         }
-
 
         //steam_release_data
         $steam_release_data = array();
