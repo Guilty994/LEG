@@ -1,0 +1,1 @@
+store.steampowered.com	FALSE	/	FALSE	0	birthtime	281660401

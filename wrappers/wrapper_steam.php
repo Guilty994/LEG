@@ -5,6 +5,8 @@
 
     $curl = curl_init("https://store.steampowered.com/search/?term=".$game."&category1=998");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    
+
     $response = curl_exec($curl);
     if(curl_errno($curl)){
         echo 'Scraper error: ' . curl_error($curl);
@@ -26,16 +28,21 @@
 
     if(isset($link)){
         //ruba informazioni da steam
+        
         $link = substr($link, 0, strpos($link, "?"));
         $appId = str_replace("https://store.steampowered.com/app/", "", $link);//steam appid per il gioco
         $appId = substr($appId, 0, strpos($appId, "/"));
         $curl = curl_init($link);
+        curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie.txt');
+        //curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie_read.txt');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+
         $response = curl_exec($curl);
         if(curl_errno($curl)){
             echo 'Scraper error: ' . curl_error($curl);
             exit;
         }
+         
         curl_close($curl);
 
         $html = new simple_html_dom();
@@ -146,5 +153,14 @@
         }
 
         //steam_release_date
+
+
+        //staem_trend
+
+
+        //steam_metacritic
+
+
+        //steam_image
     }
 ?>
