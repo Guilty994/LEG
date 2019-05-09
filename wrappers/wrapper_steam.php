@@ -47,6 +47,7 @@
                 break;
             }
         }
+        $toReturn["gameName"] = $steam_game_name;
         echo "<b>Game name: </b>".$steam_game_name." <br>";
 
         //descrizione gioco
@@ -57,6 +58,7 @@
                 break;
             }
         }   
+        $toReturn["gameDescription"] = $steam_game_description;
         echo "<b>Game description: </b>".$steam_game_description." <br>";
         
         //genere
@@ -75,6 +77,7 @@
             }
         }   
 
+        $toReturn["gameGenere"] = $steam_game_genere;
         echo "<b>Game genere: </b>".$steam_game_genere." <br>";
 
         //developer
@@ -87,6 +90,7 @@
             }
         }  
         
+        $toReturn["gameDeveloper"] = $steam_game_developer;
         echo "<b>Game developer: </b>".$steam_game_developer." <br>";
         
         //publisher
