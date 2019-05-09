@@ -2,7 +2,7 @@
     //search game su Steam
     //Steam(Nome, Id, Descrizione, Genere, Sviluppatore, Publisher, Screenshot, DataRilascio, TrendDiApprezzamento, ScoreMetaCritic, ImmagineCopertina)
     //Steam($steam_game_name, $appId, $steam_game_description, $steam_game_genere, $steam_game_developer, $steam_game_publisher, $steam_screenshot, $steam_release_date, $staem_trend, $steam_metacritic, $steam_image )
-
+    //(gametrend, metacritic non sono sempre presenti)
     $curl = curl_init("https://store.steampowered.com/search/?term=".$game."&category1=998");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     
@@ -153,14 +153,56 @@
         }
 
         //steam_release_date
+        foreach($html->find('div') as $div){
+            if($div->class == 'date'){
+                $steam_release_date = $div->innertext; 
+            }
+        }  
+        $toReturn["gameRelease"] = $steam_release_date;
+        echo "<b>Game release date: </b>".$steam_release_date." <br>"; 
 
-
-        //staem_trend
-
+        //steam_trend
+        $steam_trend = array();
+        foreach($html->find('div') as $div){
+            if($div->class == 'user_reviews_summary_row'){
+                foreach($div->find('span') as $span){
+                    if($span->class =='nonresponsive_hidden responsive_reviewdesc'){
+                        array_push($steam_trend, $span->innertext);
+                    }
+                }
+            }
+        }  
+        $toReturn["gameTrend"] = $steam_trend;
+        echo "<b>Game trend: </b>"; 
+        $len = count($steam_trend);
+        $i=0;
+        foreach($steam_trend as $trd){
+            if($i<$len-1)
+                echo "\"".$trd."\", ";
+            else 
+                echo "\"".$trd."\"<br>";
+            $i++;
+        }
 
         //steam_metacritic
-
+        foreach($html->find('div') as $div){
+            if($div->id == 'game_area_metascore'){
+                foreach($div->find('div') as $innerDiv){
+                    $steam_metacritic = $innerDiv->innertext;
+                    break;
+                }
+            }
+        }  
+        $toReturn["gameMetacritic"] = $steam_metacritic;
+        echo "<b>Game metacritic score: </b>".$steam_metacritic." <br>"; 
 
         //steam_image
+        foreach($html->find('img') as $img){
+            if($img->class == 'game_header_image_full'){
+                $steam_image = $img->src;
+            }
+        }  
+        $toReturn["gameImage"] = $steam_image;
+        echo "<b>Game image: </b>".$steam_image." <br>"; 
     }
 ?>
