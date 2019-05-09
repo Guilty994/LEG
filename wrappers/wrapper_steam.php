@@ -93,24 +93,35 @@
         $toReturn["gameDeveloper"] = $steam_game_developer;
         echo "<b>Game developer: </b>".$steam_game_developer." <br>";
         
-        //publisher ######################
-        // foreach($html->find('div') as $div){
-        //     $i=0;
-        //     if($div->class == 'dev_row'){ 
-        //         foreach($div->find('a') as $a){
-        //             if($i>0){
-        //                 if(isset($steam_game_publisher)){
-        //                     $steam_game_publisher= $steam_game_publisher.", ".$a->innertext; 
-        //                 }else{
-        //                     $steam_game_publisher= $a->innertext; 
-        //                 }
-        //             }else{
-        //                 $i++;
-        //             }
-        //         }
-        //     }
-        // }  
+        //publisher
+        foreach($html->find('div') as $div){
+            if($div->class == 'user_reviews'){
+                $div_internal = $div->find('div');
+                    if($div_internal[0]->class == 'dev_row'){
+                            echo $div;
+                    }
+            }
+        }
 
-        // echo "Game publisher: ".$steam_game_publisher." <br>";
+
+
+
+                // foreach($div->find('div') as $div_internal){
+                //     if($div_internal ->class == 'summary column'){
+                //         if($div_internal -> id != 'developer_list'){
+                //             foreach($div_internal->find('a') as $a){
+                //                 if(isset($steam_game_publisher)){
+                //                     $steam_game_publisher= $steam_game_publisher.", ".$a->innertext; 
+                //                 }else{
+                //                     $steam_game_publisher= $a->innertext; 
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
+            
+        
+
+        //echo "<b>Game publisher: </b>".$steam_game_publisher." <br>";
     }
 ?>
