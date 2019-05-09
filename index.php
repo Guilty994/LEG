@@ -20,8 +20,8 @@
 <body>
     <!-- Barra di ricerca -->
     <div class="row" style="margin-top:1%">
-        <div class="col-md-5"></div>
-        <div class="col-md-2">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
             <div class="search-form">
                 <div class="form-group has-feedback">
                     <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco"
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5"></div>
+        <div class="col-md-4"></div>
     </div>
     <!-- Barra logo -->
     <div class="row">
@@ -58,13 +58,13 @@
         </div>
     </div>
     <!-- Tutto il resto -->
+    <div class="row"><div class="col-md-12" id="labelNomeGioco"></div></div>
     <div class="row">
         <!-- Locandina -->
         <div class="col-md-3">
-
         </div>
         <div class="col-md-9">
-            
+
         </div>
     </div>
     <!-- Test -->
@@ -101,9 +101,15 @@
             $.ajax({
                 url: "./controller.php?game=" + $("#nomeGioco").val(),
                 success: function (response) {
-                    console.log(JSON.parse(response.split("JSON")[1]));
-                    $("#resultDiv").html(response.split("JSON")[
-                    0]); // TODO: Modificare quando verranno tolte le altre echo
+                    let dati = JSON.parse(response.split("JSON")[1]);
+                    console.log(dati);
+
+                    // TODO: Modificare quando verranno tolte le altre echo
+                    $("#resultDiv").html(response.split("JSON")[0]); 
+
+                    $("#labelNomeGioco").html("<h1>" + dati.gameName + "</h1>");
+
+                    
 
                 }
             });
