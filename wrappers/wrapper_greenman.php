@@ -29,8 +29,8 @@
         echo 'Scraper error: ' . curl_error($curl);
         exit;
     }
-    curl_close($curl);
-
+		curl_close($curl);
+		
     $html = new simple_html_dom();
     $html -> load($response);
 	
@@ -43,7 +43,7 @@
 				foreach($li->find('div') as $div){
 					if($div->class== 'media-body'){
 						array_push($controllarenome, $div);
-						// echo $controllarenome[$i];
+						//echo $controllarenome[0];
 						
 					}
 					
@@ -57,7 +57,7 @@
 	foreach($controllarenome as $x){
 		$gameurl = $x->first_child()->first_child()->attr['href'];
 		$gamename = $x->first_child()->first_child()->innertext;
-		// echo $gameurl;
+		// echo "test---".$gameurl;
 		// echo $gamename;
 		if(checkString($steam_game_name,$gamename)){
 			foreach($x->find('span') as $platform){
@@ -66,7 +66,6 @@
 						array_push($checkbestprice,$x);
 						break;
 					}
-						
 				}
 			}
 		}

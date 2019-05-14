@@ -10,8 +10,8 @@
 
             echo "<h2>Source Steam... </h2>";
             require "wrappers/wrapper_steam.php";
-            // echo "<h2>Source Steamcharts... </h2>";
-            // include "wrappers/wrapper_steamcharts.php";
+            echo "<h2>Source Steamcharts... </h2>";
+            include "wrappers/wrapper_steamcharts.php";
 			// echo "<h2>Kinguin price..</h2>";
 			// include "wrappers/wrapper_kinguin.php";
 			// echo "<h2> Greenman Gaming price..</h2>";
