@@ -8,6 +8,7 @@
     
     $response = curl_exec($curl);
     if(curl_errno($curl)){
+        echo "<script>console.log( 'wrapper_steam NOT OK' );</script>";
         echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
         exit;
     }
@@ -29,8 +30,8 @@
         // ruba informazioni da steam
         
         $link = substr($link, 0, strpos($link, "?"));
-        $appId = str_replace("https://store.steampowered.com/app/", "", $link);// steam appid per il gioco
-        $appId = substr($appId, 0, strpos($appId, "/"));
+        $steam_appId = str_replace("https://store.steampowered.com/app/", "", $link);// steam appid per il gioco
+        $steam_appId = substr($steam_appId, 0, strpos($steam_appId, "/"));
         $curl = curl_init($link);
         curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie.txt');// specifica locazione dei cookie da leggere
         // curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie_read.txt');// specifica locazione in cui sono scritti i cookie che erano presenti
@@ -38,6 +39,7 @@
 
         $response = curl_exec($curl);
         if(curl_errno($curl)){
+            echo "<script>console.log( 'wrapper_steam NOT OK' );</script>";
             echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
             exit;
         }
