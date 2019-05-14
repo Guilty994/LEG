@@ -10,18 +10,20 @@
 
             // echo "<h2>Source Steam... </h2>";
             require "wrappers/wrapper_steam.php";
-            echo "<script>console.log( 'wrapper_steam OK' );</script>";
+            echo "<script>console.log( 'wrapper_steam EXECUTED' );</script>";
             if(isset($steam_game_name)){
                 if(isset($steam_appId)){
                     // echo "<h2>Source Steamcharts... </h2>";
                     include "wrappers/wrapper_steamcharts.php";
-                    echo "<script>console.log( 'wrapper_steamcharts OK' );</script>";
+                    echo "<script>console.log( 'wrapper_steamcharts EXECUTED' );</script>";
                 }else{
                     // no steam_appId
-                    echo "<script>console.log( 'wrapper_steamcharts NOT OK' );</script>";
+                    echo "<script>console.log( 'wrapper_steamcharts ERROR' );</script>";
                     echo "<script>console.log( 'steam_appId not set' );</script>";
                     
                 }
+                include "wrappers/wrapper_twitch.php";
+                echo "<script>console.log( 'wrapper_twtich EXECUTED' );</script>";
                 // echo "<h2>Kinguin price..</h2>";
                 // include "wrappers/wrapper_kinguin.php";
                 // echo "<h2> Greenman Gaming price..</h2>";
@@ -30,7 +32,7 @@
                 // include "wrappers/wrapper_g2a.php";
             }else{
                 // no steam_game_name
-                echo "<script>console.log( 'wrappers NOT OK' );</script>";
+                echo "<script>console.log( 'wrappers ERROR' );</script>";
                 echo "<script>console.log( 'steam_game_name not set' );</script>";
             }
             

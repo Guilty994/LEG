@@ -4,6 +4,7 @@
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     $response = curl_exec($curl);
     if(curl_errno($curl)){
+        echo "<script>console.log( 'wrapper_steamcharts ERROR' );</script>";
         echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
         exit;
     }

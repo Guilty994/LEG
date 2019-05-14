@@ -8,7 +8,7 @@
     
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        echo "<script>console.log( 'wrapper_steam NOT OK' );</script>";
+        echo "<script>console.log( 'wrapper_steam ERROR' );</script>";
         echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
         exit;
     }
@@ -39,7 +39,7 @@
 
         $response = curl_exec($curl);
         if(curl_errno($curl)){
-            echo "<script>console.log( 'wrapper_steam NOT OK' );</script>";
+            echo "<script>console.log( 'wrapper_steam ERROR' );</script>";
             echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
             exit;
         }
@@ -52,7 +52,7 @@
         // nome del gioco corretto
         foreach($html->find('div') as $div){
             if($div->class == 'apphub_AppName'){
-                $steam_game_name = $div->innertext; 
+                $steam_game_name = $div->innertext;
                 break;
             }
         }
@@ -250,5 +250,16 @@
         }
         
         // echo "<b>Game image: </b>".$steam_image." <br>"; 
+    }else{
+        $toReturn["gameName"] = "";
+        $toReturn["gameDescription"] = "";
+        $toReturn["gameGenere"] = "";
+        $toReturn["gameDeveloper"] = "";
+        $toReturn["gamePublisher"] = "";
+        $toReturn["gameScreenshot"] = "";
+        $toReturn["gameRelease"] = "";
+        $toReturn["gameTrend"] = "";
+        $toReturn["gameMetacritic"] = "";
+        $toReturn["gameImage"] = "";
     }
 ?>
