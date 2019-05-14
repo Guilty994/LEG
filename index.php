@@ -113,6 +113,8 @@
                     // TODO: Modificare quando verranno tolte le altre echo
                     $("#resultDiv").html(response.split("JSON")[0]); 
 
+                    // Dati presi da Steam
+
                     $("#labelNomeGioco").html("<h1>" + dati.gameName + "</h1>");
 
                     $("#copertina").html('<img src="' + dati.gameImage + '"></img>');
@@ -136,8 +138,12 @@
                     }
                     contenuto += '<br>';
                     contenuto += '<b>Release date:</b> ' + dati.gameRelease + '<br>';
+
                     contenuto += '</p>';
                     $("#info").html(contenuto);
+                    // Fine dati Steam
+
+                    
                 }
             });
         }
