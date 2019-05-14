@@ -3,7 +3,7 @@
 
     if(isset($_GET["game"])){
         if($_GET["game"]==""){
-            echo "No game searched.";
+            echo "<script>console.log( 'No game was searched.' );</script>";// bisogna gestire il fatto che non viene generato alcun json
         }else{
             $toReturn = array(); // Array dove mettere le cose
             $game = $_GET["game"];
