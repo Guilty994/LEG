@@ -1,6 +1,6 @@
 <?php
     // search game _id
-    $mod_steam_game_name = preg_replace("/[^a-zA-Z0-9\s\:]/", "", $steam_game_name);
+    $mod_steam_game_name = preg_replace("/[^a-zA-Z0-9\s\:\,]/", "", $steam_game_name);
     // $mod_steam_game_name = preg_split('/[\s,]+/', $mod_steam_game_name, 3)
     // echo urlencode($mod_steam_game_name);
     
