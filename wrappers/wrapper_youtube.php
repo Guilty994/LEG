@@ -11,8 +11,25 @@
     }
     curl_close($curl);
 
-    echo $response;
+    $html = new simple_html_dom();
+    $html -> load($response);
 
+    $youtube_video_gameplay = array();
+    
+    // seleziona solo i primi {$count} video gameplay
+    $count = 5;
+    foreach($html->find('div') as $video){
+            if($video->class == "yt-lockup-content"){
+                foreach($video->find('a') as $a){
+                    array_push($youtube_video_gameplay, "https://www.youtube.com/".$a->href);
+                    $count--;
+                    break;
+                }
+            }
+            if($count<1){
+                break;
+            }
+    }
 
-
+    $toReturn['videoGameplay'] = $youtube_video_gameplay;
 ?>
