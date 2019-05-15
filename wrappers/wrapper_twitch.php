@@ -1,7 +1,12 @@
 <?php
     // search game _id
-    $url_encoded = "https://api.twitch.tv/kraken/search/games?query=".urlencode($steam_game_name);
+    $mod_steam_game_name = preg_replace("/[^a-zA-Z0-9\s\:]/", "", $steam_game_name);
+    // $mod_steam_game_name = preg_split('/[\s,]+/', $mod_steam_game_name, 3)
+    // echo urlencode($mod_steam_game_name);
     
+    $url_encoded = "https://api.twitch.tv/kraken/search/games?query=".rawurlencode($mod_steam_game_name);
+    
+    // echo $url_encoded."<br>";
     $curlHeader = array('Client-ID: j05qnqaf7a16tjffl9n11seij9j6v9', 'Accept: application/vnd.twitchtv.v5+json');
     $curl = curl_init($url_encoded);
     curl_setopt($curl, CURLOPT_AUTOREFERER, TRUE);
@@ -18,6 +23,8 @@
     curl_close($curl);
 
     $response_json = json_decode($response, TRUE);
+
+    // print_r($response_json);
 
     $_id = $response_json['games'][0]['_id'];
 

@@ -24,6 +24,8 @@
                 }
                 include "wrappers/wrapper_twitch.php";
                 echo "<script>console.log( 'wrapper_twtich EXECUTED' );</script>";
+                // include "wrappers/wrapper_youtube.php";
+                echo "<script>console.log( 'wrapper_youtube EXECUTED' );</script>";
                 // echo "<h2>Kinguin price..</h2>";
                 // include "wrappers/wrapper_kinguin.php";
                 // echo "<h2> Greenman Gaming price..</h2>";
