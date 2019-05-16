@@ -42,7 +42,5 @@
             echo json_encode($toReturn);
 			
         }       
-    }else{
-        echo "Error in the GET request.";
     }
 ?>
