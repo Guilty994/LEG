@@ -97,7 +97,7 @@
             if($("#nomeGioco").val().length == 0) return;
             $("#ricercheRecenti").hide(500);
             $.ajax({
-                url: "./controller.php?game=" + $("#nomeGioco").val(),
+                url: "./controller.php?game=" + $("#nomeGioco").val() + "&source=steam",// &source=steam aggiunto per testing poi si vede come fare
                 success: function (response) {
                     let dati = JSON.parse(response.split("JSON")[1]);
                     console.log(dati);

@@ -29,8 +29,6 @@
                         echo "<script>console.log( 'steam_appId not set' );</script>";    
                     }
 
-                    break;
-
                     // Twitch
                     include "wrappers/wrapper_twitch.php";
                     echo "<script>console.log( 'wrapper_twtich EXECUTED' );</script>";
