@@ -55,6 +55,7 @@
                 echo json_encode($toReturn);
             }  
         }       
+<<<<<<< HEAD
     }else{
         echo "<script>console.log( 'Error in the GET request.' );</script>";
         echo "<script>console.log( '_GET['game'] =".$_GET['game'].");</script>";
