@@ -53,6 +53,8 @@
                 
                 echo "JSON"; // Da rimuovere quando verranno rimosse le altre echo
                 echo json_encode($toReturn);
+
+                break;
             }  
         }       
     }else{
