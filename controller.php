@@ -59,5 +59,7 @@
         echo "<script>console.log( 'Error in the GET request.' );</script>";
         echo "<script>console.log( '_GET['game'] =".$_GET['game'].");</script>";
         echo "<script>console.log( '_GET['source'] =".$_GET['source'].");</script>";
+=======
+>>>>>>> c2d72882589385bf5142ad6798021732842cbe51
     }
 ?>

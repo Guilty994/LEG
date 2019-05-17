@@ -89,12 +89,13 @@
         function handle(e) {
             if (e.keyCode === 13) {
                 e.preventDefault(); // Ensure it is only this code that rusn
-                $("#ricercheRecenti").hide(500);
                 cerca();
             }
         }
 
         function cerca() {
+            if($("#nomeGioco").val().length == 0) return;
+            $("#ricercheRecenti").hide(500);
             $.ajax({
                 url: "./controller.php?game=" + $("#nomeGioco").val(),
                 success: function (response) {
@@ -103,6 +104,11 @@
 
                     // TODO: Modificare quando verranno tolte le altre echo
                     $("#resultDiv").html(response.split("JSON")[0]); 
+
+                    if(dati.gameName == ""){
+                        $("#labelNomeGioco").html("<h1>Nessun gioco trovato</h1>");
+                        return;
+                    }
 
                     // Dati presi da Steam
 
