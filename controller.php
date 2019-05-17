@@ -36,13 +36,19 @@
                     // Youtube
                     include "wrappers/wrapper_youtube.php";
                     echo "<script>console.log( 'wrapper_youtube EXECUTED' );</script>";
-
-                    // echo "<h2>Kinguin price..</h2>";
-                    // include "wrappers/wrapper_kinguin.php";
-                    // echo "<h2> Greenman Gaming price..</h2>";
-                    // include "wrappers/wrapper_greenman.php";
-                    // echo "<h2> G2A price..</h2>";
-                    // include "wrappers/wrapper_g2a.php";
+					
+					//Kinguin
+					include "wrappers/wrapper_kinguin.php";
+					echo "<script>console.log( 'wrapper_kinguin EXECUTED' );</script>";
+					
+					//GreenMan Gaming
+					include "wrappers/wrapper_greenman.php";
+					echo "<script>console.log( 'wrapper_greenmangaming EXECUTED' );</script>";
+					
+					//G2A
+					include "wrappers/wrapper_g2a.php";
+					echo "<script>console.log( 'wrapper_g2a EXECUTED' );</script>";
+					
                 }else{
                     // no steam_game_name
                     echo "<script>console.log( 'wrappers ERROR' );</script>";
