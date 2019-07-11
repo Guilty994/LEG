@@ -52,10 +52,13 @@
     $viewers = 0;
     $streamers_count = 0;
 
-    foreach($response_json['data'] as $streamer){
-        $viewers = $viewers + $streamer['viewer_count'];
-        $streamers_count++;
+    if(isset($response_json['data'])){
+        foreach($response_json['data'] as $streamer){
+            $viewers = $viewers + $streamer['viewer_count'];
+            $streamers_count++;
+        }
     }
+    
 
 
     while($streamers_count>99){
