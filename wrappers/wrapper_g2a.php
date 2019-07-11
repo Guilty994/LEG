@@ -10,7 +10,7 @@
 		$curl = curl_init("https://www.g2a.com/search?query=".$gamenameinput."&category_id=games-c189&drm%5B5%5D=1&sort=price-lowest-first");
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		// curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie.txt');// specifica locazione dei cookie da leggere
-		curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie_read.txt');// specifica locazione in cui sono scritti i cookie che erano presenti
+		// curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie_read.txt');// specifica locazione in cui sono scritti i cookie che erano presenti
 		
 		curl_setopt($curl, CURLOPT_ENCODING, 'gzip, deflate');
 		
@@ -71,5 +71,3 @@
 	
 		
 ?>
-
-

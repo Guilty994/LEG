@@ -1,6 +1,12 @@
 <?php
+    /*
+        Thread lanciati dall'utente, multiple richieste per lanciare multipli wrapper.
+
+    */
     include "usefulFunctions.php";
     include "simple_html_dom.php";
+
+    phpinfo();
 
     if(isset($_GET["game"]) && isset($_GET["source"])){
         if($_GET["game"]==""){
@@ -19,7 +25,6 @@
                 echo "<script>console.log( 'wrapper_steam EXECUTED' );</script>";
                 if(isset($steam_game_name)){
                     if(isset($steam_appId)){
-
                         // Steamcharts
                         include "wrappers/wrapper_steamcharts.php";
                         echo "<script>console.log( 'wrapper_steamcharts EXECUTED' );</script>";

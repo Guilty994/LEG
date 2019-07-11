@@ -32,6 +32,7 @@
         $link = substr($link, 0, strpos($link, "?"));
         $steam_appId = str_replace("https://store.steampowered.com/app/", "", $link);// steam appid per il gioco
         $steam_appId = substr($steam_appId, 0, strpos($steam_appId, "/"));
+        $toReturn["appId"] = $steam_appId;
         $curl = curl_init($link);
         curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie.txt');// specifica locazione dei cookie da leggere
         // curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie_read.txt');// specifica locazione in cui sono scritti i cookie che erano presenti
@@ -251,6 +252,7 @@
         
         // echo "<b>Game image: </b>".$steam_image." <br>"; 
     }else{
+        $toReturn["appId"] = "";
         $toReturn["gameName"] = "";
         $toReturn["gameDescription"] = "";
         $toReturn["gameGenere"] = "";
