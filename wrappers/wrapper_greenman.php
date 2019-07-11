@@ -74,16 +74,14 @@
 				}
 			}	
 		}
-		if(isset($finalResult)){
+		if(isset($finalResult['GameUrl'][0]) && isset($finalResult['GamePrice'][0])){
 			$toReturn['greenManGameURL'] = $finalResult['GameUrl'][0];
 			$toReturn['greenManPrice'] = $finalResult['GamePrice'][0];
 		}else{
 			$toReturn['greenManGameURL'] = "NO GAME AVALAIBLE";	
 			$toReturn['greenManPrice'] = "NO GAME AVALAIBLE";
 		}
-	
-	
-	
+
 	}else{
 			$toReturn['greenManGameURL'] = "";	
 			$toReturn['greenManPrice'] = "";
