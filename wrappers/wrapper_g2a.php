@@ -1,6 +1,4 @@
 <?php
-	include "simple_html_dom.php";
-	include "usefulFunctions.php";
 	
 	if(isset($steam_game_name)){
 		$gamesteam = $steam_game_name;
@@ -49,7 +47,7 @@
 						$gameURL = $internaldiv->first_child()->first_child()->attr['href'];						
 					}
 					if($internaldiv->class =='Card__price'){
-						$gamePrice = $internaldiv->first_child()->next_sibling()->innertext;					
+						$gamePrice = $internaldiv->first_child()->next_sibling()->plaintext;					
 					}
 				}
 				break;

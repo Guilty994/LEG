@@ -1,7 +1,4 @@
 <?php
-	include "simple_html_dom.php";
-	include "usefulFunctions.php";
-	
 	if(isset($steam_game_name)){
 		$gamesteam = $steam_game_name;
 	

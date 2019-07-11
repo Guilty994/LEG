@@ -1,4 +1,5 @@
 <?php
+    include "usefulFunctions.php";
     include "simple_html_dom.php";
 
     if(isset($_GET["game"]) && isset($_GET["source"])){
@@ -37,15 +38,15 @@
                     include "wrappers/wrapper_youtube.php";
                     echo "<script>console.log( 'wrapper_youtube EXECUTED' );</script>";
 					
-					//Kinguin
-					include "wrappers/wrapper_kinguin.php";
-					echo "<script>console.log( 'wrapper_kinguin EXECUTED' );</script>";
+					// // Kinguin
+					// include "wrappers/wrapper_kinguin.php";
+					// echo "<script>console.log( 'wrapper_kinguin EXECUTED' );</script>";
 					
-					//GreenMan Gaming
+					// GreenMan Gaming
 					include "wrappers/wrapper_greenman.php";
 					echo "<script>console.log( 'wrapper_greenmangaming EXECUTED' );</script>";
 					
-					//G2A
+					// G2A
 					include "wrappers/wrapper_g2a.php";
 					echo "<script>console.log( 'wrapper_g2a EXECUTED' );</script>";
 					
