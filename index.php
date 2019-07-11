@@ -58,10 +58,14 @@
         </div>
     </div>
     <!-- Tutto il resto -->
-    <div class="row"><div class="col-md-12" id="labelNomeGioco"></div></div>
+    <div class="row">
+        <div class="col-md-12" id="labelNomeGioco"></div>
+    </div>
     <div class="row">
         <!-- Locandina -->
-        <div class="col-md-3" id="copertina"></div>
+        <div class="col-md-3">
+            <img class="img-responsive" id="copertina" style="padding:2px" />
+        </div>
         <div class="col-md-9" id="info"></div>
     </div>
     <!-- Test -->
@@ -94,18 +98,19 @@
         }
 
         function cerca() {
-            if($("#nomeGioco").val().length == 0) return;
+            if ($("#nomeGioco").val().length == 0) return;
             $("#ricercheRecenti").hide(500);
             $.ajax({
-                url: "./controller.php?game=" + $("#nomeGioco").val() + "&source=steam",// &source=steam aggiunto per testing poi si vede come fare
+                url: "./controller.php?game=" + $("#nomeGioco").val() +
+                "&source=steam", // &source=steam aggiunto per testing poi si vede come fare
                 success: function (response) {
                     let dati = JSON.parse(response.split("JSON")[1]);
                     console.log(dati);
 
                     // TODO: Modificare quando verranno tolte le altre echo
-                    $("#resultDiv").html(response.split("JSON")[0]); 
+                    $("#resultDiv").html(response.split("JSON")[0]);
 
-                    if(dati.gameName == ""){
+                    if (dati.gameName == "") {
                         $("#labelNomeGioco").html("<h1>Nessun gioco trovato</h1>");
                         return;
                     }
@@ -114,23 +119,24 @@
 
                     $("#labelNomeGioco").html("<h1>" + dati.gameName + "</h1>");
 
-                    $("#copertina").html('<img src="' + dati.gameImage + '"></img>');
+                    //$("#copertina").html('<img class="img-responsive" src="' + dati.gameImage + '"></img>');
+                    $("#copertina").attr("src", dati.gameImage);
 
                     let contenuto = "";
                     contenuto += "<p>";
                     contenuto += '<b>Description:</b> ' + dati.gameDescription + '<br>';
                     contenuto += '<b>Genre:</b> ';
-                    for(let index = 0; index < dati.gameGenere.length; index++){
+                    for (let index = 0; index < dati.gameGenere.length; index++) {
                         contenuto += dati.gameGenere[index];
-                        if(index+1 != dati.gameGenere.length)
+                        if (index + 1 != dati.gameGenere.length)
                             contenuto += ', ';
                     }
                     contenuto += '<br>';
                     contenuto += '<b>Developer:</b> ' + dati.gameDeveloper + '<br>';
                     contenuto += '<b>Publisher:</b> ';
-                    for(let index = 0; index < dati.gamePublisher.length; index++){
+                    for (let index = 0; index < dati.gamePublisher.length; index++) {
                         contenuto += dati.gamePublisher[index];
-                        if(index+1 != dati.gamePublisher.length)
+                        if (index + 1 != dati.gamePublisher.length)
                             contenuto += ', ';
                     }
                     contenuto += '<br>';
@@ -140,7 +146,7 @@
                     $("#info").html(contenuto);
                     // Fine dati Steam
 
-                    
+
                 }
             });
         }
