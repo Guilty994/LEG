@@ -75,17 +75,18 @@
 
               <h3 class="profile-username text-center" id="labelNomeGioco"></h3>
 
-              <p class="text-muted text-center">Software Engineer</p>
-
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Followers</b> <a class="float-right">1,322</a>
+                  <b>Genere</b> <a class="float-right" id="labelGenere"></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Following</b> <a class="float-right">543</a>
+                  <b>Sviluppatori</b> <a class="float-right" id="labelSviluppatori"></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Friends</b> <a class="float-right">13,287</a>
+                  <b>Pubblicatori</b> <a class="float-right" id="labelPublicatori"></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Data di rilascio</b> <a class="float-right" id="labelReleaseDate"></a>
                 </li>
               </ul>
 

@@ -29,41 +29,34 @@ function cerca() {
             $("#resultDiv").html(response.split("JSON")[0]);
 
             if (dati.gameName == "") {
+                alert("Nessun gioco trovato");
                 //$("#labelNomeGioco").html("<h1>Nessun gioco trovato</h1>");
-                $("#labelNomeGioco").text("Nessun gioco trovato");
+                //$("#labelNomeGioco").text("Nessun gioco trovato");
                 return;
             }
 
+            $("#risultatiRicerca").show(500);
+
             // Dati presi da Steam
 
-            //$("#labelNomeGioco").html("<h1>" + dati.gameName + "</h1>");
+            // Nome gioco
             $("#labelNomeGioco").text(dati.gameName);
 
-            //$("#copertina").html('<img class="img-responsive" src="' + dati.gameImage + '"></img>');
+            // Immagine di copertina
             $("#copertina").attr("src", dati.gameImage);
 
-            let contenuto = "";
-            contenuto += "<p>";
-            contenuto += '<b>Description:</b> ' + dati.gameDescription + '<br>';
-            contenuto += '<b>Genre:</b> ';
-            for (let index = 0; index < dati.gameGenere.length; index++) {
-                contenuto += dati.gameGenere[index];
-                if (index + 1 != dati.gameGenere.length)
-                    contenuto += ', ';
-            }
-            contenuto += '<br>';
-            contenuto += '<b>Developer:</b> ' + dati.gameDeveloper + '<br>';
-            contenuto += '<b>Publisher:</b> ';
-            for (let index = 0; index < dati.gamePublisher.length; index++) {
-                contenuto += dati.gamePublisher[index];
-                if (index + 1 != dati.gamePublisher.length)
-                    contenuto += ', ';
-            }
-            contenuto += '<br>';
-            contenuto += '<b>Release date:</b> ' + dati.gameRelease + '<br>';
+            // Genere
+            $("#labelGenere").text(dati.gameGenere.join(', '));
 
-            contenuto += '</p>';
-            $("#info").html(contenuto);
+            // Sviluppatori
+            $("#labelSviluppatori").text(dati.gameDeveloper);
+
+            // Publicatori
+            $("#labelPublicatori").text(dati.gamePublisher.join(', '));
+
+            // Data rilascio
+            $("#labelReleaseDate").text(dati.gameRelease);
+
             // Fine dati Steam
 
 
