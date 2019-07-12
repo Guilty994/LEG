@@ -8,15 +8,25 @@
 
     /*header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
     return;*/
-
+    
     if(isset($_GET["game"]) && isset($_GET["source"])){
         if($_GET["game"]==""){
-            echo "<script>console.log( 'No game was searched.' );</script>";// bisogna gestire il fatto che non viene generato alcun json
+            header($_SERVER['SERVER_PROTOCOL'] . 'Nessun gioco cercato', true, 400);
+            return;
+            //echo "<script>console.log( 'No game was searched.' );</script>";// bisogna gestire il fatto che non viene generato alcun json
         }if($_GET["source"]==""){
-            echo "<script>console.log( 'No source was selected.' );</script>";
+            header($_SERVER['SERVER_PROTOCOL'] . 'Nessuna fonte selezionata', true, 400);
+            return;
+            //echo "<script>console.log( 'No source was selected.' );</script>";
         }else{
             $toReturn = array();// Array dove mettere le cose
             $game = $_GET["game"];
+
+            // Prova risposta positiva
+            $toReturn["gameName"] = $game;
+            header($_SERVER['SERVER_PROTOCOL'] . "200", true, 200);
+            echo json_encode($toReturn); // Per mandare la risposta
+            return;
 
             // switch basato sulle source da interrogare
             switch($_GET['source']){
