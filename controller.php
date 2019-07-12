@@ -6,7 +6,8 @@
     include "usefulFunctions.php";
     include "simple_html_dom.php";
 
-    phpinfo();
+    /*header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+    return;*/
 
     if(isset($_GET["game"]) && isset($_GET["source"])){
         if($_GET["game"]==""){
