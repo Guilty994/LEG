@@ -1,156 +1,150 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <!-- Import JQUERY -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- import Bootstrap -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <!-- Fonts and icons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
-    <!-- CSS della pagina -->
-    <link rel="stylesheet" href="./index.css">
-    <title>LEG</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>AdminLTE 3 | User Profile</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="./css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <!-- CSS della pagina -->
+  <link rel="stylesheet" href="./index.css">
 </head>
 
-<body>
-    <!-- Barra di ricerca -->
-    <div class="row" style="margin-top:1%">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <div class="search-form">
-                <div class="form-group has-feedback">
-                    <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco"
-                        onkeypress="handle(event)">
-                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                </div>
-            </div>
+<body class="hold-transition sidebar-mini">
+  <!-- Barra di ricerca -->
+  <div class="row" style="margin-top:1%">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <div class="search-form">
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco"
+            onkeypress="handle(event)">
+          <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
-        <div class="col-md-4"></div>
+      </div>
     </div>
-    <!-- Barra logo -->
-    <div class="row">
-        <div class="col-md-12">
-            <h1>LEG</h1>
+    <div class="col-md-4"></div>
+  </div>
+
+  <!-- Ricerche recenti -->
+  <div class="row" id="ricercheRecenti">
+    <div class="col-md-12">
+      <h3>Ricerche recenti:</h3>
+      <div class="row">
+        <div class="col-md-1"></div>
+        <!-- TODO: Usare offset invece della colonna vuota -->
+        <div class="col-md-10">
+          <table>
+            <thead></thead>
+            <tbody id="tbodyRicercheRecenti">
+              <p>Nessuna ricerca recente</p>
+            </tbody>
+          </table>
         </div>
+        <!-- TODO: Usare offset invece della colonna vuota -->
+        <div class="col-md-1"></div>
+      </div>
     </div>
-    <div class="row" id="ricercheRecenti">
-        <div class="col-md-12">
-            <h3>Ricerche recenti:</h3>
-            <div class="row">
-                <div class="col-md-1"></div>
-                <!-- TODO: Usare offset invece della colonna vuota -->
-                <div class="col-md-10">
-                    <table>
-                        <thead></thead>
-                        <tbody id="tbodyRicercheRecenti">
-                            <p>Nessuna ricerca recente</p>
-                        </tbody>
-                    </table>
-                </div>
-                <!-- TODO: Usare offset invece della colonna vuota -->
-                <div class="col-md-1"></div>
-            </div>
-        </div>
-    </div>
-    <!-- Tutto il resto -->
-    <div class="row">
-        <div class="col-md-12" id="labelNomeGioco"></div>
-    </div>
-    <div class="row">
-        <!-- Locandina -->
+  </div>
+
+  <!-- Main content -->
+  <section class="content" id="risultatiRicerca" style="display:none">
+    <div class="container-fluid">
+      <div class="row">
         <div class="col-md-3">
-            <img class="img-responsive" id="copertina" style="padding:2px" />
+
+          <!-- Profile Image -->
+          <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+              <div class="text-center">
+                <img id="copertina" class="img-responsive" alt="Immagine di copertina">
+              </div>
+
+              <h3 class="profile-username text-center" id="labelNomeGioco"></h3>
+
+              <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                  <b>Genere</b> <a class="float-right" id="labelGenere"></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Sviluppatori</b> <a class="float-right" id="labelSviluppatori"></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Pubblicatori</b> <a class="float-right" id="labelPublicatori"></a>
+                </li>
+                <li class="list-group-item">
+                  <b>Data di rilascio</b> <a class="float-right" id="labelReleaseDate"></a>
+                </li>
+              </ul>
+
+              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
+          <!-- About Me Box -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">About Me</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <strong><i class="fa fa-book mr-1"></i> Education</strong>
+
+              <p class="text-muted">
+                B.S. in Computer Science from the University of Tennessee at Knoxville
+              </p>
+
+              <hr>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
         </div>
-        <div class="col-md-9" id="info"></div>
-    </div>
-    <!-- Test -->
-    <div class="row">
-        <div class="col-md-12">
-            <div id="resultDiv"></div>
+        <!-- /.col -->
+        <div class="col-md-9">
+          <div class="card">
+            <div class="card-header p-2">
+
+            </div><!-- /.card-header -->
+            <div class="card-body">
+
+            </div><!-- /.card-body -->
+          </div>
+          <!-- /.nav-tabs-custom -->
         </div>
-    </div>
-
-    <!-- Modal per il caricamento -->
-    <div class="modal"></div>
-
-    <script>
-        $body = $("body");
-
-        $(document).on({
-            ajaxStart: function () {
-                $body.addClass("loading");
-            },
-            ajaxStop: function () {
-                $body.removeClass("loading");
-            }
-        });
-
-        function handle(e) {
-            if (e.keyCode === 13) {
-                e.preventDefault(); // Ensure it is only this code that rusn
-                cerca();
-            }
-        }
-
-        function cerca() {
-            if ($("#nomeGioco").val().length == 0) return;
-            $("#ricercheRecenti").hide(500);
-            $.ajax({
-                url: "./controller.php?game=" + $("#nomeGioco").val() +
-                "&source=steam", // &source=steam aggiunto per testing poi si vede come fare
-                success: function (response) {
-                    let dati = JSON.parse(response.split("JSON")[1]);
-                    console.log(dati);
-
-                    // TODO: Modificare quando verranno tolte le altre echo
-                    $("#resultDiv").html(response.split("JSON")[0]);
-
-                    if (dati.gameName == "") {
-                        $("#labelNomeGioco").html("<h1>Nessun gioco trovato</h1>");
-                        return;
-                    }
-
-                    // Dati presi da Steam
-
-                    $("#labelNomeGioco").html("<h1>" + dati.gameName + "</h1>");
-
-                    //$("#copertina").html('<img class="img-responsive" src="' + dati.gameImage + '"></img>');
-                    $("#copertina").attr("src", dati.gameImage);
-
-                    let contenuto = "";
-                    contenuto += "<p>";
-                    contenuto += '<b>Description:</b> ' + dati.gameDescription + '<br>';
-                    contenuto += '<b>Genre:</b> ';
-                    for (let index = 0; index < dati.gameGenere.length; index++) {
-                        contenuto += dati.gameGenere[index];
-                        if (index + 1 != dati.gameGenere.length)
-                            contenuto += ', ';
-                    }
-                    contenuto += '<br>';
-                    contenuto += '<b>Developer:</b> ' + dati.gameDeveloper + '<br>';
-                    contenuto += '<b>Publisher:</b> ';
-                    for (let index = 0; index < dati.gamePublisher.length; index++) {
-                        contenuto += dati.gamePublisher[index];
-                        if (index + 1 != dati.gamePublisher.length)
-                            contenuto += ', ';
-                    }
-                    contenuto += '<br>';
-                    contenuto += '<b>Release date:</b> ' + dati.gameRelease + '<br>';
-
-                    contenuto += '</p>';
-                    $("#info").html(contenuto);
-                    // Fine dati Steam
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
 
 
-                }
-            });
-        }
-    </script>
+
+  <!-- Modal per il caricamento -->
+  <div class="modal"></div>
+
+  <!-- Import JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- import Bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- script index -->
+  <script src="./js/index.js"></script>
 </body>
 
 </html>
