@@ -8,8 +8,9 @@
     
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        echo "<script>console.log( 'wrapper_steam ERROR' );</script>";
-        echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
+        header($_SERVER['SERVER_PROTOCOL'] . "wrapper_steam, Scraper error: " . curl_error($curl), true, 400);
+        // echo "<script>console.log( 'wrapper_steam ERROR' );</script>";
+        // echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
         exit;
     }
     curl_close($curl);
@@ -40,8 +41,9 @@
 
         $response = curl_exec($curl);
         if(curl_errno($curl)){
-            echo "<script>console.log( 'wrapper_steam ERROR' );</script>";
-            echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
+            header($_SERVER['SERVER_PROTOCOL'] . "wrapper_steam, Scraper error: " . curl_error($curl), true, 400);
+            // echo "<script>console.log( 'wrapper_steam ERROR' );</script>";
+            // echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
             exit;
         }
          

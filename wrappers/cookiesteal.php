@@ -8,6 +8,7 @@
     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
     $response = curl_exec($curl);
     if(curl_errno($curl)){
+        // header($_SERVER['SERVER_PROTOCOL'] . "wrapper_steam, Scraper error: " . curl_error($curl), true, 400);
         echo 'Scraper error: ' . curl_error($curl);
         exit;
     }
