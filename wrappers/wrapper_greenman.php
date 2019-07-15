@@ -1,7 +1,8 @@
 <?php
 	if(isset($steam_game_name)){
+		
 		$gamesteam = $steam_game_name;
-		$gamenameinput = changeNameWithSymbol($gamesteam,' ');
+		$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
 	
 	
 		//LINK PARAMETERS
