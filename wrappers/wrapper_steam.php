@@ -201,7 +201,14 @@
             if($div->class == 'user_reviews_summary_row'){
                 foreach($div->find('span') as $span){
                     if($span->class =='nonresponsive_hidden responsive_reviewdesc'){
-                        array_push($steam_trend, $span->innertext);
+                        
+                        if(strpos($span->innertext, '<br>') !== false){
+                            $trend_string = substr($span->innertext, 0, strpos($span->innertext, "<"));    
+                            array_push($steam_trend, $trend_string);
+                        }else{
+                            array_push($steam_trend, $span->innertext);
+                        }
+                        
                     }
                 }
             }
