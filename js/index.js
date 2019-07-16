@@ -35,46 +35,8 @@ function cerca() {
                 getFromG2A(global_name);
                 getFromKinguin(global_name);
 
-                // Immagine di copertina
-                $("#copertina").attr("src", dati.gameImage);
+                stampaDatiSteam(dati);
 
-                // Genere
-                $("#labelGenere").text(dati.gameGenere.join(', '));
-
-                // Sviluppatori
-                $("#labelSviluppatori").text(dati.gameDeveloper);
-
-                // Publicatori
-                $("#labelPublicatori").text(dati.gamePublisher.join(', '));
-
-                // Data rilascio
-                $("#labelReleaseDate").text(dati.gameRelease);
-
-                // Descrizione
-                $("#gameDescription").text(dati.gameDescription);
-
-                // Trend
-                // Forse è meglio con dei grafici
-                let str = "";
-                for (let index = 0; index < dati.gameTrend.length; index++) {
-                    str += '<p class="text-muted">' + dati.gameTrend[index] + '</p>';
-                }
-                str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
-                $("#gameTrend").html(str);
-
-                // ScreenShots
-                str = "";
-                let listaImmagini = "";
-                for (let index = 0; index < dati.gameScreenshot.length; index++) {
-                    str += '<li data-target="#carouselScreenshots" data-slide-to="' + index + '"' + (index == 0 ? 'class="active"' : '') + '></li>';
-                    listaImmagini += '<div class="item ' + (index == 0 ? 'active' : '') + '"><center><img width="100%" src="' + dati.gameScreenshot[index] + '"></center></div>';
-                }
-                $("#carouselIndicatorsScreenshots").html("");
-                $("#carouselIndicatorsScreenshots").html(str);
-                $("#carouselInnerScreenshots").html("");
-                $("#carouselInnerScreenshots").html(listaImmagini);
-                // Fine dati Steam
-                $("#risultatiRicerca").show(500);
                 return;
             },
             404: function () {
@@ -94,6 +56,49 @@ function cerca() {
             }
         }
     });
+}
+
+function stampaDatiSteam(dati) {
+    // Immagine di copertina
+    $("#copertina").attr("src", dati.gameImage);
+
+    // Genere
+    $("#labelGenere").text(dati.gameGenere.join(', '));
+
+    // Sviluppatori
+    $("#labelSviluppatori").text(dati.gameDeveloper);
+
+    // Publicatori
+    $("#labelPublicatori").text(dati.gamePublisher.join(', '));
+
+    // Data rilascio
+    $("#labelReleaseDate").text(dati.gameRelease);
+
+    // Descrizione
+    $("#gameDescription").text(dati.gameDescription);
+
+    // Trend
+    // Forse è meglio con dei grafici
+    let str = "";
+    for (let index = 0; index < dati.gameTrend.length; index++) {
+        str += '<p class="text-muted">' + dati.gameTrend[index] + '</p>';
+    }
+    str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
+    $("#gameTrend").html(str);
+
+    // ScreenShots
+    str = "";
+    let listaImmagini = "";
+    for (let index = 0; index < dati.gameScreenshot.length; index++) {
+        str += '<li data-target="#carouselScreenshots" data-slide-to="' + index + '"' + (index == 0 ? 'class="active"' : '') + '></li>';
+        listaImmagini += '<div class="item ' + (index == 0 ? 'active' : '') + '"><center><img width="100%" src="' + dati.gameScreenshot[index] + '"></center></div>';
+    }
+    $("#carouselIndicatorsScreenshots").html("");
+    $("#carouselIndicatorsScreenshots").html(str);
+    $("#carouselInnerScreenshots").html("");
+    $("#carouselInnerScreenshots").html(listaImmagini);
+    // Fine dati Steam
+    $("#risultatiRicerca").show(500);
 }
 
 function getFromSteamCharts(steam_appid) {
