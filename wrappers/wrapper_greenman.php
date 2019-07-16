@@ -69,8 +69,6 @@
 						$bestprice = $price ;
 						$finalResult['GameUrl'][0] = "https://www.greenmangaming.com".$x->first_child()->first_child()->attr['href'];
 						$finalResult['GamePrice'][0] = $bestprice;
-					}else{
-						echo "false";
 					}
 				}
 			}	
