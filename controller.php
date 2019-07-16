@@ -35,7 +35,7 @@
                 require "wrappers/wrapper_steam.php";
                 header($_SERVER['SERVER_PROTOCOL'] . "wrapper_steam EXECUTED", true, 200);
             }else{                  
-                if(isset($_GET['steam_game_name']) && $_GET['steam_game_name']) != ""){
+                if((isset($_GET['steam_game_name'])) && ($_GET['steam_game_name'] != "")){
                     $steam_game_name = $_GET['steam_game_name'];
                     switch($_GET['source']){
                         case "steamcharts":
