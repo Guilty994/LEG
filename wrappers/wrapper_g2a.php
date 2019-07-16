@@ -58,8 +58,8 @@
 		$toReturn['G2AGamePrice'] = $gamePrice;
 		
 		if($gameURL == NULL){
-			$toReturn['G2AGameURL'] = "NO PRICE AVALAIBLE";
-			$toReturn['G2AGamePrice'] = "NO PRICE AVALAIBLE";
+			$toReturn['G2AGameURL'] = "NO GAME AVALAIBLE";
+			$toReturn['G2AGamePrice'] = "NO GAME AVALAIBLE";
 		}
 	
 	
