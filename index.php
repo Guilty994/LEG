@@ -26,7 +26,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- import Bootstrap -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
+  <!-- Script che gestisce la pagina -->
+  <script src="./js/index.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -56,7 +57,7 @@
           <table>
             <thead></thead>
             <tbody id="tbodyRicercheRecenti">
-              <p>Nessuna ricerca recente</p>
+              <p>No recent search</p>
             </tbody>
           </table>
         </div>
@@ -73,7 +74,10 @@
         <div class="col-md-3">
 
           <!-- Profile Image -->
-          <div class="card card-primary card-outline">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Short bio</h3>
+            </div>
             <div class="card-body box-profile">
               <div class="text-center">
                 <img id="copertina" class="img-responsive" alt="Immagine di copertina">
@@ -117,8 +121,9 @@
         </div>
         <!-- /.col -->
         <div class="col-md-9">
-          <div class="card">
-            <div class="card-header p-2">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Screenshots</h3>
             </div><!-- /.card-header -->
             <div class="card-body">
               <div id="carouselScreenshots" class="carousel slide" data-ride="carousel">
@@ -126,7 +131,7 @@
                 <ol class="carousel-indicators" id="carouselIndicatorsScreenshots"></ol>
 
                 <!-- Wrapper for slides -->
-                <div class="carousel-inner" id="carouselInnerScreenshots"></div>
+                <div class="carousel-inner" id="carouselInnerScreenshots" style="text-align: center"></div>
 
                 <!-- Left and right controls -->
                 <a class="left carousel-control" href="#carouselScreenshots" data-slide="prev">
@@ -154,7 +159,7 @@
   <!-- Modal per il caricamento -->
   <div class="modal"></div>
   <!-- script index -->
-  <script src="./js/index.js"></script>
+  <script src="./js/scriptModal.js"></script>
 
 </body>
 

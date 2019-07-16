@@ -1,14 +1,3 @@
-$body = $("body");
-
-$(document).on({
-    ajaxStart: function () {
-        $body.addClass("loading");
-    },
-    ajaxStop: function () {
-        $body.removeClass("loading");
-    }
-});
-
 function handle(e) {
     if (e.keyCode === 13) {
         e.preventDefault(); // Ensure it is only this code that rusn
@@ -66,7 +55,7 @@ function cerca() {
                 let listaImmagini = "";
                 for(let index=0; index < dati.gameScreenshot.length; index++){
                     str += '<li data-target="#carouselScreenshots" data-slide-to="' + index + '"' + (index==0?'class="active"':'') + '></li>';
-                    listaImmagini += '<div class="item ' + (index==0?'active':'') + '"><img src="' + dati.gameScreenshot[index] + '" alt=""></div>';
+                    listaImmagini += '<div class="item ' + (index==0?'active':'') + '"><center><img width="100%" src="' + dati.gameScreenshot[index] + '"></center></div>';
                 }
                 $("#carouselIndicatorsScreenshots").html(str);
                 $("#carouselInnerScreenshots").html(listaImmagini);
