@@ -23,22 +23,11 @@ function cerca() {
         url: "./controller.php?game=" + $("#nomeGioco").val() + "&source=steam", // &source=steam aggiunto per testing poi si vede come fare
         statusCode: {
             200: function (response) {
-                console.log(response);
-                return;
-                let dati = JSON.parse(response.split("JSON")[1]);
+                let dati = JSON.parse(response);
+                //let dati = JSON.parse(response.split("JSON")[1]);
                 console.log(dati);
 
-                // TODO: Modificare quando verranno tolte le altre echo
-                $("#resultDiv").html(response.split("JSON")[0]);
-
-                if (dati.gameName == "") {
-                    alert("Nessun gioco trovato");
-                    //$("#labelNomeGioco").html("<h1>Nessun gioco trovato</h1>");
-                    //$("#labelNomeGioco").text("Nessun gioco trovato");
-                    return;
-                }
-
-                $("#risultatiRicerca").show(500);
+                let appId = dati.appId;
 
                 // Dati presi da Steam
 
@@ -60,6 +49,30 @@ function cerca() {
                 // Data rilascio
                 $("#labelReleaseDate").text(dati.gameRelease);
 
+                // Descrizione
+                $("#gameDescription").text(dati.gameDescription);
+
+                // Trend
+                // Forse è meglio con dei grafici
+                let str = "";
+                for(let index = 0; index < dati.gameTrend.length; index++){
+                    str += '<p class="text-muted">' + dati.gameTrend[index] + '</p>';
+                }
+                str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
+                $("#gameTrend").html(str);
+
+                // ScreenShots
+                str = "";
+                let listaImmagini = "";
+                for(let index=0; index < dati.gameScreenshot.length; index++){
+                    str += '<li data-target="#carouselScreenshots" data-slide-to="' + index + '"' + (index==0?'class="active"':'') + '></li>';
+                    listaImmagini += '<div class="item ' + (index==0?'active':'') + '"><img src="' + dati.gameScreenshot[index] + '" alt=""></div>';
+                }
+                $("#carouselIndicatorsScreenshots").html(str);
+                $("#carouselInnerScreenshots").html(listaImmagini);
+
+
+
                 // Fine dati Steam
 
 
@@ -73,6 +86,13 @@ function cerca() {
             400: function(){
                 alert("Parametri inviati non corretti.");
                 return;
+            },
+            500: function(response){
+                let str = "Errore durante l'esecuzione della ricerca.";
+                if(response != null){
+                    str += "\nErrore: " + response;
+                }
+                alert(str);
             }
         }
     });

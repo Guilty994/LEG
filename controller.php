@@ -94,7 +94,8 @@
                     // echo "<script>console.log( 'steam_game_name not set' );</script>";
                 }
             }
-            echo "JSON"; // Da rimuovere quando verranno rimosse le altre echo
+            //echo "JSON"; // Da rimuovere quando verranno rimosse le altre echo
+            header($_SERVER['SERVER_PROTOCOL'] . '200', true, 200);
             echo json_encode($toReturn);
         }       
     }else{

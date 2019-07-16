@@ -21,6 +21,12 @@
 
   <!-- CSS della pagina -->
   <link rel="stylesheet" href="./index.css">
+
+  <!-- Import JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- import Bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -74,23 +80,22 @@
               </div>
 
               <h3 class="profile-username text-center" id="labelNomeGioco"></h3>
+              <p class="text-muted" id="gameDescription"></p>
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
-                  <b>Genere</b> <a class="float-right" id="labelGenere"></a>
+                  <b>Genre</b> <a class="float-right" id="labelGenere"></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Sviluppatori</b> <a class="float-right" id="labelSviluppatori"></a>
+                  <b>Developers</b> <a class="float-right" id="labelSviluppatori"></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Pubblicatori</b> <a class="float-right" id="labelPublicatori"></a>
+                  <b>Publishers</b> <a class="float-right" id="labelPublicatori"></a>
                 </li>
                 <li class="list-group-item">
-                  <b>Data di rilascio</b> <a class="float-right" id="labelReleaseDate"></a>
+                  <b>Release date</b> <a class="float-right" id="labelReleaseDate"></a>
                 </li>
               </ul>
-
-              <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
             </div>
             <!-- /.card-body -->
           </div>
@@ -99,17 +104,12 @@
           <!-- About Me Box -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">About Me</h3>
+              <h3 class="card-title">Trend</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <strong><i class="fa fa-book mr-1"></i> Education</strong>
-
-              <p class="text-muted">
-                B.S. in Computer Science from the University of Tennessee at Knoxville
-              </p>
-
-              <hr>
+              <p class="text-muted" id="gameTrend"></p>
+              <!-- <hr> -->
             </div>
             <!-- /.card-body -->
           </div>
@@ -119,10 +119,25 @@
         <div class="col-md-9">
           <div class="card">
             <div class="card-header p-2">
-
             </div><!-- /.card-header -->
             <div class="card-body">
+              <div id="carouselScreenshots" class="carousel slide" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators" id="carouselIndicatorsScreenshots"></ol>
 
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" id="carouselInnerScreenshots"></div>
+
+                <!-- Left and right controls -->
+                <a class="left carousel-control" href="#carouselScreenshots" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carouselScreenshots" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
             </div><!-- /.card-body -->
           </div>
           <!-- /.nav-tabs-custom -->
@@ -138,13 +153,9 @@
 
   <!-- Modal per il caricamento -->
   <div class="modal"></div>
-
-  <!-- Import JQUERY -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- import Bootstrap -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <!-- script index -->
   <script src="./js/index.js"></script>
+
 </body>
 
 </html>
