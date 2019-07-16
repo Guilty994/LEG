@@ -154,8 +154,6 @@
   </section>
   <!-- /.content -->
 
-
-
   <!-- Modal per il caricamento -->
   <div class="modal"></div>
   <!-- script index -->

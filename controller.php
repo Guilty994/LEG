@@ -99,7 +99,9 @@
             echo json_encode($toReturn);
         }       
     }else{
-        header($_SERVER['SERVER_PROTOCOL'] . "GET request, _GET['game'] =".$_GET['game'] . " _GET['source'] =".$_GET['source'], true, 400);
+        // Sei qui perché game non c'è quindi non puoi stamparlo...
+        //header($_SERVER['SERVER_PROTOCOL'] . "GET request, _GET['game'] =".$_GET['game'] . " _GET['source'] =".$_GET['source'], true, 400);
+        header($_SERVER['SERVER_PROTOCOL'] . 'Bisogna settare game e source.', true, 400);
         // echo "<script>console.log( 'Error in the GET request.' );</script>";
         // echo "<script>console.log( '_GET['game'] =".$_GET['game'].");</script>";
         // echo "<script>console.log( '_GET['source'] =".$_GET['source'].");</script>";

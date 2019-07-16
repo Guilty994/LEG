@@ -1,3 +1,7 @@
+var global_name;
+var global_appId;
+
+
 function handle(e) {
     if (e.keyCode === 13) {
         e.preventDefault(); // Ensure it is only this code that rusn
@@ -16,12 +20,16 @@ function cerca() {
                 //let dati = JSON.parse(response.split("JSON")[1]);
                 console.log(dati);
 
-                let appId = dati.appId;
+                global_appId = dati.appId;
 
                 // Dati presi da Steam
 
                 // Nome gioco
                 $("#labelNomeGioco").text(dati.gameName);
+                global_name = dati.gameName;
+
+                // Faccio partire le chiamate alle altre fonti mentre carico i dati ricevuti
+                getFromSteamCharts(global_appId);
 
                 // Immagine di copertina
                 $("#copertina").attr("src", dati.gameImage);
@@ -59,12 +67,7 @@ function cerca() {
                 }
                 $("#carouselIndicatorsScreenshots").html(str);
                 $("#carouselInnerScreenshots").html(listaImmagini);
-
-
-
                 // Fine dati Steam
-
-
                 $("#risultatiRicerca").show(500);
                 return;
             },
@@ -85,4 +88,17 @@ function cerca() {
             }
         }
     });
+}
+
+function getFromSteamCharts(steam_appid){
+    $.ajax({
+        url: "./controller.php?steam_appid="+global_appId,
+        statusCode:{
+            200: function(response){console.log(response);},
+            400: function(){alert("Parametri errati per steam charts");},
+            404: function(){alert("Impossibile recuperari dati da steam charts per il gioco selezionato.");},
+            500: function(){alert("Errore del sistema.");}
+        }
+    });
+
 }
