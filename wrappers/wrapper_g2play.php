@@ -20,7 +20,7 @@ if(isset($steam_game_name)){
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);	
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2play, Scraper error: " . curl_error($curl), true, 400);
+        header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2play, Scraper error: " . curl_error($curl), true, 500);
 		exit;
     }
 	curl_close($curl);
@@ -55,12 +55,12 @@ if(isset($steam_game_name)){
 		$toReturn['g2playGameURL'] = $gameurl;
 		$toReturn['g2playGamePrice'] = $gameprice;
 		}else {
-			$toReturn['g2playGameURL'] = "NO GAME AVALAIBLE";	
-			$toReturn['g2playGamePrice'] = "NO GAME AVALAIBLE";
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2play, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+			exit;
 		}
 	}else{
-		$toReturn['g2playGameURL'] = "";	
-		$toReturn['g2playGamePrice'] = "";
+		header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2play, steam non definito: " . curl_error($curl), true, 400);
+		exit;
 	}
 	
 	

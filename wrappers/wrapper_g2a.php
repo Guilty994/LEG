@@ -27,7 +27,7 @@
 		
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, Scraper error: " . curl_error($curl), true, 400);
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, Scraper error: " . curl_error($curl), true, 500);
 			exit;
 		}
 		curl_close($curl);
@@ -58,14 +58,14 @@
 		$toReturn['G2AGamePrice'] = $gamePrice;
 		
 		if($gameURL == NULL){
-			$toReturn['G2AGameURL'] = "NO GAME AVALAIBLE";
-			$toReturn['G2AGamePrice'] = "NO GAME AVALAIBLE";
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+			exit;
 		}
 	
 	
 	}else{
-			$toReturn['G2AGameURL'] = "";
-			$toReturn['G2AGamePrice'] = "";
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, steam non definito: " . curl_error($curl), true, 400);
+			exit;
 	
 	}
 	

@@ -20,7 +20,7 @@
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, Scraper error: " . curl_error($curl), true, 400);
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, Scraper error: " . curl_error($curl), true, 500);
 			exit;
 		}
 		curl_close($curl);
@@ -55,14 +55,14 @@
 			$toReturn['kinguinGameURL'] = $gameurl;
 			$toReturn['kinguinGamePrice'] = $gameprice;
 		}else {
-			$toReturn['kinguinGameURL'] = "NO GAME AVALAIBLE";	
-			$toReturn['kinguinGamePrice'] = "NO GAME AVALAIBLE";
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+			exit;
 		}
 	
 
 	}else{
-		$toReturn['kinguinGameURL'] = "";	
-		$toReturn['kinguinGamePrice'] = "";
+		header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, steam non definito: " . curl_error($curl), true, 400);
+		exit;
 	}
 	
 	// echo $toReturn['kinguinGameURL'];
