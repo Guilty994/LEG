@@ -1,5 +1,4 @@
 <?php
-
 	if(isset($steam_game_name)){
 		$gamesteam = $steam_game_name;
 	

@@ -1,5 +1,4 @@
 <?php
-
 if(isset($steam_game_name)){
 	$gamesteam = $steam_game_name;
 	
@@ -24,10 +23,10 @@ if(isset($steam_game_name)){
         echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
         exit;
     }
-    curl_close($curl);
-
+	curl_close($curl);
+	
     $html = new simple_html_dom();
-    $html -> load($response);
+	$html -> load($response);
 	
 	//information about the game with the best price
 	foreach($html->find('div') as $div){
