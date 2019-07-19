@@ -73,7 +73,7 @@
             include "wrappers/wrapper_g2a.php";
             break;
         case "kinguin":
-            if(!isset($_GET["game"])){
+			if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
                 return;
             }
@@ -81,6 +81,16 @@
             // // Kinguin
             include "wrappers/wrapper_kinguin.php";
             break;
+		// case "g2play":
+			// if(!isset($_GET["game"])){
+                // header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                // return;
+            // }
+            // $steam_game_name = $_GET["game"];
+            // // // Kinguin
+            // include "wrappers/wrapper_g2play.php";
+            // break;
+		
     }
     header($_SERVER['SERVER_PROTOCOL'] . "", true, 200);
     echo json_encode($toReturn);

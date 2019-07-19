@@ -20,14 +20,13 @@
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, Scraper error: " . curl_error($curl), true, 400);
 			exit;
 		}
 		curl_close($curl);
 
 		$html = new simple_html_dom();
 		$html -> load($response);
-	
 		//information about the game with the best price
 		foreach($html->find('div') as $div){
 			if($div->id == 'offerDetails'){
@@ -44,7 +43,7 @@
 	
 			//catch url and best price
 			foreach($bestprice->find('a') as $link){
-				$gameurl = $link;
+				$gameurl = $link->attr['href'];
 				break;
 			}
 	 
@@ -65,5 +64,6 @@
 		$toReturn['kinguinGameURL'] = "";	
 		$toReturn['kinguinGamePrice'] = "";
 	}
-
+	
+	// echo $toReturn['kinguinGameURL'];
 ?>

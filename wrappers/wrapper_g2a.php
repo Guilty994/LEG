@@ -27,7 +27,7 @@
 		
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, Scraper error: " . curl_error($curl), true, 400);
 			exit;
 		}
 		curl_close($curl);
