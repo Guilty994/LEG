@@ -79,7 +79,7 @@
             }
             $steam_game_name = $_GET["game"];
             // // Kinguin
-            // include "wrappers/wrapper_kinguin.php";
+            include "wrappers/wrapper_kinguin.php";
             break;
     }
     header($_SERVER['SERVER_PROTOCOL'] . "", true, 200);

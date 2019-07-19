@@ -147,6 +147,8 @@ function getFromYoutube(steam_name) {
         statusCode: {
             200: function (response) {
                 console.log(response);
+                response = JSON.parse(response);
+                $("#cardYoutube").html('<iframe width="100%" src="http://www.youtube.com/embed/' + response["videoGameplay"][0] + '" frameborder=0></iframe>');
             },
             400: function () {
                 alert("Parametri errati per Youtube");

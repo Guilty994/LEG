@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | User Profile</title>
+  <title>LEG</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -120,36 +120,52 @@
           <!-- /.card -->
         </div>
         <!-- /.col -->
-        <div class="col-md-9">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">Screenshots</h3>
-            </div><!-- /.card-header -->
-            <div class="card-body">
-              <div id="carouselScreenshots" class="carousel slide" data-ride="carousel">
-                <!-- Indicators -->
-                <ol class="carousel-indicators" id="carouselIndicatorsScreenshots"></ol>
+        <div class="col-md-9 row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4"></div>
 
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" id="carouselInnerScreenshots" style="text-align: center"></div>
-
-                <!-- Left and right controls -->
-                <a class="left carousel-control" href="#carouselScreenshots" data-slide="prev">
-                  <span class="glyphicon glyphicon-chevron-left"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carouselScreenshots" data-slide="next">
-                  <span class="glyphicon glyphicon-chevron-right"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
-            </div><!-- /.card-body -->
+          <div class="col-md-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Youtube</h3>
+              </div><!-- /.card-header -->
+              <div class="card-body" id="cardYoutube"></div>
+            </div>
           </div>
-          <!-- /.nav-tabs-custom -->
+          <div class="col-md-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Screenshots</h3>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div id="carouselScreenshots" class="carousel slide" data-ride="carousel">
+                  <!-- Indicators -->
+                  <ol class="carousel-indicators" id="carouselIndicatorsScreenshots"></ol>
+
+                  <!-- Wrapper for slides -->
+                  <div class="carousel-inner" id="carouselInnerScreenshots" style="text-align: center"></div>
+
+                  <!-- Left and right controls -->
+                  <a class="left carousel-control" href="#carouselScreenshots" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="right carousel-control" href="#carouselScreenshots" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <div class="col-md-4"></div>
         </div>
-        <!-- /.col -->
       </div>
-      <!-- /.row -->
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
