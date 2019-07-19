@@ -13,7 +13,7 @@
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			echo 'Scraper error: ' . curl_error($curl);
+			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_greenman, Scraper error: " . curl_error($curl), true, 400);
 			exit;
 		}
 		curl_close($curl);
