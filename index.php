@@ -115,6 +115,7 @@
               <p class="text-muted" id="gameTrend"></p>
               <!-- <hr> -->
               <p class="text-muted" id="twitchViewers"></p>
+              <p class="text-muted" id="steamCharts"></p>
             </div>
             <!-- /.card-body -->
           </div>
@@ -129,20 +130,11 @@
         <!-- /.col -->
         <div class="col-md-9">
           <div class="col-md-12"></div>
-          <!-- <div class="col-md-4"></div>
-          <div class="col-md-4"></div>
-          <div class="col-md-4"></div>-->
-
           <div class="card card-primary col-md-12">
             <div class="card-body">
-              <div class="col-md-12" id="rowSlideshow" style="margin-bottom:10px">
-
-              </div>
+              <div class="col-md-12" id="rowSlideshow" style="margin-bottom:10px"></div>
               <div class="col-md-6" id="gameplayYoutube0"></div>
-
               <div class="col-md-6" id="gameplayYoutube1"></div>
-
-
             </div>
           </div>
         </div>

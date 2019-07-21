@@ -139,6 +139,8 @@ function getFromSteamCharts(steam_appid) {
         statusCode: {
             200: function (response) {
                 console.log(response);
+                response = JSON.parse(response);
+                $("#steamCharts").text("AVG 30 days players: " + response.avg + ". The peak is:" + response.peak);
             },
             400: function () {
                 alert("Parametri errati per steam charts");
@@ -186,8 +188,6 @@ function getFromYoutube(steam_name) {
                 console.log();
                 $("#gameplayYoutube0").html('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][0].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
                 $("#gameplayYoutube1").html('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][1].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
-                /*$("#gameplayYoutube0").html('<iframe width="100%" src="http://www.youtube.com/embed/' + response["videoGameplay"][0].split("?v=")[1] + '" frameborder=0></iframe>');
-                $("#gameplayYoutube1").html('<iframe width="100%" src="http://www.youtube.com/embed/' + response["videoGameplay"][1].split("?v=")[1] + '" frameborder=0></iframe>');*/
             },
             400: function () {
                 alert("Parametri errati per Youtube");
