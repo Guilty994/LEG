@@ -106,7 +106,7 @@
           <!-- /.card -->
 
           <!-- About Me Box -->
-          <div class="card card-primary">
+          <div class="card card-primary" id="cardTrend">
             <div class="card-header">
               <h3 class="card-title">Trend</h3>
             </div>
@@ -120,47 +120,23 @@
           <!-- /.card -->
         </div>
         <!-- /.col -->
-        <div class="col-md-9 row">
+        <div class="col-md-9">
+          <div class="col-md-12"></div>
+          <!-- <div class="col-md-4"></div>
           <div class="col-md-4"></div>
-          <div class="col-md-4"></div>
-          <div class="col-md-4"></div>
+          <div class="col-md-4"></div>-->
 
-          <div class="col-md-4">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Youtube</h3>
-              </div><!-- /.card-header -->
-              <div class="card-body" id="cardYoutube"></div>
+          <div class="card card-primary col-md-12">
+            <div class="card-body">
+              <div class="col-md-6" id="gameplayYoutube0" style="margin-bottom:10px"></div>
+
+              <div class="col-md-6" id="gameplayYoutube1" style="margin-bottom:10px"></div>
+              <div class="col-md-12" id="rowSlideshow">
+                
+              </div>
+
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Screenshots</h3>
-              </div><!-- /.card-header -->
-              <div class="card-body">
-                <div id="carouselScreenshots" class="carousel slide" data-ride="carousel">
-                  <!-- Indicators -->
-                  <ol class="carousel-indicators" id="carouselIndicatorsScreenshots"></ol>
-
-                  <!-- Wrapper for slides -->
-                  <div class="carousel-inner" id="carouselInnerScreenshots" style="text-align: center"></div>
-
-                  <!-- Left and right controls -->
-                  <a class="left carousel-control" href="#carouselScreenshots" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="right carousel-control" href="#carouselScreenshots" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-              </div><!-- /.card-body -->
-            </div>
-            <!-- /.nav-tabs-custom -->
-          </div>
-          <div class="col-md-4"></div>
         </div>
       </div>
       <!-- /.col -->
