@@ -114,10 +114,17 @@
             <div class="card-body">
               <p class="text-muted" id="gameTrend"></p>
               <!-- <hr> -->
+              <p class="text-muted" id="twitchViewers"></p>
             </div>
             <!-- /.card-body -->
           </div>
           <!-- /.card -->
+          <div class="card card-primary">
+          <div class="card-header">
+              <h3 class="card-title">Prices</h3>
+            </div>
+            <div class="card-body" id="cardPrezzi"></div>
+          </div>
         </div>
         <!-- /.col -->
         <div class="col-md-9">
@@ -128,12 +135,13 @@
 
           <div class="card card-primary col-md-12">
             <div class="card-body">
-              <div class="col-md-6" id="gameplayYoutube0" style="margin-bottom:10px"></div>
+              <div class="col-md-12" id="rowSlideshow" style="margin-bottom:10px">
 
-              <div class="col-md-6" id="gameplayYoutube1" style="margin-bottom:10px"></div>
-              <div class="col-md-12" id="rowSlideshow">
-                
               </div>
+              <div class="col-md-6" id="gameplayYoutube0"></div>
+
+              <div class="col-md-6" id="gameplayYoutube1"></div>
+
 
             </div>
           </div>

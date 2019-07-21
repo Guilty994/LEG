@@ -159,6 +159,9 @@ function getFromTwitch(steam_name) {
         statusCode: {
             200: function (response) {
                 console.log(response);
+                response = JSON.parse(response);
+                $("#cardTrend").show(0);
+                $("#twitchViewers").text('Twitch viewers: ' + response.twitchViewers);
             },
             400: function () {
                 alert("Parametri errati per Twitch");
@@ -205,6 +208,10 @@ function getFromGreenman(steam_name) {
         statusCode: {
             200: function (response) {
                 console.log(response);
+                response = JSON.parse(response);
+                str = $("#cardPrezzi").html();
+                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.greenManGameURL + '"><img style="width:100%;padding-top:25%" src="./logoGreenManGaming.png"></img><br><p class="text-muted">' + response.greenManPrice.replace('EUR','') + '</p></a></div>';
+                $("#cardPrezzi").html(str);
             },
             400: function () {
                 alert("Parametri errati per Greenman");
@@ -225,6 +232,10 @@ function getFromG2A(steam_name) {
         statusCode: {
             200: function (response) {
                 console.log(response);
+                response = JSON.parse(response);
+                str = $("#cardPrezzi").html();
+                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.G2AGameURL + '"><img style="width:100%;padding-top:30%" src="./logoG2A.jpg"></img><br><p class="text-muted">' + response.G2AGamePrice.replace('EUR','') + '</p></a></div>';
+                $("#cardPrezzi").html(str);
             },
             400: function () {
                 alert("Parametri errati per Greenman");
@@ -245,6 +256,11 @@ function getFromKinguin(steam_name) {
         statusCode: {
             200: function (response) {
                 console.log(response);
+                response = JSON.parse(response);
+                str = $("#cardPrezzi").html();
+                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.kinguinGameURL + '"><img style="width:100%" src="./logoKinguin.jpg"></img><br><p class="text-muted">' + response.kinguinGamePrice + '</p></a></div>';
+                $("#cardPrezzi").html(str);
+                console.info(str);
             },
             400: function () {
                 alert("Parametri errati per Greenman");
