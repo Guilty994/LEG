@@ -1,6 +1,25 @@
 var global_name;
 var global_appId;
 
+// Controllo se ci sono ricerche recenti
+var recenti = Cookie.get("recenti");
+if(recenti == undefined){
+    $("recenti").html('<p class="text-muted">You haven\'t searched games yet.');
+}else{
+    caricaRecenti();
+}
+
+function caricaRecenti(){
+    str = '<ul class="list-group list-group-unbordered mb-3">';
+    for(let index = 0; index < recenti.length; index++){
+        str += '<li class="list-group-item" onclick="recupera(' + index + ')">';
+        str += '<div class="col-md-4" style="text-align:center"><img class="img-responsive" src="' + recenti[index].copertina + '" alt="Immagine di copertina"><br><h3 class="profile-username text-center">' + recenti[index].nome + '</h3></div>';
+        str += '';
+        str += '</li>';
+    }
+    str += '</ul>';
+}
+
 
 // Per la ricerca premendo invio
 function handle(e) {

@@ -28,6 +28,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <!-- Script che gestisce la pagina -->
   <script src="./js/index.js"></script>
+  <!-- Script per gestire i cookie -->
+  <script src="./js.cookie.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -48,23 +50,16 @@
 
   <!-- Ricerche recenti -->
   <div class="row" id="ricercheRecenti">
-    <div class="col-md-12">
-      <h3>Ricerche recenti:</h3>
-      <div class="row">
-        <div class="col-md-1"></div>
-        <!-- TODO: Usare offset invece della colonna vuota -->
-        <div class="col-md-10">
-          <table>
-            <thead></thead>
-            <tbody id="tbodyRicercheRecenti">
-              <p>No recent search</p>
-            </tbody>
-          </table>
-        </div>
-        <!-- TODO: Usare offset invece della colonna vuota -->
-        <div class="col-md-1"></div>
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Recently searched</h3>
       </div>
+      <div class="card-body" id="recenti">
+
+      </div>
+      <!-- /.card-body -->
     </div>
+    <!-- /.card -->
   </div>
 
   <!-- Main content -->
@@ -121,7 +116,7 @@
           </div>
           <!-- /.card -->
           <div class="card card-primary">
-          <div class="card-header">
+            <div class="card-header">
               <h3 class="card-title">Prices</h3>
             </div>
             <div class="card-body" id="cardPrezzi"></div>
