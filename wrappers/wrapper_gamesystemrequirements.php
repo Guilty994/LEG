@@ -1,11 +1,4 @@
 <?php
-    // testing 
-    include "simple_html_dom.php";
-    $steam_game_name = "Rocket League®";
-    
-    // testing end
-
-
     $mod_steam_game_name = preg_replace("/[^a-zA-Z0-9\s\:\,]/", "", $steam_game_name);
     $curl = curl_init("https://gamesystemrequirements.com/search?q=".urlencode($mod_steam_game_name));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
@@ -50,13 +43,42 @@
         $html = new simple_html_dom();
         $html -> load($response);
 
-        echo $html;
-        
-
-
-
+        $counter = 0;
+        foreach($html->find('div') as $div){
+            if($div->class == 'srb_tab'){
+                if($counter == 0){
+                    $counter++;
+                }else{
+                    foreach($div->find('div') as $row){
+                        if($row->class == 'srb_row'){
+                            $colCounter = 0;
+                            foreach($row->find('div') as $col){
+                                if($col->class == 'tbl'){
+                                    $plain_text = $col->plaintext;
+                                    if(strpos($plain_text, 'https') !== false){
+                                        $plain_text = substr($plain_text, 0, strpos($plain_text, "https"));
+                                    }
+                                    if($colCounter == 0){
+                                        $index =  'min' . preg_replace("/[^a-zA-Z0-9\s\,]/", "", $plain_text);
+                                        $colCounter++;
+                                    }else if($colCounter == 1){
+                                        $toReturn['sysReq'][$index] = $plain_text;
+                                        $colCounter++;
+                                    }else if($colCounter == 2){
+                                        $index =  'rec' . preg_replace("/[^a-zA-Z0-9\s\,]/", "", $plain_text);
+                                        $colCounter++;
+                                    }
+                                    else{
+                                       $toReturn['sysReq'][$index] = $plain_text;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }else{
         header($_SERVER['SERVER_PROTOCOL'] . "wrapper_gamesystemrequirements, link not set", true, 400);
-    }
-    
+    }  
 ?>
