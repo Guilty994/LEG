@@ -90,13 +90,17 @@
             // // // Kinguin
             // include "wrappers/wrapper_g2play.php";
             // break;
-            case "sysreq":
+        case "sysreq":
             if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
                 return;
             }
             $steam_game_name = $_GET["game"];
             // Game System Requirements
+            include "wrappers\wrapper_gamesystemrequirements.php";
+            break;
+        case "topf":
+            // Twitch top 5
             include "wrappers\wrapper_gamesystemrequirements.php";
             break;
     }
