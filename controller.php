@@ -101,7 +101,7 @@
             break;
         case "topf":
             // Twitch top 5
-            include "wrappers\wrapper_gamesystemrequirements.php";
+            include "wrappers\wrapper_twitch_topgames.php";
             break;
     }
     header($_SERVER['SERVER_PROTOCOL'] . "", true, 200);
