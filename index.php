@@ -26,10 +26,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- import Bootstrap -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <!-- Script che gestisce la pagina -->
-  <script src="./js/index.js"></script>
   <!-- Script per gestire i cookie -->
-  <script src="./js.cookie.js"></script>
+  <script src="./jquery.cookie.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -50,16 +48,20 @@
 
   <!-- Ricerche recenti -->
   <div class="row" id="ricercheRecenti">
-    <div class="card card-primary">
-      <div class="card-header">
-        <h3 class="card-title">Recently searched</h3>
-      </div>
-      <div class="card-body" id="recenti">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">History</h3>
+        </div>
+        <div class="card-body" id="recenti">
 
+        </div>
+        <!-- /.card-body -->
       </div>
-      <!-- /.card-body -->
+      <!-- /.card -->
     </div>
-    <!-- /.card -->
+    <div class="col-md-2"></div>
   </div>
 
   <!-- Main content -->
@@ -145,7 +147,8 @@
   <div class="modal"></div>
   <!-- script index -->
   <script src="./js/scriptModal.js"></script>
-
+  <!-- Script che gestisce la pagina -->
+  <script src="./js/index.js"></script>
 </body>
 
 </html>

@@ -19,7 +19,7 @@
     $html -> load($response);
 
     // Check strict search
-    if(isset($_GET["strict"]){
+    if(isset($_GET["strict"])){
         foreach($html->find('div') as $div){
             if($div->id == 'search_result_container'){
                 foreach($div->find('span') as $span){
