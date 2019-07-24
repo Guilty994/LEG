@@ -15,6 +15,7 @@ if ($.cookie('recenti') != undefined) {
     caricaRecenti(recenti);
 } else {
     $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
+    recenti = new Array();
 }
 
 
@@ -55,6 +56,10 @@ function cerca() {
             200: function (response) {
                 let dati = JSON.parse(response);
 
+                if(dati.appId == "" || dati.gameName == ""){
+                    alert("Steam non funziona");
+                }
+
                 global_appId = dati.appId;
                 global_name = dati.gameName;
 
@@ -70,7 +75,13 @@ function cerca() {
                 getFromKinguin(global_name);
                 stampaDatiSteam(dati);
 
-
+                //while($('body').hasClass('loading'));
+                $('body').css().on('change', function () {
+                    if ($('body').css('loading') == undefined) {
+                        $.cookie('recenti', JSON.stringify(recenti));
+                        console.log($.cookie('recenti'));
+                    }
+                });
 
                 return;
             },
@@ -111,9 +122,9 @@ function recupera(appId) {
     $("#labelReleaseDate").text(gioco.releaseDate);
     $("#gameDescription").text(gioco.description);
     $("#gameTrend").html(gioco.gameTrend);
-    if(gioco.gameTrend.length == 0){
+    if (gioco.gameTrend.length == 0) {
         $("#cardTrend").hide(0);
-    }else{
+    } else {
         $("#cardTrend").show(0);
     }
     $("#rowSlideshow").html(gioco.slideshow);
@@ -129,21 +140,14 @@ function recupera(appId) {
 }
 
 function sc(chiave, valore) {
-    if (recenti == undefined) {
-        recenti = new Array();
-    }
-    if (chiave == "Youtube") {
-        recenti[global_appId][chiave] = {
-            "valore": valore,
-            "data": new Date()
-        };
-    } else {
-        recenti[global_appId][chiave] = valore;
-    }
-    $.cookie('recenti', JSON.stringify(recenti));
+    recenti[global_appId][chiave] = valore;
+    //$.cookie('recenti', JSON.stringify(recenti));
 }
 
 function stampaDatiSteam(dati) {
+
+    console.log(dati);
+
     // Nome gioco
     $("#labelNomeGioco").text(dati.gameName);
     sc("nome", dati.gameName);
@@ -184,16 +188,14 @@ function stampaDatiSteam(dati) {
     $("#gameTrend").html(str);
     sc("gameTrend", str);
 
-    if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0){
+    if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0) {
         $("#cardTrend").hide(0);
-        sc("gameTrend","");
+        sc("gameTrend", "");
     }
-        
 
     // ScreenShots
     str = '<div id="carouselScreenshots" class="carousel slide" data-ride="carousel">';
     str += '<ol class="carousel-indicators" id="carouselIndicatorsScreenshots">';
-    let listaImmagini = "";
     for (let index = 0; index < dati.gameScreenshot.length; index++) {
         str += '<li data-target="#carouselScreenshots" data-slide-to="' + index + '"' + (index == 0 ? 'class="active"' : '') + '></li>';
     }
@@ -260,9 +262,15 @@ function getFromYoutube(steam_name) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                $("#gameplayYoutube0").html('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][0].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
-                $("#gameplayYoutube1").html('<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][1].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>');
-                sc("YouTube", response["videoGameplay"]);
+                let y0, y1;
+                y0 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][0].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                y1 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][1].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+                $("#gameplayYoutube0").html(y0);
+                $("#gameplayYoutube1").html(y1);
+                //sc("YouTube", response["videoGameplay"]);
+                sc("YouTube0", response["videoGameplay"][0].split("?v=")[1]);
+                sc("YouTube1", response["videoGameplay"][1].split("?v=")[1]);
+                //sc("dataYoutube", JSON.stringify(new Date()));
             },
             400: function () {
                 alert("Parametri errati per Youtube");
