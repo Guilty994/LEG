@@ -1,13 +1,16 @@
 <?php
 	
+	
+	
 	if(isset($steam_game_name)){
 		$gamesteam = $steam_game_name;
 		
 		$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
+		$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS');
 		//LINK PARAMETERS
 		//name with the right encode
 		$gamenameinput = rawurlencode($gamenameinput);
-		$curl = curl_init("https://www.g2a.com/search?query=".$gamenameinput."&category_id=games-c189&drm%5B5%5D=1&sort=price-lowest-first");
+		$curl = curl_init("https://www.g2a.com/search?query=".$gamenameinput."&sort=price-lowest-first&category_id=games-c189&region%5B1%5D=8355&region%5B0%5D=878&drm%5B5%5D=1");
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		// curl_setopt($curl, CURLOPT_COOKIEFILE, dirname(__FILE__) . '/cookie.txt');// specifica locazione dei cookie da leggere
 		// curl_setopt($curl, CURLOPT_COOKIEJAR, dirname(__FILE__) . '/cookie_read.txt');// specifica locazione in cui sono scritti i cookie che erano presenti
@@ -38,31 +41,32 @@
 	
 		$gameURL = NULL;
 		$gamePrice = NULL;
-		foreach($html->find('li') as $li){
-			
-			if($li->class == 'products-grid__item'){
-				//echo $li;
-				foreach($li->find('div') as $internaldiv){
-					if($internaldiv->class =='Card__headings'){
-						$gameURL = $internaldiv->first_child()->first_child()->attr['href'];						
-					}
-					if($internaldiv->class =='Card__price'){
-						$gamePrice = $internaldiv->first_child()->next_sibling()->plaintext;					
+		foreach($html->find("li[class=products-grid__item]") as $li){
+			foreach($li->find('div') as $internaldiv){
+				$gameinstance = $internaldiv->first_child()->first_child();
+				if($internaldiv->class =='Card__headings'){
+					// echo $gameinstance->innertext;
+					if (preg_match('/\b('.implode($badwords,"|").')\b/i',$gameinstance->innertext)){
+						break;
+					}else{
+						$gameURL = $gameinstance->attr['href'];
 					}
 				}
-				break;
+				if($internaldiv->class =='Card__price'){
+					$gamePrice =$internaldiv->first_child()->next_sibling()->innertext;
+				}
 			}
-			
+			if($gameURL != NULL)
+				break;
 		}
-		$toReturn['G2AGameURL'] = "https://www.g2a.com".$gameURL;
-		$toReturn['G2AGamePrice'] = $gamePrice;
-		
 		if($gameURL == NULL){
 			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
 			exit;
+		}else {
+			$toReturn['G2AGameURL'] = "https://www.g2a.com".$gameURL;
+			$toReturn['G2AGamePrice'] = $gamePrice;
 		}
-	
-	
+		
 	}else{
 			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, steam non definito: " . curl_error($curl), true, 400);
 			exit;

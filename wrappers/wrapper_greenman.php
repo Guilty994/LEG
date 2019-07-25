@@ -20,69 +20,41 @@
 
 		$html = new simple_html_dom();
 		$html -> load($response);
+		
+		
+		$liroot = $html->find("ul.table-search-listings")[0]->children(0);
+		$inforoot = $liroot->first_child()->next_sibling()->next_sibling()->find("div.media-body")[0]->first_child()->first_child();
 	
 	
-
-		$controllarenome = array();
-		foreach($html->find('ul') as $ul){
-			if($ul->class == 'table-search-listings'){
-				foreach($ul->find('li') as $li){
-					//scorro i risultati
-					
-					foreach($li->find('div') as $div){
-						if($div->class== 'media-body'){
-							array_push($controllarenome, $div);
-							// echo $controllarenome[$i];
-							
-						}
-						
-					}
-				}
-			}
+		$gamenamewords = explode(" ",$gamesteam);
+		$gamename = $inforoot->innertext;
+		$rightgame = true;
+		foreach($gamenamewords as $word){
+			if (!preg_match('/\b('.$word.')\b/i',$gamename)){
+				$rightgame = false;
+				break;
+			}			
+		}	
+	
+	
+		if ($rightgame){
+			// echo $liroot;
+			$gameurl = "https://www.greenmangaming.com".$inforoot->attr['href'];
+			$gameprice = $liroot->first_child()->next_sibling()->next_sibling()->find("p.listing-price strong")[0]->innertext;
 		}
 		
-		$checkbestprice = array();
-		foreach($controllarenome as $x){
-			$gameurl = $x->first_child()->first_child()->attr['href'];
-			$gamename = $x->first_child()->first_child()->innertext;
-			// echo $gameurl;
-			// echo $gamename;
-			if(checkString($gamesteam,$gamename)){
-				foreach($x->find('span') as $platform){
-					if($platform->class == 'prod-platform'){
-						if($platform->first_child()->innertext == 'PC'){
-							array_push($checkbestprice,$x);
-							break;
-						}
-					}
-				}
-			}
-		}
 		
-		$bestprice = 1000;
-		$finalResult= array(array("GameUrl","GamePrice"),array());
-		foreach($checkbestprice as $x){
-			foreach($x->find('span') as $game){
-				if($game->class == 'current-price'){
-					$price = $game->children(2)->innertext;
-					if($price < $bestprice){
-						$bestprice = $price ;
-						$finalResult['GameUrl'][0] = "https://www.greenmangaming.com".$x->first_child()->first_child()->attr['href'];
-						$finalResult['GamePrice'][0] = $bestprice;
-					}
-				}
-			}	
-		}
-		if(isset($finalResult['GameUrl'][0]) && isset($finalResult['GamePrice'][0])){
-			$toReturn['greenManGameURL'] = $finalResult['GameUrl'][0];
-			$toReturn['greenManPrice'] = $finalResult['GamePrice'][0];
-		}else{
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_greenman, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+		
+		if ($gameurl == NULL){
+			header($_SERVER['SERVER_PROTOCOL'] . "", true, 404);
 			exit;
+		}else{
+			$toReturn['greenManGameURL'] = $gameurl;
+			$toReturn['greenManPrice'] = $gameprice;
 		}
 
 	}else{
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_greenman, steam non definito: " . curl_error($curl), true, 400);
+			header($_SERVER['SERVER_PROTOCOL'] . "", true, 400);
 			exit;
 	}
 	
