@@ -146,7 +146,7 @@
   <!-- Modal per il caricamento -->
   <div class="modal"></div>
   <!-- script index -->
-  <script src="./js/scriptModal.js"></script>
+  <!-- <script src="./js/scriptModal.js"></script> -->
   <!-- Script che gestisce la pagina -->
   <script src="./js/index.js"></script>
 </body>
