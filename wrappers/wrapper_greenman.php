@@ -77,12 +77,12 @@
 			$toReturn['greenManGameURL'] = $finalResult['GameUrl'][0];
 			$toReturn['greenManPrice'] = $finalResult['GamePrice'][0];
 		}else{
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_greenman, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+			header($_SERVER['SERVER_PROTOCOL'] . "", true, 404);
 			exit;
 		}
 
 	}else{
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_greenman, steam non definito: " . curl_error($curl), true, 400);
+			header($_SERVER['SERVER_PROTOCOL'] . "" , true, 400);
 			exit;
 	}
 	

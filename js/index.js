@@ -1,5 +1,6 @@
 var global_name;
 var global_appId;
+var canSave = false;
 
 /*var recenti = new Array();
 recenti[0] = {};
@@ -18,26 +19,24 @@ if ($.cookie('recenti') != undefined) {
     recenti = new Array();
 }
 
+function stampaRecenti() {
+    for (r in recenti) {
+        console.log(recenti[r]);
+    }
+}
 
 function caricaRecenti(recenti) {
     console.log(recenti);
-    //str = '<ul class="list-group list-group-unbordered mb-3">';
     str = '<div class="col-md-12">';
     for (r in recenti) {
         if (recenti[r] == undefined) continue;
         str += '<div class="col-md-4" onclick="recupera(' + r + ')">';
         str += '<img class="img-responsive" src="' + recenti[r].copertina + '" alt="Immagine di copertina"><br><h3 class="profile-username text-center">' + recenti[r].nome + '</h3>';
         str += '</div>';
-        //str += '<li class="list-group-item" onclick="recupera(' + r + ')">';
-        //str += '<div class="col-md-4" style="text-align:center"><img class="img-responsive" src="' + recenti[r].copertina + '" alt="Immagine di copertina"><br><h3 class="profile-username text-center">' + recenti[r].nome + '</h3></div>';
-        //str += '</li>';
     }
-    //str += '</ul>';
     str += '</div>';
-    //console.log(str);
     $("#recenti").html(str);
 }
-
 
 // Per la ricerca premendo invio
 function handle(e) {
@@ -56,11 +55,12 @@ function cerca() {
             200: function (response) {
                 let dati = JSON.parse(response);
 
-                if(dati.appId == "" || dati.gameName == ""){
+                if (dati.appId == "" || dati.gameName == "") {
                     alert("Steam non funziona");
                 }
 
                 global_appId = dati.appId;
+                canSave = true;
                 global_name = dati.gameName;
 
                 $("#cardPrezzi").html("");
@@ -75,13 +75,7 @@ function cerca() {
                 getFromKinguin(global_name);
                 stampaDatiSteam(dati);
 
-                //while($('body').hasClass('loading'));
-                $('body').css().on('change', function () {
-                    if ($('body').css('loading') == undefined) {
-                        $.cookie('recenti', JSON.stringify(recenti));
-                        console.log($.cookie('recenti'));
-                    }
-                });
+                //$.cookie('recenti', JSON.stringify(recenti));
 
                 return;
             },
@@ -122,13 +116,16 @@ function recupera(appId) {
     $("#labelReleaseDate").text(gioco.releaseDate);
     $("#gameDescription").text(gioco.description);
     $("#gameTrend").html(gioco.gameTrend);
-    if (gioco.gameTrend.length == 0) {
+    if (gioco.gameTrend == undefined || gioco.gameTrend.length == 0) {
         $("#cardTrend").hide(0);
     } else {
         $("#cardTrend").show(0);
     }
-    $("#rowSlideshow").html(gioco.slideshow);
-    console.log(gioco);
+    
+    $("#rowSlideshow").html(creaSlideshow(JSON.parse(gioco.slideshow)));
+
+    $("#gameplayYoutube0").html(gioco.YouTube0);
+    $("#gameplayYoutube1").html(gioco.YouTube1);
 
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
@@ -139,9 +136,35 @@ function recupera(appId) {
     $("#risultatiRicerca").show(500);
 }
 
+function creaSlideshow(immagini){
+    str = '<div id="carouselScreenshots" class="carousel slide" data-ride="carousel">';
+    str += '<ol class="carousel-indicators" id="carouselIndicatorsScreenshots">';
+    for (let index = 0; index < immagini.length; index++) {
+        str += '<li data-target="#carouselScreenshots" data-slide-to="' + index + '"' + (index == 0 ? 'class="active"' : '') + '></li>';
+    }
+    str += '</ol><div class="carousel-inner" id="carouselInnerScreenshots" style="text-align: center">';
+    for (let index = 0; index < immagini.length; index++) {
+        str += '<div class="item ' + (index == 0 ? 'active' : '') + '"><center><img width="100%" src="' + immagini[index] + '"></center></div>';
+    }
+    str += '</div>';
+    str += '<a class="left carousel-control" href="#carouselScreenshots" data-slide="prev">';
+    str += '<span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a>';
+    str += '<a class="right carousel-control" href="#carouselScreenshots" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a>';
+    return str;
+}
+
 function sc(chiave, valore) {
     recenti[global_appId][chiave] = valore;
-    //$.cookie('recenti', JSON.stringify(recenti));
+    salvaCookie();
+}
+
+function salvaCookie() {
+    let tmpRecenti = {};
+    for (r in recenti) {
+        tmpRecenti[r] = recenti[r];
+    }
+    $.cookie('recenti', JSON.stringify(tmpRecenti));
+    recenti = JSON.parse($.cookie("recenti"));
 }
 
 function stampaDatiSteam(dati) {
@@ -194,21 +217,10 @@ function stampaDatiSteam(dati) {
     }
 
     // ScreenShots
-    str = '<div id="carouselScreenshots" class="carousel slide" data-ride="carousel">';
-    str += '<ol class="carousel-indicators" id="carouselIndicatorsScreenshots">';
-    for (let index = 0; index < dati.gameScreenshot.length; index++) {
-        str += '<li data-target="#carouselScreenshots" data-slide-to="' + index + '"' + (index == 0 ? 'class="active"' : '') + '></li>';
-    }
-    str += '</ol><div class="carousel-inner" id="carouselInnerScreenshots" style="text-align: center">';
-    for (let index = 0; index < dati.gameScreenshot.length; index++) {
-        str += '<div class="item ' + (index == 0 ? 'active' : '') + '"><center><img width="100%" src="' + dati.gameScreenshot[index] + '"></center></div>';
-    }
-    str += '</div>';
-    str += '<a class="left carousel-control" href="#carouselScreenshots" data-slide="prev">';
-    str += '<span class="glyphicon glyphicon-chevron-left"></span><span class="sr-only">Previous</span></a>';
-    str += '<a class="right carousel-control" href="#carouselScreenshots" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span><span class="sr-only">Next</span></a>';
+    str = creaSlideshow(dati.gameScreenshot);
     $("#rowSlideshow").html(str);
-    sc("slideshow", $("#rowSlideshow").html());
+    sc("slideshow", JSON.stringify(dati.gameScreenshot));
+    
     // Fine dati Steam
     $("#risultatiRicerca").show(500);
 }
@@ -268,8 +280,8 @@ function getFromYoutube(steam_name) {
                 $("#gameplayYoutube0").html(y0);
                 $("#gameplayYoutube1").html(y1);
                 //sc("YouTube", response["videoGameplay"]);
-                sc("YouTube0", response["videoGameplay"][0].split("?v=")[1]);
-                sc("YouTube1", response["videoGameplay"][1].split("?v=")[1]);
+                sc("YouTube0", y0);
+                sc("YouTube1", y1);
                 //sc("dataYoutube", JSON.stringify(new Date()));
             },
             400: function () {
@@ -292,7 +304,12 @@ function getFromGreenman(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.greenManGameURL + '"><img style="width:100%;padding-top:25%" src="./logoGreenManGaming.png"></img><br><p class="text-muted">' + response.greenManPrice.replace('EUR', '') + '</p></a></div>';
+                let price;
+                /*if (response.greenManPrice.includes('EUR'))
+                    price = response.greenManPrice.replace('EUR', '');
+                else */
+                price = response.greenManPrice;
+                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.greenManGameURL + '"><img style="width:100%;padding-top:25%" src="./logoGreenManGaming.png"></img><br><p class="text-muted">' + price + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -353,3 +370,14 @@ function getFromKinguin(steam_name) {
         }
     });
 }
+
+$body = $("body");
+
+$(document).on({
+    ajaxStart: function () {
+        $body.addClass("loading");
+    },
+    ajaxStop: function () {
+        $body.removeClass("loading");
+    }
+});
