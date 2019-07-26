@@ -2,7 +2,9 @@
 if(isset($steam_game_name)){
 	$gamesteam = $steam_game_name;
 	
+	$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS','PACK','PASS');
 	$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
+	$gamenameinput = preg_replace("!\s+!"," ",$gamenameinput);
 	
 	//LINK PARAMETERS
 	//name with the right encode
@@ -28,40 +30,37 @@ if(isset($steam_game_name)){
     $html = new simple_html_dom();
 	$html -> load($response);
 	//information about the game with the best price
-	foreach($html->find('div') as $div){
-		if($div->id == 'offerDetails'){
-			foreach($div->find('div') as $gameinfo) {
-				if($gameinfo->class == 'info'){
-				$bestprice = $gameinfo;
-				break;
-				}
-			}
+	$gameurl = NULL;
+	$gameprice = NULL;
+	foreach($html->find("div[class][id][itemtype] div div.info")as $div){
+		$gamename = $div->first_child()->first_child()->innertext;
+		$gamename = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamename));
+		if (preg_match('/\b('.implode($badwords,"|").')\b/i',$gamename)){
+			continue;
+		}else{
+			$gameurl = $div->first_child()->first_child()->first_child()->attr['href'];
+			$pricetag = $div->first_child()->next_sibling()->find("div[class=actual-price] span[data-no-tax-price]");
+			$gameprice = $pricetag[0]->attr['data-no-tax-price'];
+			break;	
 		}
+		
 	}
 	
-	if(isset($bestprice)){
-	
-		//catch url and best price
-		foreach($bestprice->find('a') as $link){
-			$gameurl = $link->attr['href'];;
-			break;
-		}
-	 
-		foreach($bestprice->find('div') as $price){
-			if($price->class == 'actual-price'){
-				$gameprice = $price->first_child()->attr['data-no-tax-price'];
-			}
-		}
-		$toReturn['g2playGameURL'] = $gameurl;
-		$toReturn['g2playGamePrice'] = $gameprice;
-		}else {
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2play, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+	if($gameurl == NULL){
+			header($_SERVER['SERVER_PROTOCOL'] . "", true, 404);
 			exit;
+		}else{
+			$toReturn['g2playGameURL'] = $gameurl;
+			$toReturn['g2playGamePrice'] = $gameprice;
 		}
+	
+
 	}else{
-		header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2play, steam non definito: " . curl_error($curl), true, 400);
+		header($_SERVER['SERVER_PROTOCOL'] . "", true, 400);
 		exit;
 	}
+	
+		
 	
 	
 	
