@@ -2,13 +2,13 @@
 	if(isset($steam_game_name)){
 		
 		$gamesteam = $steam_game_name;
-		$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
-	
-	
+		$gamesteam = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
+		
+		
 		//LINK PARAMETERS
 		//name with the right encode
-		$gamenameinput = rawurlencode($gamenameinput);
-
+		$gamenameinput = rawurlencode($gamesteam);
+		$gamenameinput = preg_replace("/(%20%20)$/","",$gamenameinput);
 		$curl = curl_init("https://www.greenmangaming.com/search/".$gamenameinput."?platforms=73&comingSoon=false&released=true&prePurchased=false&bestSelling=false&pageSize=10");
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
@@ -17,45 +17,41 @@
 			exit;
 		}
 		curl_close($curl);
-
 		$html = new simple_html_dom();
 		$html -> load($response);
+
+		$gameurl = NULL;
+		$gameprice = NULL;
 		
-		
-		$liroot = $html->find("ul.table-search-listings")[0]->children(0);
-		$inforoot = $liroot->first_child()->next_sibling()->next_sibling()->find("div.media-body")[0]->first_child()->first_child();
-	
-	
-		$gamenamewords = explode(" ",$gamesteam);
-		$gamename = $inforoot->innertext;
-		$rightgame = true;
-		foreach($gamenamewords as $word){
-			if (!preg_match('/\b('.$word.')\b/i',$gamename)){
-				$rightgame = false;
-				break;
-			}			
-		}	
-	
-	
-		if ($rightgame){
-			// echo $liroot;
-			$gameurl = "https://www.greenmangaming.com".$inforoot->attr['href'];
-			$gameprice = $liroot->first_child()->next_sibling()->next_sibling()->find("p.listing-price strong")[0]->innertext;
+		$root = $html->find("ul.table-search-listings,0");
+		foreach($root[0]->children(0)->find("div.media-body") as $div){
+			$gameroot = $div->first_child()->first_child();
+			$explodedgame = explode(" ",$gamesteam);
+			$gamename = $gameroot->innertext;
+			$rightgame = true;
+			foreach($explodedgame as $word){
+				if (!preg_match('/\b('.$word.')\b/i',$gamename)){
+					$rightgame = false;
+					break;
+				}			
+			}
+			if($rightgame){
+				$gameurl = "https://www.greenmangaming.com".$gameroot->attr['href'];
+				$gameprice = $div->find("div.row strong")[0]->innertext;
+			}
+			break;
 		}
 		
-		
-		
-		if ($gameurl == NULL){
+		if($gameurl == NULL){
 			header($_SERVER['SERVER_PROTOCOL'] . "", true, 404);
 			exit;
 		}else{
 			$toReturn['greenManGameURL'] = $gameurl;
 			$toReturn['greenManPrice'] = $gameprice;
 		}
-
 	}else{
-			header($_SERVER['SERVER_PROTOCOL'] . "", true, 400);
-			exit;
+		header($_SERVER['SERVER_PROTOCOL'] . "", true, 400);
+		exit;
 	}
 	
 ?>

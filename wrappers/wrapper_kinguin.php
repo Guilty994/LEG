@@ -4,11 +4,12 @@
 	
 		$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS','PACK','PASS');
 		$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
+		$gamenameinput = preg_replace("!\s+!"," ",$gamenameinput);
 		
-	
 		//LINK PARAMETERS
 		//name with the right encode
 		$gamenameinput = urlencode($gamenameinput);
+		// echo $gamenameinput;
 		//ONLY BASE GAME
 		$gametype = "content_type%5B%5D=1";
 		//ORDER MIN + ASC
@@ -49,7 +50,7 @@
 		
 			
 		if($gameurl == NULL){
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+			header($_SERVER['SERVER_PROTOCOL'] . "", true, 404);
 			exit;
 		}else{
 			$toReturn['kinguinGameURL'] = $gameurl;
@@ -58,7 +59,7 @@
 	
 
 	}else{
-		header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, steam non definito: " . curl_error($curl), true, 400);
+		header($_SERVER['SERVER_PROTOCOL'] . "", true, 400);
 		exit;
 	}
 ?>
