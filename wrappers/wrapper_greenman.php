@@ -20,6 +20,7 @@
 
 		$html = new simple_html_dom();
 		$html -> load($response);
+		$gameurl = NULL;
 		
 		
 		$liroot = $html->find("ul.table-search-listings")[0]->children(0);

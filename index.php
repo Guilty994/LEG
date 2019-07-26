@@ -149,6 +149,7 @@
   <!-- <script src="./js/scriptModal.js"></script> -->
   <!-- Script che gestisce la pagina -->
   <script src="./js/index.js"></script>
+  <script src="./js/toastr.js"></script>
 </body>
 
 </html>

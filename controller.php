@@ -62,6 +62,7 @@
             $steam_game_name = $_GET["game"];
             // GreenMan Gaming
             include "wrappers/wrapper_greenman.php";
+            $toReturn["Daniele"] = "TEST";
             break;
         case "g2a":
             if(!isset($_GET["game"])){

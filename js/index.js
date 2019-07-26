@@ -1,6 +1,5 @@
 var global_name;
 var global_appId;
-var canSave = false;
 
 /*var recenti = new Array();
 recenti[0] = {};
@@ -12,7 +11,8 @@ console.log(JSON.parse($.cookie('recenti')));*/
 
 if ($.cookie('recenti') != undefined) {
     // Ci sono ricerce recenti
-    recenti = JSON.parse($.cookie('recenti'));
+    recenti = $.cookie('recenti');
+    recenti = JSON.parse(recenti);
     caricaRecenti(recenti);
 } else {
     $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
@@ -57,15 +57,13 @@ function cerca() {
 
                 if (dati.appId == "" || dati.gameName == "") {
                     alert("Steam non funziona");
+                    toastr.error("Steam non dispone di questo gioco.");
                 }
 
                 global_appId = dati.appId;
-                canSave = true;
                 global_name = dati.gameName;
 
                 $("#cardPrezzi").html("");
-
-                recenti[global_appId] = {};
 
                 getFromYoutube(global_name);
                 getFromSteamCharts(global_appId);
@@ -76,15 +74,15 @@ function cerca() {
                 stampaDatiSteam(dati);
 
                 //$.cookie('recenti', JSON.stringify(recenti));
-
+                salvaCookie();
                 return;
             },
             404: function () {
-                alert("Impossibile trovate il gioco desiderato.");
+                toastr.error("Impossibile trovate il gioco desiderato.");
                 return;
             },
             400: function () {
-                alert("Parametri inviati non corretti.");
+                toastr.error("Parametri inviati non corretti.");
                 return;
             },
             500: function (response) {
@@ -92,7 +90,7 @@ function cerca() {
                 if (response != null) {
                     str += "\nErrore: " + response;
                 }
-                alert(str);
+                toastr.error(str);
             }
         }
     });
@@ -121,22 +119,25 @@ function recupera(appId) {
     } else {
         $("#cardTrend").show(0);
     }
-    
+
     $("#rowSlideshow").html(creaSlideshow(JSON.parse(gioco.slideshow)));
 
-    $("#gameplayYoutube0").html(gioco.YouTube0);
-    $("#gameplayYoutube1").html(gioco.YouTube1);
+    let y0, y1;
+    y0 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + gioco.YouTube0 + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    y1 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + gioco.YouTube1 + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    $("#gameplayYoutube0").html(y0);
+    $("#gameplayYoutube1").html(y1);
 
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
-    getFromGreenman(global_name);
+    //getFromGreenman(global_name);
     getFromG2A(global_name);
     getFromKinguin(global_name);
 
     $("#risultatiRicerca").show(500);
 }
 
-function creaSlideshow(immagini){
+function creaSlideshow(immagini) {
     str = '<div id="carouselScreenshots" class="carousel slide" data-ride="carousel">';
     str += '<ol class="carousel-indicators" id="carouselIndicatorsScreenshots">';
     for (let index = 0; index < immagini.length; index++) {
@@ -154,22 +155,42 @@ function creaSlideshow(immagini){
 }
 
 function sc(chiave, valore) {
+    if (recenti == undefined) {
+        recenti = new Array();
+    }
+    if (recenti[global_appId] == undefined)
+        recenti[global_appId] = {};
+
     recenti[global_appId][chiave] = valore;
     salvaCookie();
 }
 
 function salvaCookie() {
-    let tmpRecenti = {};
+    //document.cookie = "username=Mannaggia" + recenti;
+    if (recenti == undefined || recenti.length == 0) return;
+    //document.cookie = "recenti=" + JSON.stringify(recenti);
+    //console.log(document.cookie);
+
+    /*let tmpRecenti = {};
     for (r in recenti) {
         tmpRecenti[r] = recenti[r];
-    }
-    $.cookie('recenti', JSON.stringify(tmpRecenti));
-    recenti = JSON.parse($.cookie("recenti"));
+    }*/
+
+    let k = JSON.stringify(recenti);
+    console.log("Salvo nei cookie: " + k);
+    $.cookie('recenti', k);
+
+    //$.cookie('recenti', JSON.stringify(recenti));
+    //console.log(JSON.parse($.cookie("recenti")));
+    k = $.cookie('recenti');
+    console.log("Ho letto dai cookie: " + k);
+    k = JSON.parse(k);
+    console.log(k);
 }
 
 function stampaDatiSteam(dati) {
 
-    console.log(dati);
+    //console.log(dati);
 
     // Nome gioco
     $("#labelNomeGioco").text(dati.gameName);
@@ -209,7 +230,7 @@ function stampaDatiSteam(dati) {
     if (dati.gameMetacritic.length > 0)
         str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
     $("#gameTrend").html(str);
-    sc("gameTrend", str);
+    sc("gameTrend", JSON.stringify(dati.gameMetacritic));
 
     if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0) {
         $("#cardTrend").hide(0);
@@ -220,7 +241,7 @@ function stampaDatiSteam(dati) {
     str = creaSlideshow(dati.gameScreenshot);
     $("#rowSlideshow").html(str);
     sc("slideshow", JSON.stringify(dati.gameScreenshot));
-    
+
     // Fine dati Steam
     $("#risultatiRicerca").show(500);
 }
@@ -234,13 +255,13 @@ function getFromSteamCharts(steam_appid) {
                 $("#steamCharts").text("AVG 30 days players: " + response.avg + ". The peak is:" + response.peak);
             },
             400: function () {
-                alert("Parametri errati per steam charts");
+                toastr.error("Parametri errati per steam charts");
             },
             404: function () {
-                alert("Impossibile recuperari dati da steam charts per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da steam charts per il gioco selezionato.");
             },
             500: function () {
-                console.log("Errore SteamCharts.");
+                toastr.error("Errore SteamCharts.");
             }
         }
     });
@@ -256,13 +277,13 @@ function getFromTwitch(steam_name) {
                 $("#twitchViewers").text('Twitch viewers: ' + response.twitchViewers);
             },
             400: function () {
-                alert("Parametri errati per Twitch");
+                toastr.error("Parametri errati per Twitch");
             },
             404: function () {
-                alert("Impossibile recuperari dati da Twitch per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da Twitch per il gioco selezionato.");
             },
             500: function () {
-                console.log("Errore Twitch.");
+                toastr.error("Errore Twitch.");
             }
         }
     });
@@ -280,18 +301,18 @@ function getFromYoutube(steam_name) {
                 $("#gameplayYoutube0").html(y0);
                 $("#gameplayYoutube1").html(y1);
                 //sc("YouTube", response["videoGameplay"]);
-                sc("YouTube0", y0);
-                sc("YouTube1", y1);
+                sc("YouTube0", response["videoGameplay"][0].split("?v=")[1]);
+                sc("YouTube1", response["videoGameplay"][1].split("?v=")[1]);
                 //sc("dataYoutube", JSON.stringify(new Date()));
             },
             400: function () {
-                alert("Parametri errati per Youtube");
+                toastr.error("Parametri errati per Youtube");
             },
             404: function () {
-                alert("Impossibile recuperari dati da Youtube per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da Youtube per il gioco selezionato.");
             },
             500: function () {
-                console.log("Errore Youtube.");
+                toastr.error("Errore Youtube.");
             }
         }
     });
@@ -302,6 +323,7 @@ function getFromGreenman(steam_name) {
         url: "./controller.php?game=" + steam_name + "&source=greenman",
         statusCode: {
             200: function (response) {
+                return;
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
                 let price;
@@ -313,13 +335,13 @@ function getFromGreenman(steam_name) {
                 $("#cardPrezzi").html(str);
             },
             400: function () {
-                alert("Parametri errati per Greenman");
+                toastr.error("Parametri errati per Greenman");
             },
             404: function () {
-                alert("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                altoastr.errorert("Impossibile recuperari dati da Greenman per il gioco selezionato.");
             },
             500: function () {
-                console.log("Errore Greenman.");
+                toastr.error("Errore Greenman.");
             }
         }
     });
@@ -336,13 +358,13 @@ function getFromG2A(steam_name) {
                 $("#cardPrezzi").html(str);
             },
             400: function () {
-                alert("Parametri errati per Greenman");
+                toastr.error("Parametri errati per Greenman");
             },
             404: function () {
-                alert("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da Greenman per il gioco selezionato.");
             },
             500: function () {
-                console.log("Errore G2A.");
+                toastr.error("Errore G2A.");
             }
         }
     });
@@ -359,13 +381,13 @@ function getFromKinguin(steam_name) {
                 $("#cardPrezzi").html(str);
             },
             400: function () {
-                alert("Parametri errati per Greenman");
+                toastr.error("Parametri errati per Greenman");
             },
             404: function () {
-                alert("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da Greenman per il gioco selezionato.");
             },
             500: function () {
-                console.log("Errore Kinguin.");
+                toastr.error("Errore Kinguin.");
             }
         }
     });
@@ -381,3 +403,7 @@ $(document).on({
         $body.removeClass("loading");
     }
 });
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
