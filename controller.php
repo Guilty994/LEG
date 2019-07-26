@@ -11,7 +11,7 @@
 
     if(!isset($_GET["source"])){
         header($_SERVER['SERVER_PROTOCOL'] . 'Bisogna settare la fonte', true, 400);
-        return;
+        exit;
     }
 
     $toReturn = array();
@@ -20,7 +20,7 @@
         case "steam":
             if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $game = $_GET["game"];
             require "wrappers/wrapper_steam.php";
@@ -33,13 +33,13 @@
             }else{
                 // no steam_appId
                 header($_SERVER['SERVER_PROTOCOL'] . 'wrapper_steamcharts, steam_appId not set', true, 400);
-                return; 
+                exit; 
             }
             break;
         case "twitch":
             if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $steam_game_name = $_GET["game"];
             // Twitch
@@ -48,7 +48,7 @@
         case "youtube":
             if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $steam_game_name = $_GET["game"];
             // Youtube
@@ -57,7 +57,7 @@
         case "greenman":
             if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $steam_game_name = $_GET["game"];
             // GreenMan Gaming
@@ -67,7 +67,7 @@
         case "g2a":
             if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $steam_game_name = $_GET["game"];
             // G2A
@@ -76,7 +76,7 @@
         case "kinguin":
 			if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $steam_game_name = $_GET["game"];
             // // Kinguin
@@ -94,7 +94,7 @@
         case "sysreq":
             if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $steam_game_name = $_GET["game"];
             // Game System Requirements
