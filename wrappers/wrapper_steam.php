@@ -58,7 +58,7 @@
 
         $response = curl_exec($curl);
         if(curl_errno($curl)){
-            header("wrapper_steam, Scraper error: " . curl_error($curl), true, 400);
+            header("wrapper_steam, Scraper error: " . curl_error($curl), true, 500);
             // echo "<script>console.log( 'wrapper_steam ERROR' );</script>";
             // echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
             exit;
