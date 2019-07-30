@@ -97,11 +97,11 @@
             }
             $steam_game_name = $_GET["game"];
             // Game System Requirements
-            include "wrappers\wrapper_gamesystemrequirements.php";
+            include "wrappers/wrapper_gamesystemrequirements.php";
             break;
         case "topf":
             // Twitch top 5
-            include "wrappers\wrapper_twitch_topgames.php";
+            include "wrappers/wrapper_twitch_topgames.php";
             break;
     }
     header("Tappost", true, 200);

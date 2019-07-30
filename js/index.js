@@ -382,6 +382,7 @@ function testChart() {
 }
 
 function getSystemRequirement(steam_name){
+    if(steam_name == undefined) steam_name = global_name;
     $.ajax({
         url: "./controller.php?game=" + steam_name + "&source=sysreq",
         statusCode: {
