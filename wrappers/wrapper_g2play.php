@@ -47,6 +47,7 @@ if(isset($steam_game_name)){
 	}
 	
 	if($gameurl == NULL){
+			echo "gioco non trovato asjdahfahgaha";
 			// Gioco non trovato
 			header($_SERVER['SERVER_PROTOCOL'], true, 404);
 			exit;
