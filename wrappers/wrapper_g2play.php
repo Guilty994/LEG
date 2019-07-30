@@ -1,5 +1,4 @@
 <?php
-if(isset($steam_game_name)){
 	$gamesteam = $steam_game_name;
 	
 	$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS','PACK','PASS');
@@ -22,7 +21,7 @@ if(isset($steam_game_name)){
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);	
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        header("Qualcosa" . "wrapper_g2play, Scraper error: " . curl_error($curl), true, 500);
+        header("wrapper_g2play, Scraper error: " . curl_error($curl), true, 500);
 		exit;
     }
 	curl_close($curl);
@@ -48,22 +47,10 @@ if(isset($steam_game_name)){
 	
 	if($gameurl == NULL){
 			// Gioco non trovato
-			header("Qualcosa", true, 404);
+			header("Game not found", true, 404);
 			exit;
 		}else{
 			$toReturn['g2playGameURL'] = $gameurl;
 			$toReturn['g2playGamePrice'] = $gameprice;
 		}
-	
-
-	}else{
-		header("Qualcosa", true, 400);
-		exit;
-	}
-	
-		
-	
-	
-	
-	
 ?>

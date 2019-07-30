@@ -10,7 +10,7 @@
     return;*/
 
     if(!isset($_GET["source"])){
-        header("Qualcosa", true, 400);
+        header("Source not set", true, 400);
         exit;
     }
 
@@ -19,7 +19,7 @@
     switch($_GET["source"]){
         case "steam":
             if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $game = $_GET["game"];
@@ -32,13 +32,13 @@
                 include "wrappers/wrapper_steamcharts.php";
             }else{
                 // no steam_appId
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit; 
             }
             break;
         case "twitch":
             if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -47,7 +47,7 @@
             break;
         case "youtube":
             if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -56,17 +56,16 @@
             break;
         case "greenman":
             if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
             // GreenMan Gaming
             include "wrappers/wrapper_greenman.php";
-            $toReturn["Daniele"] = "TEST";
             break;
         case "g2a":
             if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -75,7 +74,7 @@
             break;
         case "kinguin":
 			if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -84,7 +83,7 @@
             break;
 		case "g2play":
 			if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -93,7 +92,7 @@
             break;
         case "sysreq":
             if(!isset($_GET["game"])){
-                header("Qualcosa", true, 400);
+                header("Game not set", true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -105,7 +104,7 @@
             include "wrappers\wrapper_twitch_topgames.php";
             break;
     }
-    header("Qualcosa", true, 200);
+    header("Tappost", true, 200);
     echo json_encode($toReturn);
     return;
 ?>
