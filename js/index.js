@@ -269,12 +269,13 @@ function getFromGreenman(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                let price;
+                //let price;
                 /*if (response.greenManPrice.includes('EUR'))
                     price = response.greenManPrice.replace('EUR', '');
                 else */
-                price = response.greenManPrice;
-                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.greenManGameURL + '"><img style="width:100%;padding-top:25%" src="./logoGreenManGaming.png"></img><br><p class="text-muted">' + price + '</p></a></div>';
+                //price = response.greenManPrice;
+                str += creaDivPrezzo("greenman", response.greenManGameURL, response.greenManPrice);
+                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.greenManGameURL + '"><img style="width:100%;padding-top:25%" src="./logoGreenManGaming.png"></img><br><p class="text-muted">' + price + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -297,7 +298,8 @@ function getFromG2A(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.G2AGameURL + '"><img style="width:100%;padding-top:30%" src="./logoG2A.jpg"></img><br><p class="text-muted">' + response.G2AGamePrice.replace('EUR', '') + '</p></a></div>';
+                str += creaDivPrezzo("g2a", response.G2AGameURL, response.G2AGamePrice.replace('EUR', ''));
+                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.G2AGameURL + '"><img style="width:100%;padding-top:30%" src="./logoG2A.jpg"></img><br><p class="text-muted">' + response.G2AGamePrice.replace('EUR', '') + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -320,7 +322,8 @@ function getFromKinguin(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.kinguinGameURL + '"><img style="width:100%" src="./logoKinguin.jpg"></img><br><p class="text-muted">' + response.kinguinGamePrice + '</p></a></div>';
+                str += creaDivPrezzo("kinguin", response.kinguinGameURL, response.kinguinGamePrice);
+                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.kinguinGameURL + '"><img style="width:100%" src="./logoKinguin.jpg"></img><br><p class="text-muted">' + response.kinguinGamePrice + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -343,7 +346,8 @@ function getFromG2play(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.g2playGameURL + '"><img style="width:100%;padding-top:20%" src="./logoG2play.png"></img><br><p class="text-muted">' + response.g2playGamePrice + '</p></a></div>';
+                str += creaDivPrezzo("g2play", response.g2playGameURL, response.g2playGamePrice);
+                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.g2playGameURL + '"><img style="width:100%;padding-top:20%" src="./logoG2play.png"></img><br><p class="text-muted">' + response.g2playGamePrice + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -357,6 +361,10 @@ function getFromG2play(steam_name) {
             }
         }
     });
+}
+
+function creaDivPrezzo(nome, url, prezzo){
+    return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '</p></a></div>';
 }
 
 $body = $("body");
