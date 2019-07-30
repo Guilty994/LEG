@@ -32,5 +32,11 @@
             }
     }
 
-    $toReturn['videoGameplay'] = $youtube_video_gameplay;
+    if(isset($youtube_video_gameplay))
+        $toReturn['videoGameplay'] = $youtube_video_gameplay;
+    else{
+        header("Video not found", true, 404);
+        exit;
+    }
+
 ?>

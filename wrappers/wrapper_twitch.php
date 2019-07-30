@@ -42,7 +42,7 @@
     curl_setopt($curl, CURLOPT_HTTPHEADER, $curlHeader);
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        header("wrapper_twitch, Scraper error: " . curl_error($curl), true, 400);
+        header("wrapper_twitch, Scraper error: " . curl_error($curl), true, 500);
         // echo "<script>console.log( 'wrapper_twitch ERROR' );</script>";
         // echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
         exit;
@@ -77,7 +77,7 @@
         curl_setopt($curl, CURLOPT_HTTPHEADER, $curlHeader);
         $response = curl_exec($curl);
         if(curl_errno($curl)){
-            header("wrapper_twitch, Scraper error: " . curl_error($curl), true, 400);
+            header("wrapper_twitch, Scraper error: " . curl_error($curl), true, 500);
             // echo "<script>console.log( 'wrapper_twitch ERROR' );</script>";
             // echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
             exit;
@@ -94,5 +94,6 @@
         }
     }
 
-    $toReturn['twitchViewers'] = $viewers; 
+    $toReturn['twitchViewers'] = $viewers;
+    
 ?>
