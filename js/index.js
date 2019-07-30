@@ -364,7 +364,7 @@ function getFromG2play(steam_name) {
 }
 
 function creaDivPrezzo(nome, url, prezzo){
-    return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '</p></a></div>';
+    return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" height="42" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '</p></a></div>';
 }
 
 $body = $("body");
