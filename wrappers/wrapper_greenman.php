@@ -1,6 +1,4 @@
-<?php
-	if(isset($steam_game_name)){
-		
+<?php		
 		$gamesteam = $steam_game_name;
 		$gamesteam = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
 		
@@ -13,7 +11,7 @@
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			header("Qualcosa" . "wrapper_greenman, Scraper error: " . curl_error($curl), true, 500);
+			header("wrapper_greenman, Scraper error: " . curl_error($curl), true, 500);
 			exit;
 		}
 		curl_close($curl);
@@ -43,16 +41,12 @@
 		}
 		
 		if($gameurl == NULL){
-			header("Qualcosa" . "", true, 404);
+			header("Game not found", true, 404);
 			exit;
 		}else{
 			$toReturn['greenManGameURL'] = $gameurl;
 			$toReturn['greenManPrice'] = $gameprice;
 		}
-	}else{
-		header("Qualcosa" . "", true, 400);
-		exit;
-	}
 	
 ?>
 
