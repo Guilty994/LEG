@@ -79,7 +79,7 @@
                 exit;
             }
             $steam_game_name = $_GET["game"];
-            // // Kinguin
+            // Kinguin
             include "wrappers/wrapper_kinguin.php";
             break;
 		case "g2play":
@@ -88,9 +88,9 @@
                 exit;
             }
             $steam_game_name = $_GET["game"];
-            // // // G2Play
+            // G2Play
             include "wrappers/wrapper_g2play.php";
-            if(!isset($toReturn['g2playGameURL'] && $toReturn['g2playGamePrice'])){
+            if($gameurl == NULL){
                 exit;
             }
             break;
