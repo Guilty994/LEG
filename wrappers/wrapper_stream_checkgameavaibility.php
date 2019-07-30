@@ -1,4 +1,5 @@
 <?php
+// NOT USED
     $curl = curl_init("https://store.steampowered.com/search/?term=".$twitchGame."&category1=998");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         

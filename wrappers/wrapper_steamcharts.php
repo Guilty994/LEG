@@ -28,7 +28,7 @@
             if(isset($td->innertext)){
                 $toReturn["peak"] = $td->innertext;
             }else{
-                $toReturn["peak"] = "";
+                header("Game not found", true, 404);
             }
         }
     }
