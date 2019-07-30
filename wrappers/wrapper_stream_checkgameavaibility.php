@@ -6,6 +6,7 @@
         $response = curl_exec($curl);
         if(curl_errno($curl)){
             header("wrapper_steam, Scraper error: " . curl_error($curl), true, 500);
+            exit;
         }
         curl_close($curl);
 

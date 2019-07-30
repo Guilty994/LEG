@@ -80,6 +80,7 @@
         }
     }else{
         header("wrapper_gamesystemrequirements, link not set", true, 404);
+        exit;
     }  
 
 ?>

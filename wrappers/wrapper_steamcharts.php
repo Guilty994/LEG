@@ -29,6 +29,7 @@
                 $toReturn["peak"] = $td->innertext;
             }else{
                 header("Game not found", true, 404);
+                exit;
             }
         }
     }
