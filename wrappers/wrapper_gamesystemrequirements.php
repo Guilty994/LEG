@@ -59,17 +59,17 @@
                                         $plain_text = substr($plain_text, 0, strpos($plain_text, "https"));
                                     }
                                     if($colCounter == 0){
-                                        $index =  'min' . preg_replace("/[^a-zA-Z0-9\s\,]/", "", $plain_text);
+                                        $index = preg_replace("/[^a-zA-Z0-9\s\,]/", "", $plain_text);
                                         $colCounter++;
                                     }else if($colCounter == 1){
-                                        $toReturn['sysReq'][$index] = $plain_text;
+                                        $toReturn['sysReq']['min'][$index] = $plain_text;
                                         $colCounter++;
                                     }else if($colCounter == 2){
-                                        $index =  'rec' . preg_replace("/[^a-zA-Z0-9\s\,]/", "", $plain_text);
+                                        $index = preg_replace("/[^a-zA-Z0-9\s\,]/", "", $plain_text);
                                         $colCounter++;
                                     }
                                     else{
-                                       $toReturn['sysReq'][$index] = $plain_text;
+                                        $toReturn['sysReq']['rec'][$index] = $plain_text;
                                     }
                                 }
                             }
@@ -81,5 +81,5 @@
     }else{
         header("wrapper_gamesystemrequirements, link not set", true, 404);
     }  
-    
+
 ?>

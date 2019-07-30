@@ -278,16 +278,7 @@
         
         // echo "<b>Game image: </b>".$steam_image." <br>"; 
     }else{
-        $toReturn["appId"] = "";
-        $toReturn["gameName"] = "";
-        $toReturn["gameDescription"] = "";
-        $toReturn["gameGenere"] = "";
-        $toReturn["gameDeveloper"] = "";
-        $toReturn["gamePublisher"] = "";
-        $toReturn["gameScreenshot"] = "";
-        $toReturn["gameRelease"] = "";
-        $toReturn["gameTrend"] = "";
-        $toReturn["gameMetacritic"] = "";
-        $toReturn["gameImage"] = "";
+        header("Game not found", true, 404);
+        exit;
     }
 ?>
