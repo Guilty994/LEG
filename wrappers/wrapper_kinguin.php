@@ -1,5 +1,4 @@
 <?php
-	if(isset($steam_game_name)){
 		$gamesteam = $steam_game_name;
 	
 		$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS','PACK','PASS');
@@ -23,7 +22,7 @@
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			header("Qualcosa" . "wrapper_kinguin, Scraper error: " . curl_error($curl), true, 500);
+			header("wrapper_kinguin, Scraper error: " . curl_error($curl), true, 500);
 			exit;
 		}
 		curl_close($curl);
@@ -50,16 +49,10 @@
 		
 			
 		if($gameurl == NULL){
-			header("Qualcosa" . "", true, 404);
+			header("Game not found", true, 404);
 			exit;
 		}else{
 			$toReturn['kinguinGameURL'] = $gameurl;
 			$toReturn['kinguinGamePrice'] = $gameprice;
 		}
-	
-
-	}else{
-		header("Qualcosa" . "", true, 400);
-		exit;
-	}
 ?>

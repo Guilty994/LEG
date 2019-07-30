@@ -1,8 +1,5 @@
 <?php
 	
-	
-	
-	if(isset($steam_game_name)){
 		$gamesteam = $steam_game_name;
 		
 		$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
@@ -30,7 +27,7 @@
 		
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			header("Qualcosa" . "wrapper_g2a, Scraper error: " . curl_error($curl), true, 500);
+			header("wrapper_g2a, Scraper error: " . curl_error($curl), true, 500);
 			exit;
 		}
 		curl_close($curl);
@@ -60,18 +57,12 @@
 				break;
 		}
 		if($gameURL == NULL){
-			header("Qualcosa" . "wrapper_g2a, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+			header("Game not found", true, 404);
 			exit;
 		}else {
 			$toReturn['G2AGameURL'] = "https://www.g2a.com".$gameURL;
 			$toReturn['G2AGamePrice'] = $gamePrice;
 		}
-		
-	}else{
-			header("Qualcosa" . "wrapper_g2a, steam non definito: " . curl_error($curl), true, 400);
-			exit;
-	
-	}
 	
 		
 ?>
