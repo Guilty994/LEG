@@ -2,9 +2,9 @@ var global_name;
 var global_appId;
 var recenti = localStorage.recenti;
 
-if(recenti == undefined){
+if (recenti == undefined) {
     $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
-}else{
+} else {
     recenti = JSON.parse(recenti);
     caricaRecenti(recenti);
 }
@@ -60,19 +60,19 @@ function cerca() {
                 getFromGreenman(global_name);
                 getFromG2A(global_name);
                 getFromKinguin(global_name);
-				getFromG2play(global_name);
+                getFromG2play(global_name);
                 stampaDatiSteam(dati);
 
-                if(recenti == undefined){
+                if (recenti == undefined) {
                     recenti = new Array();
                 }
                 let g = {};
                 g.appId = global_appId;
                 g.datiSteam = dati;
 
-                if(recenti.length != 0){
-                    for(i in recenti){
-                        if(recenti[i].appId == global_appId){
+                if (recenti.length != 0) {
+                    for (i in recenti) {
+                        if (recenti[i].appId == global_appId) {
                             recenti[i] = g;
                             localStorage.setItem("recenti", JSON.stringify(recenti));
                             return;
@@ -102,7 +102,7 @@ function cerca() {
     });
 }
 
-function stampaDatiYoutube(dati){
+function stampaDatiYoutube(dati) {
     let y0, y1;
     y0 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + dati["videoGameplay"][0].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
     y1 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + dati["videoGameplay"][1].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
@@ -120,7 +120,7 @@ function recupera(index) {
 
     // Visualizzo le informazioni che già ho
     stampaDatiSteam(gioco.datiSteam);
-    
+
     // Recupero le altre informazioni
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
@@ -128,7 +128,7 @@ function recupera(index) {
     getFromGreenman(global_name);
     getFromG2A(global_name);
     getFromKinguin(global_name);
-	getFromG2play(global_name);
+    getFromG2play(global_name);
 
     $("#risultatiRicerca").show(500);
 }
@@ -159,22 +159,22 @@ function stampaDatiSteam(dati) {
 
     // Immagine di copertina
     $("#copertina").attr("src", dati.gameImage);
-    
+
     // Genere
     $("#labelGenere").text(dati.gameGenere.join(', '));
-    
+
     // Sviluppatori
     $("#labelSviluppatori").text(dati.gameDeveloper);
-    
+
     // Publicatori
     $("#labelPublicatori").text(dati.gamePublisher.join(', '));
-    
+
     // Data rilascio
     $("#labelReleaseDate").text(dati.gameRelease);
-    
+
     // Descrizione
     $("#gameDescription").text(dati.gameDescription);
-    
+
     // Trend
     // Forse è meglio con dei grafici
     let str = "";
@@ -185,7 +185,7 @@ function stampaDatiSteam(dati) {
     if (dati.gameMetacritic.length > 0)
         str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
     $("#gameTrend").html(str);
-    
+
     if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0) {
         $("#cardTrend").hide(0);
     }
@@ -193,7 +193,7 @@ function stampaDatiSteam(dati) {
     // ScreenShots
     str = creaSlideshow(dati.gameScreenshot);
     $("#rowSlideshow").html(str);
-    
+
     // Fine dati Steam
     $("#risultatiRicerca").show(500);
 }
@@ -363,8 +363,57 @@ function getFromG2play(steam_name) {
     });
 }
 
-function creaDivPrezzo(nome, url, prezzo){
+function creaDivPrezzo(nome, url, prezzo) {
     return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '</p></a></div>';
+}
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function testChart() {
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                label: '# of Votes',
+                data: [80],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+
+        }
+    });
+
+}
+
+function getSystemRequirement(steam_name){
+    $.ajax({
+        url: "./controller.php?game=" + steam_name + "&source=sysreq",
+        statusCode: {
+            200: function (response) {
+                response = JSON.parse(response);
+                console.log(response);
+            },
+            400: function () {
+                toastr.error("Parametri errati per G2play");
+            },
+            404: function () {
+                toastr.error("Impossibile recuperari dati da G2play per il gioco selezionato.");
+            },
+            500: function () {
+                toastr.error("Errore G2play.");
+            }
+        }
+    });
 }
 
 $body = $("body");
@@ -377,7 +426,3 @@ $(document).on({
         $body.removeClass("loading");
     }
 });
-
-function replaceAll(str, find, replace) {
-    return str.replace(new RegExp(find, 'g'), replace);
-}
