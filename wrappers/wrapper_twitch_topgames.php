@@ -13,7 +13,7 @@
         curl_setopt($curl, CURLOPT_HTTPHEADER, $curlHeader);
         $response = curl_exec($curl);
         if(curl_errno($curl)){
-            header("Qualcosa" . "wrapper_twitch, Scraper error: " . curl_error($curl), true, 400);
+            header("wrapper_twitch, Scraper error: " . curl_error($curl), true, 500);
             exit;
         }
         curl_close($curl);
