@@ -47,7 +47,8 @@ if(isset($steam_game_name)){
 	}
 	
 	if($gameurl == NULL){
-			header($_SERVER['SERVER_PROTOCOL'] . "", true, 404);
+			// Gioco non trovato
+			header($_SERVER['SERVER_PROTOCOL'], true, 404);
 			exit;
 		}else{
 			$toReturn['g2playGameURL'] = $gameurl;
@@ -56,7 +57,7 @@ if(isset($steam_game_name)){
 	
 
 	}else{
-		header($_SERVER['SERVER_PROTOCOL'] . "", true, 400);
+		header($_SERVER['SERVER_PROTOCOL'], true, 400);
 		exit;
 	}
 	
