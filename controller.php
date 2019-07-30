@@ -85,7 +85,7 @@
 		case "g2play":
 			if(!isset($_GET["game"])){
                 header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
-                return;
+                exit;
             }
             $steam_game_name = $_GET["game"];
             // // // G2Play
