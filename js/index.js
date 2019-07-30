@@ -373,10 +373,18 @@ function replaceAll(str, find, replace) {
 
 function testChart() {
     var ctx = document.getElementById('myChart').getContext('2d');
+    let data = {
+        datasets: [{
+            data: [80,20]
+        }],
+        backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)'
+        ]
+    };
     var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
-        data: data,
-        options: options
+        data: data
     });
 
 }
@@ -389,6 +397,7 @@ function getSystemRequirement(steam_name){
             200: function (response) {
                 response = JSON.parse(response);
                 console.log(response);
+                // Dovrei stampare con la tabella
             },
             400: function () {
                 toastr.error("Parametri errati per G2play");
