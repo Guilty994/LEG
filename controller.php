@@ -90,9 +90,7 @@
             $steam_game_name = $_GET["game"];
             // G2Play
             include "wrappers/wrapper_g2play.php";
-            if($gameurl == NULL){
-                exit;
-            }
+            echo "gicoo pipppoooasfdoasifa";
             break;
         case "sysreq":
             if(!isset($_GET["game"])){
