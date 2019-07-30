@@ -371,26 +371,8 @@ function replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
 }
 
-function testChart() {
-    var ctx = document.getElementById('myChart').getContext('2d');
-    let data = {
-        datasets: [{
-            data: [80,20]
-        }],
-        backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)'
-        ]
-    };
-    var myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: data
-    });
-
-}
-
-function getSystemRequirement(steam_name){
-    if(steam_name == undefined) steam_name = global_name;
+function getSystemRequirement(steam_name) {
+    if (steam_name == undefined) steam_name = global_name;
     $.ajax({
         url: "./controller.php?game=" + steam_name + "&source=sysreq",
         statusCode: {

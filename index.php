@@ -20,15 +20,11 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <!-- CSS della pagina -->
   <link rel="stylesheet" href="./index.css">
-  <!-- CSS charts -->
-  <link rel="stylesheet" href="./Chart.css">
 
   <!-- Import JQUERY -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- import Bootstrap -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-  <!-- js charts -->
-  <script src="./js/Chart.js"></script>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -98,19 +94,6 @@
                   <b>Release date</b> <a class="float-right" id="labelReleaseDate"></a>
                 </li>
               </ul>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-
-          <!-- About Me Box -->
-          <div class="card card-primary" id="cardCharts">
-            <div class="card-header">
-              <h3 class="card-title">Charts</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-            <canvas id="myChart" width="400" height="400"></canvas>
             </div>
             <!-- /.card-body -->
           </div>
