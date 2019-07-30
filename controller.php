@@ -10,7 +10,7 @@
     return;*/
 
     if(!isset($_GET["source"])){
-        header($_SERVER['SERVER_PROTOCOL'] . 'Bisogna settare la fonte', true, 400);
+        header($_SERVER['SERVER_PROTOCOL'], true, 400);
         exit;
     }
 
@@ -19,7 +19,7 @@
     switch($_GET["source"]){
         case "steam":
             if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $game = $_GET["game"];
@@ -32,13 +32,13 @@
                 include "wrappers/wrapper_steamcharts.php";
             }else{
                 // no steam_appId
-                header($_SERVER['SERVER_PROTOCOL'] . 'wrapper_steamcharts, steam_appId not set', true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit; 
             }
             break;
         case "twitch":
             if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -47,7 +47,7 @@
             break;
         case "youtube":
             if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -56,7 +56,7 @@
             break;
         case "greenman":
             if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -66,7 +66,7 @@
             break;
         case "g2a":
             if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -75,7 +75,7 @@
             break;
         case "kinguin":
 			if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -84,16 +84,19 @@
             break;
 		case "g2play":
 			if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
             // // // G2Play
             include "wrappers/wrapper_g2play.php";
+            if(!isset($toReturn['g2playGameURL'] && $toReturn['g2playGamePrice'])){
+                exit;
+            }
             break;
         case "sysreq":
             if(!isset($_GET["game"])){
-                header($_SERVER['SERVER_PROTOCOL'] . "Bisogna settare il game", true, 400);
+                header($_SERVER['SERVER_PROTOCOL'], true, 400);
                 exit;
             }
             $steam_game_name = $_GET["game"];
@@ -105,7 +108,7 @@
             include "wrappers\wrapper_twitch_topgames.php";
             break;
     }
-    header($_SERVER['SERVER_PROTOCOL'] . "", true, 200);
+    header($_SERVER['SERVER_PROTOCOL'], true, 200);
     echo json_encode($toReturn);
     return;
 ?>
