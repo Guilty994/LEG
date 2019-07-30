@@ -4,7 +4,7 @@
         
         $response = curl_exec($curl);
         if(curl_errno($curl)){
-            header($_SERVER['SERVER_PROTOCOL'] . "wrapper_steam, Scraper error: " . curl_error($curl), true, 400);
+            header("Qualcosa" . "wrapper_steam, Scraper error: " . curl_error($curl), true, 400);
         }
         curl_close($curl);
 

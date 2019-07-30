@@ -22,7 +22,7 @@ if(isset($steam_game_name)){
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);	
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2play, Scraper error: " . curl_error($curl), true, 500);
+        header("Qualcosa" . "wrapper_g2play, Scraper error: " . curl_error($curl), true, 500);
 		exit;
     }
 	curl_close($curl);
@@ -48,7 +48,7 @@ if(isset($steam_game_name)){
 	
 	if($gameurl == NULL){
 			// Gioco non trovato
-			header($_SERVER['SERVER_PROTOCOL'], true, 404);
+			header("Qualcosa", true, 404);
 			exit;
 		}else{
 			$toReturn['g2playGameURL'] = $gameurl;
@@ -57,7 +57,7 @@ if(isset($steam_game_name)){
 	
 
 	}else{
-		header($_SERVER['SERVER_PROTOCOL'], true, 400);
+		header("Qualcosa", true, 400);
 		exit;
 	}
 	

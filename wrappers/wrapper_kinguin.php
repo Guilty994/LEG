@@ -23,7 +23,7 @@
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_kinguin, Scraper error: " . curl_error($curl), true, 500);
+			header("Qualcosa" . "wrapper_kinguin, Scraper error: " . curl_error($curl), true, 500);
 			exit;
 		}
 		curl_close($curl);
@@ -50,7 +50,7 @@
 		
 			
 		if($gameurl == NULL){
-			header($_SERVER['SERVER_PROTOCOL'] . "", true, 404);
+			header("Qualcosa" . "", true, 404);
 			exit;
 		}else{
 			$toReturn['kinguinGameURL'] = $gameurl;
@@ -59,7 +59,7 @@
 	
 
 	}else{
-		header($_SERVER['SERVER_PROTOCOL'] . "", true, 400);
+		header("Qualcosa" . "", true, 400);
 		exit;
 	}
 ?>

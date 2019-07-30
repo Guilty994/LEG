@@ -5,7 +5,7 @@
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        header($_SERVER['SERVER_PROTOCOL'] . "wrapper_youtube, Scraper error: " . curl_error($curl), true, 400);
+        header("Qualcosa" . "wrapper_youtube, Scraper error: " . curl_error($curl), true, 400);
         // echo "<script>console.log( 'wrapper_youtube ERROR' );</script>";
         // echo "<script>console.log( 'Scraper error: " . curl_error($curl) . "' );</script>";
         exit;

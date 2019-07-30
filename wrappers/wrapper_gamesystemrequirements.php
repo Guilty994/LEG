@@ -5,7 +5,7 @@
     
     $response = curl_exec($curl);
     if(curl_errno($curl)){
-        header($_SERVER['SERVER_PROTOCOL'] . "wrapper_gamesystemrequirements, Scraper error: " . curl_error($curl), true, 400);
+        header("Qualcosa" . "wrapper_gamesystemrequirements, Scraper error: " . curl_error($curl), true, 400);
         exit;
     }
     curl_close($curl);
@@ -35,7 +35,7 @@
         
         $response = curl_exec($curl);
         if(curl_errno($curl)){
-            header($_SERVER['SERVER_PROTOCOL'] . "wrapper_gamesystemrequirements, Scraper error: " . curl_error($curl), true, 400);
+            header("Qualcosa" . "wrapper_gamesystemrequirements, Scraper error: " . curl_error($curl), true, 400);
             exit;
         }
         curl_close($curl);
@@ -79,6 +79,6 @@
             }
         }
     }else{
-        header($_SERVER['SERVER_PROTOCOL'] . "wrapper_gamesystemrequirements, link not set", true, 400);
+        header("Qualcosa" . "wrapper_gamesystemrequirements, link not set", true, 400);
     }  
 ?>

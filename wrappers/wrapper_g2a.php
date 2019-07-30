@@ -30,7 +30,7 @@
 		
 		$response = curl_exec($curl);
 		if(curl_errno($curl)){
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, Scraper error: " . curl_error($curl), true, 500);
+			header("Qualcosa" . "wrapper_g2a, Scraper error: " . curl_error($curl), true, 500);
 			exit;
 		}
 		curl_close($curl);
@@ -60,7 +60,7 @@
 				break;
 		}
 		if($gameURL == NULL){
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
+			header("Qualcosa" . "wrapper_g2a, gioco non disponibile in catalogo: " . curl_error($curl), true, 404);
 			exit;
 		}else {
 			$toReturn['G2AGameURL'] = "https://www.g2a.com".$gameURL;
@@ -68,7 +68,7 @@
 		}
 		
 	}else{
-			header($_SERVER['SERVER_PROTOCOL'] . "wrapper_g2a, steam non definito: " . curl_error($curl), true, 400);
+			header("Qualcosa" . "wrapper_g2a, steam non definito: " . curl_error($curl), true, 400);
 			exit;
 	
 	}

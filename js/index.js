@@ -282,7 +282,7 @@ function getFromGreenman(steam_name) {
                 toastr.error("Parametri errati per Greenman");
             },
             404: function () {
-                altoastr.errorert("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da Greenman per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Greenman.");
