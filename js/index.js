@@ -1,22 +1,12 @@
 var global_name;
 var global_appId;
+var recenti = localStorage.recenti;
 
-/*var recenti = new Array();
-recenti[0] = {};
-recenti[0].nome = "Sekiro";
-recenti[0].copertina = "url";
-
-$.cookie('recenti', JSON.stringify(recenti));
-console.log(JSON.parse($.cookie('recenti')));*/
-
-if ($.cookie('recenti') != undefined) {
-    // Ci sono ricerce recenti
-    recenti = $.cookie('recenti');
+if(recenti == undefined){
+    $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
+}else{
     recenti = JSON.parse(recenti);
     caricaRecenti(recenti);
-} else {
-    $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
-    recenti = new Array();
 }
 
 function stampaRecenti() {
@@ -26,12 +16,12 @@ function stampaRecenti() {
 }
 
 function caricaRecenti(recenti) {
-    console.log(recenti);
     str = '<div class="col-md-12">';
     for (r in recenti) {
         if (recenti[r] == undefined) continue;
+        let gioco = recenti[r];
         str += '<div class="col-md-4" onclick="recupera(' + r + ')">';
-        str += '<img class="img-responsive" src="' + recenti[r].copertina + '" alt="Immagine di copertina"><br><h3 class="profile-username text-center">' + recenti[r].nome + '</h3>';
+        str += '<img class="img-responsive" src="' + gioco.datiSteam.gameImage + '" alt="Immagine di copertina"><br><h3 class="profile-username text-center">' + gioco.datiSteam.gameName + '</h3>';
         str += '</div>';
     }
     str += '</div>';
@@ -64,7 +54,6 @@ function cerca() {
                 global_name = dati.gameName;
 
                 $("#cardPrezzi").html("");
-
                 getFromYoutube(global_name);
                 getFromSteamCharts(global_appId);
                 getFromTwitch(global_name);
@@ -73,8 +62,24 @@ function cerca() {
                 getFromKinguin(global_name);
                 stampaDatiSteam(dati);
 
-                //$.cookie('recenti', JSON.stringify(recenti));
-                salvaCookie();
+                if(recenti == undefined){
+                    recenti = new Array();
+                }
+                let g = {};
+                g.appId = global_appId;
+                g.datiSteam = dati;
+
+                if(recenti.length != 0){
+                    for(i in recenti){
+                        if(recenti[i].appId == global_appId){
+                            recenti[i] = g;
+                            localStorage.setItem("recenti", JSON.stringify(recenti));
+                            return;
+                        }
+                    }
+                }
+                recenti.push(g);
+                localStorage.setItem("recenti", JSON.stringify(recenti));
                 return;
             },
             404: function () {
@@ -96,40 +101,29 @@ function cerca() {
     });
 }
 
-function recupera(appId) {
+function stampaDatiYoutube(dati){
+    let y0, y1;
+    y0 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + dati["videoGameplay"][0].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    y1 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + dati["videoGameplay"][1].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    $("#gameplayYoutube0").html(y0);
+    $("#gameplayYoutube1").html(y1);
+}
+
+function recupera(index) {
 
     $("#ricercheRecenti").hide(500);
 
-    global_appId = appId;
-    global_name = recenti[appId].nome;
-
-    let gioco = recenti[appId];
+    let gioco = recenti[index];
+    global_appId = gioco.appId;
+    global_name = gioco.datiSteam.gameName;
 
     // Visualizzo le informazioni che già ho
-    $("#labelNomeGioco").text(global_name);
-    $("#copertina").attr("src", gioco.copertina);
-    $("#labelGenere").text(gioco.genere);
-    $("#labelSviluppatori").text(gioco.sviluppatori);
-    $("#labelPublicatori").text(gioco.publicatori);
-    $("#labelReleaseDate").text(gioco.releaseDate);
-    $("#gameDescription").text(gioco.description);
-    $("#gameTrend").html(gioco.gameTrend);
-    if (gioco.gameTrend == undefined || gioco.gameTrend.length == 0) {
-        $("#cardTrend").hide(0);
-    } else {
-        $("#cardTrend").show(0);
-    }
-
-    $("#rowSlideshow").html(creaSlideshow(JSON.parse(gioco.slideshow)));
-
-    let y0, y1;
-    y0 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + gioco.YouTube0 + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-    y1 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + gioco.YouTube1 + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-    $("#gameplayYoutube0").html(y0);
-    $("#gameplayYoutube1").html(y1);
-
+    stampaDatiSteam(gioco.datiSteam);
+    
+    // Recupero le altre informazioni
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
+    getFromYoutube(global_name);
     //getFromGreenman(global_name);
     getFromG2A(global_name);
     getFromKinguin(global_name);
@@ -154,72 +148,31 @@ function creaSlideshow(immagini) {
     return str;
 }
 
-function sc(chiave, valore) {
-    if (recenti == undefined) {
-        recenti = new Array();
-    }
-    if (recenti[global_appId] == undefined)
-        recenti[global_appId] = {};
-
-    recenti[global_appId][chiave] = valore;
-    salvaCookie();
-}
-
-function salvaCookie() {
-    //document.cookie = "username=Mannaggia" + recenti;
-    if (recenti == undefined || recenti.length == 0) return;
-    //document.cookie = "recenti=" + JSON.stringify(recenti);
-    //console.log(document.cookie);
-
-    /*let tmpRecenti = {};
-    for (r in recenti) {
-        tmpRecenti[r] = recenti[r];
-    }*/
-
-    let k = JSON.stringify(recenti);
-    console.log("Salvo nei cookie: " + k);
-    $.cookie('recenti', k);
-
-    //$.cookie('recenti', JSON.stringify(recenti));
-    //console.log(JSON.parse($.cookie("recenti")));
-    k = $.cookie('recenti');
-    console.log("Ho letto dai cookie: " + k);
-    k = JSON.parse(k);
-    console.log(k);
-}
-
 function stampaDatiSteam(dati) {
 
     //console.log(dati);
 
     // Nome gioco
     $("#labelNomeGioco").text(dati.gameName);
-    sc("nome", dati.gameName);
 
     // Immagine di copertina
     $("#copertina").attr("src", dati.gameImage);
-    sc("copertina", dati.gameImage);
-
+    
     // Genere
     $("#labelGenere").text(dati.gameGenere.join(', '));
-    sc("genere", dati.gameGenere.join(', '));
-
+    
     // Sviluppatori
     $("#labelSviluppatori").text(dati.gameDeveloper);
-    sc("sviluppatori", dati.gameDeveloper);
-
+    
     // Publicatori
     $("#labelPublicatori").text(dati.gamePublisher.join(', '));
-    sc("publicatori", dati.gamePublisher.join(', '));
-
+    
     // Data rilascio
     $("#labelReleaseDate").text(dati.gameRelease);
-    sc("releaseDate", dati.gameRelease);
-
+    
     // Descrizione
     $("#gameDescription").text(dati.gameDescription);
-    sc("description", dati.gameDescription);
-
+    
     // Trend
     // Forse è meglio con dei grafici
     let str = "";
@@ -230,18 +183,15 @@ function stampaDatiSteam(dati) {
     if (dati.gameMetacritic.length > 0)
         str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
     $("#gameTrend").html(str);
-    sc("gameTrend", JSON.stringify(dati.gameMetacritic));
-
+    
     if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0) {
         $("#cardTrend").hide(0);
-        sc("gameTrend", "");
     }
 
     // ScreenShots
     str = creaSlideshow(dati.gameScreenshot);
     $("#rowSlideshow").html(str);
-    sc("slideshow", JSON.stringify(dati.gameScreenshot));
-
+    
     // Fine dati Steam
     $("#risultatiRicerca").show(500);
 }
@@ -295,15 +245,7 @@ function getFromYoutube(steam_name) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                let y0, y1;
-                y0 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][0].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                y1 = '<iframe width="560" height="315" src="https://www.youtube.com/embed/' + response["videoGameplay"][1].split("?v=")[1] + '" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
-                $("#gameplayYoutube0").html(y0);
-                $("#gameplayYoutube1").html(y1);
-                //sc("YouTube", response["videoGameplay"]);
-                sc("YouTube0", response["videoGameplay"][0].split("?v=")[1]);
-                sc("YouTube1", response["videoGameplay"][1].split("?v=")[1]);
-                //sc("dataYoutube", JSON.stringify(new Date()));
+                stampaDatiYoutube(response);
             },
             400: function () {
                 toastr.error("Parametri errati per Youtube");
