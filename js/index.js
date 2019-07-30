@@ -373,24 +373,10 @@ function replaceAll(str, find, replace) {
 
 function testChart() {
     var ctx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    var myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
-        data: {
-            datasets: [{
-                label: '# of Votes',
-                data: [80],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-
-        }
+        data: data,
+        options: options
     });
 
 }
