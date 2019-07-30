@@ -60,6 +60,7 @@ function cerca() {
                 getFromGreenman(global_name);
                 getFromG2A(global_name);
                 getFromKinguin(global_name);
+				getFromG2play(global_name);
                 stampaDatiSteam(dati);
 
                 if(recenti == undefined){
@@ -124,9 +125,10 @@ function recupera(index) {
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
     getFromYoutube(global_name);
-    //getFromGreenman(global_name);
+    getFromGreenman(global_name);
     getFromG2A(global_name);
     getFromKinguin(global_name);
+	getFromG2play(global_name);
 
     $("#risultatiRicerca").show(500);
 }
@@ -265,7 +267,6 @@ function getFromGreenman(steam_name) {
         url: "./controller.php?game=" + steam_name + "&source=greenman",
         statusCode: {
             200: function (response) {
-                return;
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
                 let price;
@@ -300,10 +301,10 @@ function getFromG2A(steam_name) {
                 $("#cardPrezzi").html(str);
             },
             400: function () {
-                toastr.error("Parametri errati per Greenman");
+                toastr.error("Parametri errati per G2A");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da G2A per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore G2A.");
@@ -323,13 +324,36 @@ function getFromKinguin(steam_name) {
                 $("#cardPrezzi").html(str);
             },
             400: function () {
-                toastr.error("Parametri errati per Greenman");
+                toastr.error("Parametri errati per Kinguin");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                toastr.error("Impossibile recuperari dati da Kinguin per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Kinguin.");
+            }
+        }
+    });
+}
+
+function getFromG2play(steam_name) {
+    $.ajax({
+        url: "./controller.php?game=" + steam_name + "&source=g2play",
+        statusCode: {
+            200: function (response) {
+                response = JSON.parse(response);
+                str = $("#cardPrezzi").html();
+                str += '<div class="col-md-4" style="text-align:center"><a href="' + response.g2playGameURL + '"><img style="width:100%;padding-top:20%" src="./logoG2play.png"></img><br><p class="text-muted">' + response.g2playGamePrice + '</p></a></div>';
+                $("#cardPrezzi").html(str);
+            },
+            400: function () {
+                toastr.error("Parametri errati per G2play");
+            },
+            404: function () {
+                toastr.error("Impossibile recuperari dati da G2play per il gioco selezionato.");
+            },
+            500: function () {
+                toastr.error("Errore G2play.");
             }
         }
     });
