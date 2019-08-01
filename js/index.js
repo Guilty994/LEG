@@ -84,7 +84,7 @@ function cerca() {
                 return;
             },
             404: function () {
-                toastr.error("Impossibile trovate il gioco desiderato.");
+                toastr.error("Steam non possiede il gioco desiderato.");
                 return;
             },
             400: function () {
@@ -185,21 +185,21 @@ function stampaDatiSteam(dati) {
     $("#divChartPositiveReviewsLastMonth").hide(0);
     for (let index = 0; index < dati.gameTrend.length; index++) {
         percentuale = dati.gameTrend[index].split('- ')[1].split('%')[0];
-        if(dati.gameTrend[index].includes('30 days')){
+        if (dati.gameTrend[index].includes('30 days')) {
             creaChartPositiveReviewsLastMonth(percentuale);
-        }else if(dati.gameTrend[index].includes('for this game')){
+        } else if (dati.gameTrend[index].includes('for this game')) {
             creaChartPositiveReviews(percentuale);
-        }else{
+        } else {
             str += '<p class="text-muted">' + dati.gameTrend[index] + '</p>';
         }
     }
 
     $("#divChartMetacritic").hide(0);
-    if (dati.gameMetacritic.length > 0){
+    if (dati.gameMetacritic.length > 0) {
         creaChartMetacritic(dati.gameMetacritic);
     }
-        
-        //str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
+
+    //str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
     $("#gameTrend").html(str);
 
     if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0) {
@@ -220,13 +220,14 @@ function getFromSteamCharts(steam_appid) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                $("#steamCharts").text("AVG 30 days players: " + response.avg + ". The peak is:" + response.peak);
+                //$("#steamCharts").text("AVG 30 days players: " + response.avg + ". The peak is:" + response.peak);
+                creaChartSteamCharts(response.avg, response.peak);
             },
             400: function () {
                 toastr.error("Parametri errati per steam charts");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da steam charts per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da steam charts per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore SteamCharts.");
@@ -248,7 +249,7 @@ function getFromTwitch(steam_name) {
                 toastr.error("Parametri errati per Twitch");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da Twitch per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da Twitch per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Twitch.");
@@ -269,7 +270,7 @@ function getFromYoutube(steam_name) {
                 toastr.error("Parametri errati per Youtube");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da Youtube per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da Youtube per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Youtube.");
@@ -298,7 +299,7 @@ function getFromGreenman(steam_name) {
                 toastr.error("Parametri errati per Greenman");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da Greenman per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Greenman.");
@@ -322,7 +323,7 @@ function getFromG2A(steam_name) {
                 toastr.error("Parametri errati per G2A");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da G2A per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da G2A per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore G2A.");
@@ -346,7 +347,7 @@ function getFromKinguin(steam_name) {
                 toastr.error("Parametri errati per Kinguin");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da Kinguin per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da Kinguin per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Kinguin.");
@@ -370,7 +371,7 @@ function getFromG2play(steam_name) {
                 toastr.error("Parametri errati per G2play");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da G2play per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore G2play.");
@@ -401,7 +402,7 @@ function getSystemRequirement(steam_name) {
                 toastr.error("Parametri errati per G2play");
             },
             404: function () {
-                toastr.error("Impossibile recuperari dati da G2play per il gioco selezionato.");
+                toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore G2play.");
@@ -427,10 +428,8 @@ function creaChartMetacritic(positive) {
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['score','remains'],
             datasets: [{
-                label: '',
-                data: [positive, 100-positive],
+                data: [positive, 100 - positive],
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(255, 255, 132, 1)'
@@ -443,13 +442,10 @@ function creaChartMetacritic(positive) {
             }]
         },
         options: {
-            /*scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }*/
+            title: {
+                display: true,
+                text: 'Metacritic score'
+            }
         }
     });
 }
@@ -460,10 +456,8 @@ function creaChartPositiveReviews(positive) {
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['positive reviews','negative reviews'],
             datasets: [{
-                label: '',
-                data: [positive, 100-positive],
+                data: [positive, 100 - positive],
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(255, 255, 132, 1)'
@@ -476,13 +470,10 @@ function creaChartPositiveReviews(positive) {
             }]
         },
         options: {
-            /*scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }*/
+            title: {
+                display: true,
+                text: 'Total reviews'
+            }
         }
     });
 }
@@ -493,10 +484,8 @@ function creaChartPositiveReviewsLastMonth(positive) {
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ['positive reviews','negative reviews'],
             datasets: [{
-                label: '',
-                data: [positive, 100-positive],
+                data: [positive, 100 - positive],
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(255, 255, 132, 1)'
@@ -509,23 +498,39 @@ function creaChartPositiveReviewsLastMonth(positive) {
             }]
         },
         options: {
-            /*scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }*/
+            title: {
+                display: true,
+                text: 'Reviews in the last 30 days'
+            }
         }
     });
 }
 
-function  creaChartSteamCharts(positive) {
-    $("#divChartPositiveReviewsLastMonth").show(500);
+function creaChartSteamCharts(avg, max) {
+    $("#chartSteamCharts").show(500);
     var ctx = document.getElementById('chartSteamCharts').getContext('2d');
-    var myBarChart = new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: options
+    let p = (100*avg)/max;
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [max-avg, avg],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 255, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Players in the last month'
+            }
+        }
     });
 }

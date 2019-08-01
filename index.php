@@ -22,6 +22,8 @@
   <link rel="stylesheet" href="./index.css">
   <!-- Chart -->
   <link rel="stylesheet" href="./css/Chart.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="./css/toastr.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -101,43 +103,33 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              <p class="text-muted" id="gameTrend"></p>
-              <!-- <hr> -->
-              <p class="text-muted" id="twitchViewers"></p>
-              <p class="text-muted" id="steamCharts"></p>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-
-          <div class="card card-primary" id="cardTrend">
-            <div class="card-header">
-              <h3 class="card-title">Charts</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
               <div class="col-md-6" style="text-align:center" id="divChartPositiveReviewsLastMonth">
                 <canvas id="chartPositiveReviewsLastMonth" width="100%" height="100%"></canvas>
-                <label>Last 30 days</label>
+                <!-- <label>Last 30 days</label> -->
               </div>
               <div class="col-md-6" style="text-align:center" id="divChartPositiveReviews">
                 <canvas id="chartPositiveReviews" width="100%" height="100%"></canvas>
-                <label>Total reviews</label>
+                <!-- <label>Total reviews</label> -->
               </div>
               <div class="col-md-6" style="text-align:center" id="divChartMetacritic">
                 <canvas id="chartMetacritic" width="100%" height="100%"></canvas>
-                <label>Score Metacritic</label>
+                <!-- <label>Score Metacritic</label> -->
               </div>
               <div class="col-md-6" style="text-align:center" id="divChartSteamCharts">
                 <canvas id="chartSteamCharts" width="100%" height="100%"></canvas>
-                <label>AVG players per last month</label>
+                <!-- <label>AVG players per last month</label> -->
               </div>
+              <div class="col-md-12">
+                <p class="text-muted" id="twitchViewers"></p>
+                <p class="text-muted" id="steamCharts"></p>
+                <p class="text-muted" id="gameTrend"></p>
+              </div>
+              <!-- <hr> -->
 
             </div>
             <!-- /.card-body -->
           </div>
           <!-- /.card -->
-
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Prices</h3>
