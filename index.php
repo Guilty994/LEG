@@ -20,11 +20,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
   <!-- CSS della pagina -->
   <link rel="stylesheet" href="./index.css">
-
-  <!-- Import JQUERY -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- import Bootstrap -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- Chart -->
+  <link rel="stylesheet" href="./css/Chart.css">
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -112,6 +109,35 @@
             <!-- /.card-body -->
           </div>
           <!-- /.card -->
+
+          <div class="card card-primary" id="cardTrend">
+            <div class="card-header">
+              <h3 class="card-title">Charts</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="col-md-6" style="text-align:center" id="divChartPositiveReviewsLastMonth">
+                <canvas id="chartPositiveReviewsLastMonth" width="100%" height="100%"></canvas>
+                <label>Last 30 days</label>
+              </div>
+              <div class="col-md-6" style="text-align:center" id="divChartPositiveReviews">
+                <canvas id="chartPositiveReviews" width="100%" height="100%"></canvas>
+                <label>Total reviews</label>
+              </div>
+              <div class="col-md-6" style="text-align:center" id="divChartMetacritic">
+                <canvas id="chartMetacritic" width="100%" height="100%"></canvas>
+                <label>Score Metacritic</label>
+              </div>
+              <div class="col-md-6" style="text-align:center" id="divChartSteamCharts">
+                <canvas id="chartSteamCharts" width="100%" height="100%"></canvas>
+                <label>AVG players per last month</label>
+              </div>
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
           <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">Prices</h3>
@@ -140,9 +166,15 @@
 
   <!-- Modal per il caricamento -->
   <div class="modal"></div>
-  <!-- script index -->
-  <!-- <script src="./js/scriptModal.js"></script> -->
-  <!-- Script che gestisce la pagina -->
+
+  <!-- Script da importare -->
+  <!-- Import JQUERY -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- import Bootstrap -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <!-- Chart -->
+  <script src="./js/Chart.js"></script>
+
   <script src="./js/index.js"></script>
   <script src="./js/toastr.js"></script>
 </body>

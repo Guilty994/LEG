@@ -178,12 +178,28 @@ function stampaDatiSteam(dati) {
     // Trend
     // Forse è meglio con dei grafici
     let str = "";
+    let percentuale;
+
+    // Nascondo tutti i charts in moodo da attivarli solo se ci sono le informazioni
+    $("#divChartPositiveReviews").hide(0);
+    $("#divChartPositiveReviewsLastMonth").hide(0);
     for (let index = 0; index < dati.gameTrend.length; index++) {
-        str += '<p class="text-muted">' + dati.gameTrend[index] + '</p>';
+        percentuale = dati.gameTrend[index].split('- ')[1].split('%')[0];
+        if(dati.gameTrend[index].includes('30 days')){
+            creaChartPositiveReviewsLastMonth(percentuale);
+        }else if(dati.gameTrend[index].includes('for this game')){
+            creaChartPositiveReviews(percentuale);
+        }else{
+            str += '<p class="text-muted">' + dati.gameTrend[index] + '</p>';
+        }
     }
 
-    if (dati.gameMetacritic.length > 0)
-        str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
+    $("#divChartMetacritic").hide(0);
+    if (dati.gameMetacritic.length > 0){
+        creaChartMetacritic(dati.gameMetacritic);
+    }
+        
+        //str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
     $("#gameTrend").html(str);
 
     if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0) {
@@ -404,3 +420,112 @@ $(document).on({
         $body.removeClass("loading");
     }
 });
+
+function creaChartMetacritic(positive) {
+    $("#divChartMetacritic").show(500);
+    var ctx = document.getElementById('chartMetacritic').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['score','remains'],
+            datasets: [{
+                label: '',
+                data: [positive, 100-positive],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 255, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            /*scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }*/
+        }
+    });
+}
+
+function creaChartPositiveReviews(positive) {
+    $("#divChartPositiveReviews").show(500);
+    var ctx = document.getElementById('chartPositiveReviews').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['positive reviews','negative reviews'],
+            datasets: [{
+                label: '',
+                data: [positive, 100-positive],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 255, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            /*scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }*/
+        }
+    });
+}
+
+function creaChartPositiveReviewsLastMonth(positive) {
+    $("#divChartPositiveReviewsLastMonth").show(500);
+    var ctx = document.getElementById('chartPositiveReviewsLastMonth').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['positive reviews','negative reviews'],
+            datasets: [{
+                label: '',
+                data: [positive, 100-positive],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 255, 132, 1)'
+                ],
+                borderColor: [
+                    'rgba(255, 255, 132, 1)',
+                    'rgba(255, 99, 132, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            /*scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }*/
+        }
+    });
+}
+
+function  creaChartSteamCharts(positive) {
+    $("#divChartPositiveReviewsLastMonth").show(500);
+    var ctx = document.getElementById('chartSteamCharts').getContext('2d');
+    var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: options
+    });
+}
