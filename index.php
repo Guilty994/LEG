@@ -136,7 +136,15 @@
             </div>
             <div class="card-body" id="cardPrezzi"></div>
           </div>
+
+          <div class="card card-primary" id="cardPrezzi">
+            <div class="card-header">
+              <h3 class="card-title">System Requirement</h3>
+            </div>
+            <div class="card-body" id="cardTableSystemRequirements"></div>
+          </div>
         </div>
+
         <!-- /.col -->
         <div class="col-md-9">
           <div class="col-md-12"></div>
