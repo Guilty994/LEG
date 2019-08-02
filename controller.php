@@ -112,7 +112,15 @@
             // Steam Seach by TAGS
             include "wrappers/wrapper_steam_searchbytag.php";
             break;
-
+        case "searchbyname":
+            if(!isset($_GET["game"])){
+                header("Game not set", true, 400);
+                exit;
+            }
+            $game = $_GET["game"];
+            // Steam Search by NAME
+            include "wrappers/wrapper_steam_searchOnName.php";
+            break;
     }
     header("Tappost", true, 200);
     echo json_encode($toReturn);

@@ -3,13 +3,12 @@
 
     $toReturn = array();
 
-    $_GET['tags']="19%2C21%2C9";
-    if(!isset($_GET["tags"])){
-        header("Tags not set", true, 400);
+    if(!isset($_GET["game"])){
+        header("Game not set", true, 400);
         exit;
     }
-
-    include "wrappers/wrapper_steam_searchbytag.php";
+    $game = $_GET["game"];
+    include "wrappers/wrapper_steam_searchOnName.php";
 
     print_r($toReturn);
 ?>
