@@ -62,6 +62,7 @@ function cerca() {
                 getFromKinguin(global_name);
                 getFromG2play(global_name);
                 stampaDatiSteam(dati);
+                getSystemRequirement(global_name)
 
                 if (recenti == undefined) {
                     recenti = new Array();
@@ -129,6 +130,7 @@ function recupera(index) {
     getFromG2A(global_name);
     getFromKinguin(global_name);
     getFromG2play(global_name);
+    getSystemRequirement(global_name)
 
     $("#risultatiRicerca").show(500);
 }
@@ -395,8 +397,20 @@ function getSystemRequirement(steam_name) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                console.log(response);
-                // Dovrei stampare con la tabella
+                response = response.sysReq;
+                
+                let min = response.min;
+                let rec = response.rec;
+                
+                let str = "<table><thead><th>Spec</th>";
+                // Creo dinamicamente l'head della tabella
+                str += (min!= undefined?"<th>Min</th>":"") + (rec!=undefined?"<th>REC</th>":"");
+                str += "</thead><tbody>";
+                for(index in min){
+                    str += "<tr><td>" + index + "</td><td><p class=\"text-muted\">" + min[index] + "</p></td>" + (rec!=undefined?"<td><p class=\"text-muted\">" + rec[index] + "</p></td>":"");
+                }
+                str += "</tbody></table>";
+                $("#cardTableSystemRequirements").html(str);
             },
             400: function () {
                 toastr.error("Parametri errati per G2play");
