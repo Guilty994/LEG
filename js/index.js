@@ -81,6 +81,9 @@ function cerca() {
                     }
                 }
                 recenti.push(g);
+                if(recenti.length > 9){
+                    recenti.splice(0,1);
+                }
                 localStorage.setItem("recenti", JSON.stringify(recenti));
                 return;
             },
@@ -397,6 +400,7 @@ function getSystemRequirement(steam_name) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
+                if(response.length == 0) return; // TODO: Non deve accadere
                 response = response.sysReq;
                 
                 let min = response.min;
