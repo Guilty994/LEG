@@ -22,7 +22,7 @@
 
         
         foreach($response_json['top'] as $top){
-            $twitchTop[$count] = $top['game']['name'];
+            $toReturn[$count] = $top['game']['name'];
             $count++;
         }
         $offset = $offset + 5;

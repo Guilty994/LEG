@@ -9,10 +9,29 @@ if (recenti == undefined) {
     caricaRecenti(recenti);
 }
 
+// Solo DEBUG
 function stampaRecenti() {
     for (r in recenti) {
         console.log(recenti[r]);
     }
+}
+
+// Solo DEBUG
+function top5(){
+    $.ajax({
+        url: "./controller.php?source=topf",
+        statusCode: {
+            200: function(response){
+                console.log(response);
+            },
+            400: function(){
+                console.info("Impossibile caricare top 5");
+            },
+            500: function(){
+                toastr.error("Impossibile caricare i top 5. Errore del server");
+            }
+        }
+    });
 }
 
 function caricaRecenti(recenti) {
