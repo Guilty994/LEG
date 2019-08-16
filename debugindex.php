@@ -1,14 +1,12 @@
 <?php
     include "simple_html_dom.php";
 
-    $toReturn = array();
+    // $steam_game_name = "dota 2";
+    $steam_game_name = "league of maiden";
+    echo "GameSystemRequirements";
+    include "wrappers/wrapper_gamesystemrequirements.php";
 
-    if(!isset($_GET["game"])){
-        header("Game not set", true, 400);
-        exit;
-    }
-    $game = $_GET["game"];
-    include "wrappers/wrapper_steam_searchOnName.php";
+    header("Tappost", true, 200);
 
     print_r($toReturn);
 ?>
