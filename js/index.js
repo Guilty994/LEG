@@ -81,8 +81,8 @@ function cerca() {
                     }
                 }
                 recenti.push(g);
-                if(recenti.length > 9){
-                    recenti.splice(0,1);
+                if (recenti.length > 9) {
+                    recenti.splice(0, 1);
                 }
                 localStorage.setItem("recenti", JSON.stringify(recenti));
                 return;
@@ -232,7 +232,7 @@ function getFromSteamCharts(steam_appid) {
                 toastr.error("Parametri errati per steam charts");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da steam charts per il gioco selezionato.");
+                ////toastr.info("Impossibile recuperari dati da steam charts per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore SteamCharts.");
@@ -254,7 +254,7 @@ function getFromTwitch(steam_name) {
                 toastr.error("Parametri errati per Twitch");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da Twitch per il gioco selezionato.");
+                ////toastr.info("Impossibile recuperari dati da Twitch per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Twitch.");
@@ -275,7 +275,7 @@ function getFromYoutube(steam_name) {
                 toastr.error("Parametri errati per Youtube");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da Youtube per il gioco selezionato.");
+                ////toastr.info("Impossibile recuperari dati da Youtube per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Youtube.");
@@ -304,7 +304,7 @@ function getFromGreenman(steam_name) {
                 toastr.error("Parametri errati per Greenman");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da Greenman per il gioco selezionato.");
+                //toastr.info("Impossibile recuperari dati da Greenman per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Greenman.");
@@ -328,7 +328,7 @@ function getFromG2A(steam_name) {
                 toastr.error("Parametri errati per G2A");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da G2A per il gioco selezionato.");
+                //toastr.info("Impossibile recuperari dati da G2A per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore G2A.");
@@ -352,7 +352,7 @@ function getFromKinguin(steam_name) {
                 toastr.error("Parametri errati per Kinguin");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da Kinguin per il gioco selezionato.");
+                //toastr.info("Impossibile recuperari dati da Kinguin per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore Kinguin.");
@@ -376,7 +376,7 @@ function getFromG2play(steam_name) {
                 toastr.error("Parametri errati per G2play");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
+                //toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore G2play.");
@@ -400,27 +400,35 @@ function getSystemRequirement(steam_name) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                if(response.length == 0) return; // TODO: Non deve accadere
+                if (response.length == 0) return; // TODO: Non deve accadere
                 response = response.sysReq;
-                
+
                 let min = response.min;
                 let rec = response.rec;
-                
-                let str = "<table><thead><th>Spec</th>";
-                // Creo dinamicamente l'head della tabella
-                str += (min!= undefined?"<th>Min</th>":"") + (rec!=undefined?"<th>REC</th>":"");
-                str += "</thead><tbody>";
-                for(index in min){
-                    str += "<tr><td>" + index + "</td><td><p class=\"text-muted\">" + min[index] + "</p></td>" + (rec!=undefined?"<td><p class=\"text-muted\">" + rec[index] + "</p></td>":"");
+
+                let str;
+
+                // Provo a stampare entrambi
+                if (rec != undefined) {
+                    str = '<table class="table" style="width:100%;"><thead><th style="text-align:center">Specs</th><th style="text-align:center">Minimum</th><th style="text-align:center">Recommended</th></thead><tbody>';
+                } else {
+                    str = '<table class="table" style="width:100%;"><thead><th colspan="2"  style="text-align:center">Minimum Specs</th></thead><tbody>';
+                }
+                for (index in min) {
+                    if (index != "CPU" && index != "RAM" && index != "GPU") continue;
+                    str += "<tr style=\"text-align:center;\"><td>" + index + "</td><td><p class=\"text-muted\">" + min[index] + "</p></td>";
+                    if (rec != undefined)
+                        str += "<td><p class=\"text-muted\">" + rec[index] + "</p></td>"
                 }
                 str += "</tbody></table>";
                 $("#cardTableSystemRequirements").html(str);
+                return;
             },
             400: function () {
                 toastr.error("Parametri errati per G2play");
             },
             404: function () {
-                toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
+                //toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
             },
             500: function () {
                 toastr.error("Errore G2play.");
@@ -527,12 +535,12 @@ function creaChartPositiveReviewsLastMonth(positive) {
 function creaChartSteamCharts(avg, max) {
     $("#chartSteamCharts").show(500);
     var ctx = document.getElementById('chartSteamCharts').getContext('2d');
-    let p = (100*avg)/max;
+    let p = (100 * avg) / max;
     var myChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [max-avg, avg],
+                data: [max - avg, avg],
                 backgroundColor: [
                     'rgba(255, 99, 132, 1)',
                     'rgba(255, 255, 132, 1)'

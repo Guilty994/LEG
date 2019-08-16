@@ -28,9 +28,11 @@
 
 <body class="hold-transition sidebar-mini">
   <!-- Barra di ricerca -->
-  <div class="row" style="margin-top:1%">
-    <div class="col-md-4"></div>
+  <div class="row" style="margin-top:1%;">
     <div class="col-md-4">
+    <!-- Qui ci va il logo -->
+    </div>
+    <div class="col-md-6">
       <div class="search-form">
         <div class="form-group has-feedback">
           <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco"
@@ -136,18 +138,17 @@
             </div>
             <div class="card-body" id="cardPrezzi"></div>
           </div>
-
-          <div class="card card-primary" id="cardPrezzi">
+          <div class="card card-primary">
             <div class="card-header">
               <h3 class="card-title">System Requirement</h3>
             </div>
             <div class="card-body" id="cardTableSystemRequirements"></div>
           </div>
+          
         </div>
 
         <!-- /.col -->
         <div class="col-md-9">
-          <div class="col-md-12"></div>
           <div class="card card-primary col-md-12">
             <div class="card-body">
               <div class="col-md-12" id="rowSlideshow" style="margin-bottom:10px"></div>
