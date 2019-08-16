@@ -132,13 +132,13 @@
             <!-- /.card-body -->
           </div>
           <!-- /.card -->
-          <div class="card card-primary">
+          <div class="card card-primary" id="cardPrezziPrincipale">
             <div class="card-header">
               <h3 class="card-title">Prices</h3>
             </div>
             <div class="card-body" id="cardPrezzi"></div>
           </div>
-          <div class="card card-primary">
+          <div class="card card-primary" id="cardSystemRequirements">
             <div class="card-header">
               <h3 class="card-title">System Requirement</h3>
             </div>

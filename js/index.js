@@ -57,16 +57,17 @@ function handle(e) {
 
 function cerca() {
     if ($("#nomeGioco").val().length == 0) return;
-    $("#ricercheRecenti").hide(500);
     $.ajax({
         url: "./controller.php?game=" + $("#nomeGioco").val() + "&source=steam",
         statusCode: {
             200: function (response) {
+                $("#ricercheRecenti").hide(500);
                 let dati = JSON.parse(response);
 
                 if (dati.appId == "" || dati.gameName == "") {
                     alert("Steam non funziona");
                     toastr.error("Steam non dispone di questo gioco.");
+                    $("#ricercheRecenti").show(500);
                 }
 
                 global_appId = dati.appId;
@@ -74,8 +75,10 @@ function cerca() {
 
                 $("#cardPrezzi").html("");
                 getFromYoutube(global_name);
+                $("#cardTrend").hide(0);
                 getFromSteamCharts(global_appId);
                 getFromTwitch(global_name);
+                $("#cardPrezziPrincipale").hide(0);
                 getFromGreenman(global_name);
                 getFromG2A(global_name);
                 getFromKinguin(global_name);
@@ -145,9 +148,11 @@ function recupera(index) {
     stampaDatiSteam(gioco.datiSteam);
 
     // Recupero le altre informazioni
+    $("#cardTrend").hide(0);
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
     getFromYoutube(global_name);
+    $("#cardPrezziPrincipale").hide(0);
     getFromGreenman(global_name);
     getFromG2A(global_name);
     getFromKinguin(global_name);
@@ -239,6 +244,7 @@ function stampaDatiSteam(dati) {
 }
 
 function getFromSteamCharts(steam_appid) {
+    $("#divChartSteamCharts").hide(0);
     $.ajax({
         url: "./controller.php?steam_appid=" + steam_appid + "&source=steamcharts",
         statusCode: {
@@ -405,6 +411,7 @@ function getFromG2play(steam_name) {
 }
 
 function creaDivPrezzo(nome, url, prezzo) {
+    $("#cardPrezziPrincipale").show(0);
     return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '</p></a></div>';
 }
 
@@ -425,6 +432,10 @@ function getSystemRequirement(steam_name) {
                 let min = response.min;
                 let rec = response.rec;
 
+                if(min != undefined || rec != undefined){
+                    $("#cardSystemRequirements").show(0);
+                }
+
                 let str;
 
                 // Provo a stampare entrambi
@@ -444,13 +455,13 @@ function getSystemRequirement(steam_name) {
                 return;
             },
             400: function () {
-                toastr.error("Parametri errati per G2play");
+                toastr.error("Parametri errati per Game System Requirements");
             },
             404: function () {
-                //toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
+                $("#cardSystemRequirements").hide(0);
             },
             500: function () {
-                toastr.error("Errore G2play.");
+                toastr.error("Errore Game System Requirements.");
             }
         }
     });
@@ -468,6 +479,7 @@ $(document).on({
 });
 
 function creaChartMetacritic(positive) {
+    $("#cardTrend").show(0);
     $("#divChartMetacritic").show(500);
     var ctx = document.getElementById('chartMetacritic').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -496,6 +508,7 @@ function creaChartMetacritic(positive) {
 }
 
 function creaChartPositiveReviews(positive) {
+    $("#cardTrend").show(0);
     $("#divChartPositiveReviews").show(500);
     var ctx = document.getElementById('chartPositiveReviews').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -524,6 +537,7 @@ function creaChartPositiveReviews(positive) {
 }
 
 function creaChartPositiveReviewsLastMonth(positive) {
+    $("#cardTrend").show(0);
     $("#divChartPositiveReviewsLastMonth").show(500);
     var ctx = document.getElementById('chartPositiveReviewsLastMonth').getContext('2d');
     var myChart = new Chart(ctx, {
@@ -552,7 +566,10 @@ function creaChartPositiveReviewsLastMonth(positive) {
 }
 
 function creaChartSteamCharts(avg, max) {
+    if(avg == undefined || max == undefined) return;
+    $("#cardTrend").show(0);
     $("#chartSteamCharts").show(500);
+    $("#divChartSteamCharts").show(0);
     var ctx = document.getElementById('chartSteamCharts').getContext('2d');
     let p = (100 * avg) / max;
     var myChart = new Chart(ctx, {
