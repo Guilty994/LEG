@@ -27,7 +27,7 @@
         array_push($toReturn['topFive'], $resultSteam);
     }
 
-    if(!isset($toReturn['topFive'])){
+    if($toReturn['topFive'] == ""){
         header("No matching found for the game", true, 404);
         break;
     }
