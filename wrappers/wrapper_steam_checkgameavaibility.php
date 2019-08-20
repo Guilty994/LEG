@@ -28,6 +28,6 @@
 
     if(!isset($toReturn['topFive'])){
         header("No matching found for the game", true, 404);
-        break;
+        exit;
     }
 ?>
