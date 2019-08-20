@@ -28,20 +28,24 @@
 
 <body class="hold-transition sidebar-mini">
   <!-- Barra di ricerca -->
-  <div class="row" style="margin-top:1%;">
-    <div class="col-md-4">
-    <!-- Qui ci va il logo -->
+  <div class="row searchBar" style="margin-top:1%; margin-bottom:2%">
+    <div class="col-md-3">
+      <img class="img-responsive" src="logo_wide.png" onclick="home()" style="width:50%; padding-left:5%"/>
     </div>
-    <div class="col-md-6">
-      <div class="search-form">
+    <div class="col-md-5">
+      <div class="search-form" style="margin-top:5%">
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco"
-            onkeypress="handle(event)">
+          <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco" onkeypress="handle(event)">
           <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
       </div>
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-1"> <!-- Top 3 -->
+      <button type="button" class="btn btn-success">TOP 3</button>
+    </div>
+    <div class="col-md-3">
+      <input type="color"/>
+    </div>
   </div>
 
   <!-- Ricerche recenti -->

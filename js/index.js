@@ -9,6 +9,23 @@ if (recenti == undefined) {
     caricaRecenti(recenti);
 }
 
+function checkRecenti(){
+    if (recenti == undefined) {
+        $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
+    } else {
+        caricaRecenti(recenti);
+    }
+}
+
+//checkRecenti();
+
+
+function home(){
+    $("#ricercheRecenti").show(500);
+    $("#risultatiRicerca").hide(500);
+    checkRecenti();
+}
+
 // Solo DEBUG
 function stampaRecenti() {
     for (r in recenti) {
@@ -39,8 +56,8 @@ function caricaRecenti(recenti) {
     for (r in recenti) {
         if (recenti[r] == undefined) continue;
         let gioco = recenti[r];
-        str += '<div class="col-md-4" onclick="recupera(' + r + ')">';
-        str += '<img class="img-responsive" src="' + gioco.datiSteam.gameImage + '" alt="Immagine di copertina"><br><h3 class="profile-username text-center">' + gioco.datiSteam.gameName + '</h3>';
+        str += '<div class="col-md-4" onclick="recupera(' + r + ')" style="padding:1%">';
+        str += '<img class="img-responsive" src="' + gioco.datiSteam.gameImage + '" alt="Immagine di copertina"><h4 class="text-center">' + gioco.datiSteam.gameName + '</h4>';
         str += '</div>';
     }
     str += '</div>';
@@ -53,6 +70,12 @@ function handle(e) {
         e.preventDefault();
         cerca();
     }
+}
+
+function resetCampi(){
+    $("#cardTrend").hide(0);
+    $("#cardPrezzi").html("");
+    $("#cardPrezziPrincipale").hide(0);
 }
 
 function cerca() {
@@ -73,12 +96,11 @@ function cerca() {
                 global_appId = dati.appId;
                 global_name = dati.gameName;
 
-                $("#cardPrezzi").html("");
+                resetCampi();
+
                 getFromYoutube(global_name);
-                $("#cardTrend").hide(0);
                 getFromSteamCharts(global_appId);
                 getFromTwitch(global_name);
-                $("#cardPrezziPrincipale").hide(0);
                 getFromGreenman(global_name);
                 getFromG2A(global_name);
                 getFromKinguin(global_name);
@@ -147,12 +169,11 @@ function recupera(index) {
     // Visualizzo le informazioni che già ho
     stampaDatiSteam(gioco.datiSteam);
 
+    resetCampi();
     // Recupero le altre informazioni
-    $("#cardTrend").hide(0);
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
     getFromYoutube(global_name);
-    $("#cardPrezziPrincipale").hide(0);
     getFromGreenman(global_name);
     getFromG2A(global_name);
     getFromKinguin(global_name);
@@ -412,7 +433,7 @@ function getFromG2play(steam_name) {
 
 function creaDivPrezzo(nome, url, prezzo) {
     $("#cardPrezziPrincipale").show(0);
-    return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '</p></a></div>';
+    return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '€</p></a></div>';
 }
 
 function replaceAll(str, find, replace) {
