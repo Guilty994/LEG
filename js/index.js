@@ -40,6 +40,23 @@ function top5() {
         statusCode: {
             200: function (response) {
                 console.log(response);
+                response = JSON.parse(response);
+                for(r in response){
+                    $.ajax({
+                        url: "./controller.php?source=checkgameavb&twitchGame=" + response[r],
+                        statusCode: {
+                            200: function (response){
+                                console.log(response);
+                            },
+                            400: function(){
+                                console.info("Il gioco " + response[r] + " non è presente su steam.");
+                            },
+                            500: function(){
+                                console.error("Errore col gioco " + response[r]);
+                            }
+                        }
+                    });
+                }
             },
             400: function () {
                 console.info("Impossibile caricare top 5");
