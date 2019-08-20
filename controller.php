@@ -103,7 +103,6 @@
             // Twitch top 5
             include "wrappers/wrapper_twitch_topgames.php";
             break;
-
         case "searchbytags":
             if(!isset($_GET["tags"])){
                 header("Tags not set", true, 400);

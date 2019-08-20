@@ -34,6 +34,13 @@
     }
 
     // Check game avability on Steam
+    class Game{
+        public function __construct($name, $icon) {
+            $this->name = $name;
+            $this->icon = $icon;
+        }
+    }
+
     $toReturn['topFive'] = array();
     foreach($gamesFound as $twitchGame){
         include "wrappers/wrapper_steam_checkgameavaibility.php";
