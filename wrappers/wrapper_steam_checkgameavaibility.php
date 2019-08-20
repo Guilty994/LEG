@@ -21,12 +21,9 @@
             }
         }
     }
-    $toReturn['topFive'] = array();
+    
     //check matching steam-twitch
     if(strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $resultSteam)) == strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $twitchGame))){
         array_push($toReturn['topFive'], $resultSteam);
-    }else{
-        header("No matching found for the game", true, 404);
-        exit;
     }
 ?>

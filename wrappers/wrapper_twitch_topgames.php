@@ -1,6 +1,7 @@
 <?php
     $offset = 0;
     $count = 0;
+    $gamesFound = array();
     while($offset < 10){
         $url_encoded = "https://api.twitch.tv/kraken/games/top?limit=5&offset=".$offset;
 
@@ -22,9 +23,24 @@
 
         
         foreach($response_json['top'] as $top){
-            $toReturn[$count] = $top['game']['name'];
+            $gamesFound[$count] = $top['game']['name'];
             $count++;
         }
         $offset = $offset + 5;
+    }
+    if(empty($gamesFound)){
+        header("No games found", true, 404);
+        exit;
+    }
+
+    // Check game avability on Steam
+    $toReturn['topFive'] = array();
+    foreach($gamesFound as $twitchGame){
+        include "wrappers/wrapper_steam_checkgameavaibility.php";
+    }
+
+    if(empty($toReturn['topFive'])){
+        header("No matching found", true, 404);
+        exit;
     }
 ?>

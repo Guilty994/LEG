@@ -18,6 +18,7 @@
     $html = new simple_html_dom();
     $html -> load($response);
 
+    /*
     // Check strict search
     if(isset($_GET["strict"])){
         foreach($html->find('div') as $div){
@@ -34,7 +35,8 @@
             exit;
         }
     }
-
+    */
+    
     foreach($html->find('div') as $div){
         if($div->id == 'search_result_container'){
             foreach($div->find('a') as $a){

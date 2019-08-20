@@ -121,15 +121,6 @@
             // Steam Search by NAME
             include "wrappers/wrapper_steam_searchOnName.php";
             break;
-        case "checkgameavb":
-            if(!isset($_GET["twitchGame"])){
-                header("Game not set", true, 400);
-                exit;
-            }
-            $twitchGame = $_GET["twitchGame"];
-            // Steam check gameavaibility
-            include "wrappers/wrapper_steam_checkgameavaibility.php";
-            break;
     }
     header("Tappost", true, 200);
     echo json_encode($toReturn);
