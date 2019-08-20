@@ -9,7 +9,7 @@ if (recenti == undefined) {
     caricaRecenti(recenti);
 }
 
-function checkRecenti(){
+function checkRecenti() {
     if (recenti == undefined) {
         $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
     } else {
@@ -20,7 +20,7 @@ function checkRecenti(){
 //checkRecenti();
 
 
-function home(){
+function home() {
     $("#ricercheRecenti").show(500);
     $("#risultatiRicerca").hide(500);
     checkRecenti();
@@ -34,17 +34,17 @@ function stampaRecenti() {
 }
 
 // Solo DEBUG
-function top5(){
+function top5() {
     $.ajax({
         url: "./controller.php?source=topf",
         statusCode: {
-            200: function(response){
+            200: function (response) {
                 console.log(response);
             },
-            400: function(){
+            400: function () {
                 console.info("Impossibile caricare top 5");
             },
-            500: function(){
+            500: function () {
                 toastr.error("Impossibile caricare i top 5. Errore del server");
             }
         }
@@ -72,7 +72,7 @@ function handle(e) {
     }
 }
 
-function resetCampi(){
+function resetCampi() {
     $("#cardTrend").hide(0);
     $("#cardPrezzi").html("");
     $("#cardPrezziPrincipale").hide(0);
@@ -433,11 +433,7 @@ function getFromG2play(steam_name) {
 
 function creaDivPrezzo(nome, url, prezzo) {
     $("#cardPrezziPrincipale").show(0);
-    return '<div class="col-md-4" style="text-align:center"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><p class="text-muted">' + prezzo + '€</p></a></div>';
-}
-
-function replaceAll(str, find, replace) {
-    return str.replace(new RegExp(find, 'g'), replace);
+    return '<div class="col-md-4" style="text-align:center; background-color:white; padding:1%;"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><label style="color:black">' + prezzo + '€</label></a></div>';
 }
 
 function getSystemRequirement(steam_name) {
@@ -453,7 +449,7 @@ function getSystemRequirement(steam_name) {
                 let min = response.min;
                 let rec = response.rec;
 
-                if(min != undefined || rec != undefined){
+                if (min != undefined || rec != undefined) {
                     $("#cardSystemRequirements").show(0);
                 }
 
@@ -461,15 +457,15 @@ function getSystemRequirement(steam_name) {
 
                 // Provo a stampare entrambi
                 if (rec != undefined) {
-                    str = '<table class="table" style="width:100%;"><thead><th style="text-align:center">Specs</th><th style="text-align:center">Minimum</th><th style="text-align:center">Recommended</th></thead><tbody>';
+                    str = '<table class="table" style="width:100%;"><thead><th style="text-align:center"><label>Specs</label></th><th style="text-align:center">Minimum</th><th style="text-align:center"><label>Recommended</label></th></thead><tbody>';
                 } else {
-                    str = '<table class="table" style="width:100%;"><thead><th colspan="2"  style="text-align:center">Minimum Specs</th></thead><tbody>';
+                    str = '<table class="table" style="width:100%;"><thead><th colspan="2" style="text-align:center"><label>Minimum Specs</label></th></thead><tbody>';
                 }
                 for (index in min) {
                     if (index != "CPU" && index != "RAM" && index != "GPU") continue;
-                    str += "<tr style=\"text-align:center;\"><td>" + index + "</td><td><p class=\"text-muted\">" + min[index] + "</p></td>";
+                    str += "<tr style=\"text-align:center;\"><td><label>" + index + "</label></td><td><label>" + min[index] + "</label></td>";
                     if (rec != undefined)
-                        str += "<td><p class=\"text-muted\">" + rec[index] + "</p></td>"
+                        str += "<td><label>" + rec[index] + "</label></td>"
                 }
                 str += "</tbody></table>";
                 $("#cardTableSystemRequirements").html(str);
@@ -488,6 +484,96 @@ function getSystemRequirement(steam_name) {
     });
 }
 
+function creaChartMetacritic(positive) {
+    positive = Math.round(positive);
+    $("#cardTrend").show(0);
+    $("#divChartMetacritic").show(500);
+    var myCircle = Circles.create({
+        id: 'chartMetacritic',
+        radius: 50,
+        value: positive,
+        maxValue: 100,
+        width: 15,
+        text: positive + '%',
+        colors: ['#D3B6C6', '#4B253A'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
+        valueStrokeClass: 'circles-valueStroke',
+        maxValueStrokeClass: 'circles-maxValueStroke',
+        styleWrapper: true,
+        styleText: true
+    });
+}
+
+function creaChartPositiveReviews(positive) {
+    $("#cardTrend").show(0);
+    $("#divChartPositiveReviews").show(500);
+    var myCircle = Circles.create({
+        id: 'chartPositiveReviews',
+        radius: 50,
+        value: positive,
+        maxValue: 100,
+        width: 15,
+        text: positive + '%',
+        colors: ['#D3B6C6', '#4B253A'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
+        valueStrokeClass: 'circles-valueStroke',
+        maxValueStrokeClass: 'circles-maxValueStroke',
+        styleWrapper: true,
+        styleText: true
+    });
+}
+
+function creaChartPositiveReviewsLastMonth(positive) {
+    $("#cardTrend").show(0);
+    $("#divChartPositiveReviewsLastMonth").show(500);
+    var myCircle = Circles.create({
+        id: 'chartPositiveReviewsLastMonth',
+        radius: 50,
+        value: positive,
+        maxValue: 100,
+        width: 15,
+        text: positive + '%',
+        colors: ['#D3B6C6', '#4B253A'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
+        valueStrokeClass: 'circles-valueStroke',
+        maxValueStrokeClass: 'circles-maxValueStroke',
+        styleWrapper: true,
+        styleText: true
+    });
+}
+
+function creaChartSteamCharts(avg, max) {
+    if (avg == undefined || max == undefined) return;
+    $("#cardTrend").show(0);
+    $("#chartSteamCharts").show(500);
+    p = (100*avg)/max;
+    p = Math.round(p);
+    $("#divChartSteamCharts").show(0);
+    var myCircle = Circles.create({
+        id: 'chartSteamCharts',
+        radius: 50,
+        value: p,
+        maxValue: 100,
+        width: 15,
+        text: p + '%',
+        colors: ['#D3B6C6', '#4B253A'],
+        duration: 400,
+        wrpClass: 'circles-wrp',
+        textClass: 'circles-text',
+        valueStrokeClass: 'circles-valueStroke',
+        maxValueStrokeClass: 'circles-maxValueStroke',
+        styleWrapper: true,
+        styleText: true
+    });
+}
+
+// Animazione di caricamento
 $body = $("body");
 
 $(document).on({
@@ -499,121 +585,8 @@ $(document).on({
     }
 });
 
-function creaChartMetacritic(positive) {
-    $("#cardTrend").show(0);
-    $("#divChartMetacritic").show(500);
-    var ctx = document.getElementById('chartMetacritic').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [positive, 100 - positive],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 255, 132, 1)'
-                ],
-                borderColor: [
-                    'rgba(255, 255, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Metacritic score'
-            }
-        }
-    });
-}
+// Funzioni utili
 
-function creaChartPositiveReviews(positive) {
-    $("#cardTrend").show(0);
-    $("#divChartPositiveReviews").show(500);
-    var ctx = document.getElementById('chartPositiveReviews').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [positive, 100 - positive],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 255, 132, 1)'
-                ],
-                borderColor: [
-                    'rgba(255, 255, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Total reviews'
-            }
-        }
-    });
-}
-
-function creaChartPositiveReviewsLastMonth(positive) {
-    $("#cardTrend").show(0);
-    $("#divChartPositiveReviewsLastMonth").show(500);
-    var ctx = document.getElementById('chartPositiveReviewsLastMonth').getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [positive, 100 - positive],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 255, 132, 1)'
-                ],
-                borderColor: [
-                    'rgba(255, 255, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Reviews in the last 30 days'
-            }
-        }
-    });
-}
-
-function creaChartSteamCharts(avg, max) {
-    if(avg == undefined || max == undefined) return;
-    $("#cardTrend").show(0);
-    $("#chartSteamCharts").show(500);
-    $("#divChartSteamCharts").show(0);
-    var ctx = document.getElementById('chartSteamCharts').getContext('2d');
-    let p = (100 * avg) / max;
-    var myChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            datasets: [{
-                data: [max - avg, avg],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(255, 255, 132, 1)'
-                ],
-                borderColor: [
-                    'rgba(255, 255, 132, 1)',
-                    'rgba(255, 99, 132, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            title: {
-                display: true,
-                text: 'Players in the last month'
-            }
-        }
-    });
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(find, 'g'), replace);
 }

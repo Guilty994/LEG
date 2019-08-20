@@ -83,7 +83,7 @@
               </div>
 
               <h3 class="profile-username text-center" id="labelNomeGioco"></h3>
-              <p class="text-muted" id="gameDescription"></p>
+              <label id="gameDescription"></label>
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
@@ -110,25 +110,23 @@
             <!-- /.card-header -->
             <div class="card-body">
               <div class="col-md-6" style="text-align:center" id="divChartPositiveReviewsLastMonth">
-                <canvas id="chartPositiveReviewsLastMonth" width="100%" height="100%"></canvas>
-                <!-- <label>Last 30 days</label> -->
+                <div class="circle" id="chartPositiveReviewsLastMonth"></div>
+                <label>Monthly positive review</label>
               </div>
               <div class="col-md-6" style="text-align:center" id="divChartPositiveReviews">
-                <canvas id="chartPositiveReviews" width="100%" height="100%"></canvas>
-                <!-- <label>Total reviews</label> -->
+                <div class="circle" id="chartPositiveReviews"></div>
+                <label>Global positive reviews</label>
               </div>
-              <div class="col-md-6" style="text-align:center" id="divChartMetacritic">
-                <canvas id="chartMetacritic" width="100%" height="100%"></canvas>
-                <!-- <label>Score Metacritic</label> -->
+              <div class="col-md-6 circle" style="text-align:center" id="divChartMetacritic">
+                <div class="circle" id="chartMetacritic"></div>
+                <label>Score Metacritic</label>
               </div>
               <div class="col-md-6" style="text-align:center" id="divChartSteamCharts">
-                <canvas id="chartSteamCharts" width="100%" height="100%"></canvas>
-                <!-- <label>AVG players per last month</label> -->
+                <div class="circle" id="chartSteamCharts"></div>
+                <label>Monthly AVG players</label>
               </div>
-              <div class="col-md-12">
-                <p class="text-muted" id="twitchViewers"></p>
-                <p class="text-muted" id="steamCharts"></p>
-                <p class="text-muted" id="gameTrend"></p>
+              <div class="col-md-12" style="margin-top:7px">
+                <label id="twitchViewers"></label>
               </div>
               <!-- <hr> -->
 
@@ -179,6 +177,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <!-- Chart -->
   <script src="./js/Chart.js"></script>
+  <!-- Circles -->
+  <script src="./js/circles.js"></script>
 
   <script src="./js/index.js"></script>
   <script src="./js/toastr.js"></script>
