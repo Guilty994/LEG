@@ -1,6 +1,7 @@
 var global_name;
 var global_appId;
 var recenti = localStorage.recenti;
+var top3;
 
 if (recenti == undefined) {
     $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
@@ -33,30 +34,48 @@ function stampaRecenti() {
     }
 }
 
+function closeTop5() {
+    $('#contenutoModalTop5').html('');
+    $("#modalTop5").attr('active', 'false');
+}
+
 // Solo DEBUG
 function top5() {
+    top3 = new Array();
     $.ajax({
         url: "./controller.php?source=topf",
         statusCode: {
             200: function (response) {
-                console.log(response);
                 response = JSON.parse(response);
-                for(r in response){
-                    $.ajax({
-                        url: "./controller.php?source=checkgameavb&twitchGame=" + response[r],
-                        statusCode: {
-                            200: function (response){
-                                console.log(response);
-                            },
-                            400: function(){
-                                console.info("Il gioco " + response[r] + " non è presente su steam.");
-                            },
-                            500: function(){
-                                console.error("Errore col gioco " + response[r]);
-                            }
-                        }
-                    });
+                console.log(response);
+                response = response.topFive;
+                // Mostro il modal
+                let str = '';
+                /*str += '<ul class="list-group list-group-unbordered mb-3">';
+
+                for(index in response){
+                    str += '<li class="list-group-item">';
+                    str += '<img class="img-responsive" src="' + response[index].icon + '">';
+                    str += '<label>' + response[index].name + '</label>';
+                    str += '</li>';
                 }
+                str += '</ul>';*/
+
+                for (index in response) {
+                    if (index >= 3) break;
+                    top3.push(response[index]);
+                    str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cerca(' + index + ')">';
+                    str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
+                    str += '<div class="col-md-8"><label>' + response[index].name + '</label></div>';
+                    str += '</div>';
+                }
+                console.log(str);
+                $("#contenutoModalTop3").html(str);
+
+                // Simulo il modal
+                $("#btnShowTop3").click();
+                /*$("#modalTop5").attr('active', 'true');
+                $("#modalTop5").show(500);*/
             },
             400: function () {
                 console.info("Impossibile caricare top 5");
@@ -95,10 +114,18 @@ function resetCampi() {
     $("#cardPrezziPrincipale").hide(0);
 }
 
-function cerca() {
-    if ($("#nomeGioco").val().length == 0) return;
+function cerca(index) {
+    if (index == undefined) {
+        if ($("#nomeGioco").val().length == 0) return;
+        else
+            nome = $("#nomeGioco").val();
+    } else {
+        $("#modalTop3").modal('hide');
+        nome = top3[index].name;
+    }
+    $("#nomeGioco").val('');
     $.ajax({
-        url: "./controller.php?game=" + $("#nomeGioco").val() + "&source=steam",
+        url: "./controller.php?game=" + nome + "&source=steam",
         statusCode: {
             200: function (response) {
                 $("#ricercheRecenti").hide(500);
@@ -450,7 +477,7 @@ function getFromG2play(steam_name) {
 
 function creaDivPrezzo(nome, url, prezzo) {
     $("#cardPrezziPrincipale").show(0);
-    return '<div class="col-md-4" style="text-align:center; background-color:white; padding:1%;"><a href="' + url + '"><img style="width:100%;padding-top:20%" src="./logo' + nome + '.png"></img><br><label style="color:black">' + prezzo + '€</label></a></div>';
+    return '<div class="col-md-4" style="text-align:center; padding:1%;"><a href="' + url + '"><img class="img-responsive" src="./logo' + nome + '.png"></img><label style="color:black; width:100%; background-color:white">' + prezzo + '€</label></a></div>';
 }
 
 function getSystemRequirement(steam_name) {
@@ -460,7 +487,10 @@ function getSystemRequirement(steam_name) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                if (response.length == 0) return; // TODO: Non deve accadere
+                if (response.length == 0){
+                    $("#cardSystemRequirements").hide(0);
+                    return; // TODO: Non deve accadere
+                } 
                 response = response.sysReq;
 
                 let min = response.min;
@@ -569,7 +599,7 @@ function creaChartSteamCharts(avg, max) {
     if (avg == undefined || max == undefined) return;
     $("#cardTrend").show(0);
     $("#chartSteamCharts").show(500);
-    p = (100*avg)/max;
+    p = (100 * avg) / max;
     p = Math.round(p);
     $("#divChartSteamCharts").show(0);
     var myCircle = Circles.create({

@@ -29,22 +29,24 @@
 <body class="hold-transition sidebar-mini">
   <!-- Barra di ricerca -->
   <div class="row searchBar" style="margin-top:1%; margin-bottom:2%">
+    <!-- <div class="col-md-1"></div> -->
     <div class="col-md-3">
-      <img class="img-responsive" src="logo_wide.png" onclick="home()" style="width:50%; padding-left:5%"/>
+      <img class="img-responsive pointer" src="logo_wide.png" onclick="home()" style="width:50%; padding-left:5%" align="right"/>
     </div>
-    <div class="col-md-5">
-      <div class="search-form" style="margin-top:5%">
+    <div class="col-md-6">
+      <div class="search-form" style="margin-top:5%;">
         <div class="form-group has-feedback">
-          <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco" onkeypress="handle(event)">
+          <input type="text" class="form-control" name="search" id="nomeGioco" placeholder="Cerca gioco"
+            onkeypress="handle(event)">
           <span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
       </div>
     </div>
-    <div class="col-md-1"> <!-- Top 3 -->
-      <button type="button" class="btn btn-success">TOP 3</button>
-    </div>
-    <div class="col-md-3">
-      <input type="color"/>
+    <div class="col-md-1">
+      <!-- Top 3 -->
+      <img class="img-responsive pointer" src="./funghetti.png" onclick="top5()" />
+      <h3>TOP 3</h3>
+      <!-- <button type="button" class="btn btn-success" onclick="top5()">TOP 3</button> -->
     </div>
   </div>
 
@@ -146,7 +148,7 @@
             </div>
             <div class="card-body" id="cardTableSystemRequirements"></div>
           </div>
-          
+
         </div>
 
         <!-- /.col -->
@@ -168,7 +170,33 @@
   <!-- /.content -->
 
   <!-- Modal per il caricamento -->
-  <div class="modal"></div>
+  <div class="modal" id="modalCaricamento"></div>
+
+  <!-- Modal per i top 3 -->
+  <div class="modal fade" id="modalTop3">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Top 3 games</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body" id="contenutoModalTop3"></div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTop3" style="display:none"
+    id="btnShowTop3"></button>
 
   <!-- Script da importare -->
   <!-- Import JQUERY -->

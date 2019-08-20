@@ -59,7 +59,7 @@
 }
 
 /* Wait modal */
-.modal {
+#modalCaricamento {
   display: none;
   position: fixed;
   z-index: 1000;
@@ -70,13 +70,11 @@
   background: rgba(185, 185, 185, 0.568) url('./loading.gif') 50% 50% no-repeat;
 }
 
-body.loading .modal {
+body.loading #modalCaricamento {
   overflow: hidden;
-}
-
-body.loading .modal {
   display: block;
 }
+
 body{
   width: 100%; height: 100%; top: 0; left: 0;
   /* background: rgba(228, 226, 222, 0.527) url("./legnologo.png") no-repeat center top;  */
@@ -109,3 +107,10 @@ body{
 ul.list-group li.list-group-item{
   background-color:rgba(255, 255, 255, 0);
 }
+
+.mustHilightOnHover:hover{
+  background-color: #5d94fb;
+  /*border: 1px solid green;*/
+}
+
+.pointer {cursor: pointer;}
