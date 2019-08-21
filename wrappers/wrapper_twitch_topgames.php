@@ -33,21 +33,23 @@
         exit;
     }
 
-    // Check game avability on Steam
-    class Game{
-        public function __construct($name, $icon) {
-            $this->name = $name;
-            $this->icon = $icon;
-        }
-    }
+    $toReturn['topGames'] = $gamesFound;
 
-    $toReturn['topFive'] = array();
-    foreach($gamesFound as $twitchGame){
-        include "wrappers/wrapper_steam_checkgameavaibility.php";
-    }
+    // // Check game avability on Steam
+    // class Game{
+    //     public function __construct($name, $icon) {
+    //         $this->name = $name;
+    //         $this->icon = $icon;
+    //     }
+    // }
 
-    if(empty($toReturn['topFive'])){
-        header("No matching found", true, 404);
-        exit;
-    }
+    // $toReturn['topFive'] = array();
+    // foreach($gamesFound as $twitchGame){
+    //     include "wrappers/wrapper_steam_checkgameavaibility.php";
+    // }
+
+    // if(empty($toReturn['topFive'])){
+    //     header("No matching found", true, 404);
+    //     exit;
+    // }
 ?>

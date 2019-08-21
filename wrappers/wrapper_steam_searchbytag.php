@@ -8,8 +8,13 @@
         $toReturn['search']['tags'][$index] = $tag;
         $index++;
     }
-
-    // $_GET['tags'] = str_replace (",", "%2C", $_GET['tags']);
+    
+    class Game{
+        public function __construct($name, $icon) {
+            $this->name = $name;
+            $this->icon = $icon;
+        }
+    }
 
     $curl = curl_init("https://store.steampowered.com/search/?ignore_preferences=1&tags=" . $_GET['tags'] . "&category1=998");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
@@ -27,8 +32,13 @@
     //0 to 24
     $index = 0;
     foreach($html->find('span') as $span){
+        $img_src;
         if($span->class == 'title'){
-            $toReturn['search']['result'][$index] = $span->innertext;
+            foreach($span->parent()->parent()->parent()->find('img') as $img){
+                $img_src = $img->src;
+            }
+            $gameToAdd = new Game($span->innertext, $img_src);
+            $toReturn['search']['result'][$index] = $gameToAdd;
             $index++;
         }
     }

@@ -1,4 +1,11 @@
 <?php
+    class Game{
+        public function __construct($name, $icon) {
+            $this->name = $name;
+            $this->icon = $icon;
+        }
+    }
+
     $curl = curl_init("https://store.steampowered.com/search/?term=".$twitchGame."&category1=998");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     
@@ -38,5 +45,10 @@
     //check matching steam-twitch
     if(strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $resultSteam_name)) == strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $twitchGame))){
         array_push($toReturn['topFive'], $game_obj);
+    }
+
+    if(empty($toReturn['topFive'])){
+        header("No matching found", true, 404);
+        exit;
     }
 ?>
