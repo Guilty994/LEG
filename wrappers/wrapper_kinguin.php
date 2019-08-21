@@ -1,9 +1,10 @@
 <?php
 		$gamesteam = $steam_game_name;
 	
-		$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS','PACK','PASS');
+		$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS','PACK','PASS','PRE','ORDER');
 		$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
 		$gamenameinput = preg_replace("!\s+!"," ",$gamenameinput);
+		$later = $gamenameinput;
 		
 		//LINK PARAMETERS
 		//name with the right encode
@@ -35,7 +36,18 @@
 		foreach($html->find("div[class][id][itemtype] div div.info")as $div){
 			$gamename = $div->first_child()->first_child()->innertext;
 			$gamename = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamename));
-			if (preg_match('/\b('.implode($badwords,"|").')\b/i',$gamename)){
+			if (preg_match('/\b('.implode($badwords,"|").')\b/i',$gamename))
+				continue;
+			
+			$explodedgame = explode(" ",$later);
+			$rightgame = true;
+			foreach($explodedgame as $word){
+				if (!preg_match('/\b('.$word.')\b/i',$gamename)){
+					$rightgame = false;
+					break;
+				}			
+			}
+			if ($rightgame == false){
 				continue;
 			}else{
 				$gameurl = $div->first_child()->first_child()->first_child()->attr['href'];
