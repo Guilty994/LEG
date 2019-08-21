@@ -105,12 +105,7 @@ function caricaRecenti(recenti) {
         let gioco = recenti[r];
         str += '<div class="col-md-4" onclick="recupera(' + r + ')" style="padding:1%">';
         str += '<img class="img-responsive" src="' + gioco.datiSteam.gameImage + '" alt="Immagine di copertina">';
-        //str += '<p class="text-center">' + gioco.datiSteam.gameName + '</p>';
-        if(gioco.datiSteam.gameName.length > 24){
-            str += '<h6 class="text-center">' + gioco.datiSteam.gameName + '</h6>';
-        }else{
-            str += '<h5 class="text-center">' + gioco.datiSteam.gameName + '</h5>';
-        }
+        str += '<h6 class="text-center">' + gioco.datiSteam.gameName + '</h6>';
         str += '</div>';
     }
     str += '</div>';
