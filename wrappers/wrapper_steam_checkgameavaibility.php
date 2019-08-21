@@ -23,13 +23,15 @@
         }
     }
 
-    foreach($html->find('div') as $div){
-        if($div->class == 'col search_capsule'){
-            foreach($div->find('img') as $img){
+    foreach($html->find('div[id=search_result_container]') as $div){
+        foreach($div->find('a') as $a){
+            foreach($a->find('img') as $img){
                 $resultSteam_img = $img->src;
                 break;
             }
+            break;
         }
+        break;
     }
     $game_obj = new Game($resultSteam_name, $resultSteam_img);
 
