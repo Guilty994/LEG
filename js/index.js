@@ -2,6 +2,7 @@ var global_name;
 var global_appId;
 var recenti = localStorage.recenti;
 var top3;
+var risultatiTags;
 
 if (recenti == undefined) {
     $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
@@ -31,6 +32,11 @@ function stampaRecenti() {
     }
 }
 
+function cercaByTop3(index) {
+    $("#modalTop3").modal('hide');
+    cerca(top3[index].name);
+}
+
 // Top 3
 function top5() {
     top3 = new Array();
@@ -47,16 +53,13 @@ function top5() {
                 for (index in response) {
                     if (index >= 3) break;
                     top3.push(response[index]);
-                    str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cerca(' + index + ')">';
+                    str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTop3(' + index + ')">';
                     str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
                     str += '<div class="col-md-8"><label>' + response[index].name + '</label></div>';
                     str += '</div>';
                 }
-                console.log(str);
                 $("#contenutoModalTop3").html(str);
-
-                // Simulo la pressione di un tasto per far apparire il modal
-                $("#btnShowTop3").click();
+                $("#modalTop3").modal('show');
             },
             400: function () {
                 console.info("Impossibile caricare top 5");
@@ -95,14 +98,11 @@ function resetCampi() {
     $("#cardPrezziPrincipale").hide(0);
 }
 
-function cerca(index) {
-    if (index == undefined) {
+function cerca(nome) {
+    if (nome == undefined) {
         if ($("#nomeGioco").val().length == 0) return;
         else
             nome = $("#nomeGioco").val();
-    } else {
-        $("#modalTop3").modal('hide');
-        nome = top3[index].name;
     }
     $("#nomeGioco").val('');
     $.ajax({
@@ -454,10 +454,10 @@ function getSystemRequirement(steam_name) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                if (response.length == 0){
+                if (response.length == 0) {
                     $("#cardSystemRequirements").hide(0);
                     return; // TODO: Non deve accadere
-                } 
+                }
                 response = response.sysReq;
 
                 let min = response.min;
@@ -587,6 +587,59 @@ function creaChartSteamCharts(avg, max) {
     });
 }
 
+function cercaByTag(index) {
+    $("#modalTags").modal('hide');
+    cerca(risultatiTags[index]);
+}
+
+function cercaTags() {
+    // Recupero tutti i tag
+    let tagSelezionati = $('select').multipleSelect('getSelects');
+    if(tagSelezionati.length == 0){
+        // Vedo se l'utente ha sbagliato a premere
+        cerca();
+        return;
+    }
+
+    // Chiamo il controller
+    $.ajax({
+        url: "./controller.php?tags=" + tagSelezionati + "&source=searchbytags",
+        statusCode: {
+            200: function (response) {
+                response = JSON.parse(response);
+                console.log(response.search.result);
+                if(response.search.result == undefined){
+                    toastr.warning("No games found");
+                    return;
+                }
+
+                // Popolo il modal con i risultati
+                let str = "";
+                response = response.search.result;
+                risultatiTags = response;
+                let result = new Array();
+                for (index in response) {
+                    str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTag(' + index + ')">';
+                    //str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
+                    str += '<div class="col-md-12"><label>' + response[index] + '</label></div>';
+                    str += '</div>';
+                }
+                $("#contenutoModalTags").html(str);
+                $("#modalTags").modal('show');
+            },
+            400: function () {
+                toastr.error("Parametri errati per la ricerca con i tag.");
+            },
+            404: function () {
+                //toastr.info("Impossibile recuperari dati da G2play per il gioco selezionato.");
+            },
+            500: function () {
+                toastr.error("Errore di ricerca.");
+            }
+        }
+    });
+}
+
 // Animazione di caricamento
 $body = $("body");
 
@@ -600,6 +653,18 @@ $(document).on({
 });
 
 // Funzioni utili
+
+$(function () {
+    $("#selectTags").multipleSelect({
+        placeholder: 'Search by tags',
+        selectAll: false,
+        multiple: false,
+        filter: true,
+        width: "80%"
+    });
+    $('#selectTags').multipleSelect('uncheckAll');
+});
+
 
 function replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);

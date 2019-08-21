@@ -39,7 +39,7 @@
 .search-form .form-group/*:hover*/,
 .search-form .form-group/*.hover*/ {
   width: 100%;
-  border-radius: 4px 25px 25px 4px;
+  border-radius: 25px 25px 25px 25px;
   border: 1px solid green;
 }
 
@@ -114,3 +114,4 @@ ul.list-group li.list-group-item{
 }
 
 .pointer {cursor: pointer;}
+div.ms-parent{margin-top:10%}
