@@ -3,6 +3,7 @@
     //Steam(Nome, Id, Descrizione, Genere, Sviluppatore, Publisher, Screenshot, DataRilascio, TrendDiApprezzamento, ScoreMetaCritic, ImmagineCopertina)
     //Steam($steam_game_name, $appId, $steam_game_description, $steam_game_genere, $steam_game_developer, $steam_game_publisher, $steam_screenshot, $steam_release_date, $staem_trend, $steam_metacritic, $steam_image )
     //(gametrend, metacritic non sono sempre presenti)
+    $game = strtolower($game);
     $curl = curl_init("https://store.steampowered.com/search/?term=".$game."&category1=998");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     
