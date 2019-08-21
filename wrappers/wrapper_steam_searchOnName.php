@@ -1,4 +1,11 @@
 <?php
+    class Game{
+        public function __construct($name, $icon) {
+            $this->name = $name;
+            $this->icon = $icon;
+        }
+    }
+
     $curl = curl_init("https://store.steampowered.com/search/?term=".$game."&category1=998");
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 
@@ -18,7 +25,13 @@
     $index = 0;
     foreach($html->find('span') as $span){
         if($span->class == 'title'){
-            $toReturn['search']['result'][$index] = $span->innertext;
+            // $toReturn['search']['result'][$index] = $span->innertext;
+            // $index++;
+            foreach($span->parent()->parent()->parent()->find('img') as $img){
+                $img_src = $img->src;
+            }
+            $gameToAdd = new Game($span->innertext, $img_src);
+            $toReturn['search']['result'][$index] = $gameToAdd;
             $index++;
         }
     }
