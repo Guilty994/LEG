@@ -45,10 +45,21 @@ function top5() {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                response = response.topFive;
+                response = response.topGames;
+
+                for(index in response){
+                    $.ajax({
+                        url: "./controller.php?source=checksteam&twitchGame=" + response[index],
+                        statusCode: {
+                            200: function (response) {
+                                console.log(response);
+                            }
+                        }
+                    });
+                }
 
                 // Popolo il modal
-                let str = '';
+                /*let str = '';
 
                 for (index in response) {
                     if (index >= 3) break;
@@ -59,7 +70,7 @@ function top5() {
                     str += '</div>';
                 }
                 $("#contenutoModalTop3").html(str);
-                $("#modalTop3").modal('show');
+                $("#modalTop3").modal('show');*/
             },
             400: function () {
                 console.info("Impossibile caricare top 5");
@@ -620,8 +631,8 @@ function cercaTags() {
                 let result = new Array();
                 for (index in response) {
                     str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTag(' + index + ')">';
-                    //str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
-                    str += '<div class="col-md-12"><label>' + response[index] + '</label></div>';
+                    str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
+                    str += '<div class="col-md-8"><label>' + response[index].name + '</label></div>';
                     str += '</div>';
                 }
                 $("#contenutoModalTags").html(str);
