@@ -39,6 +39,7 @@ function cercaByTop3(index) {
 
 // Top 3
 function top5() {
+    console.log("top5 click");
     top3 = new Array();
     $.ajax({
         url: "./controller.php?source=topf",
@@ -47,30 +48,44 @@ function top5() {
                 response = JSON.parse(response);
                 response = response.topGames;
 
-                for(index in response){
+                for (index in response) {
+                    if (top3.length >= 3) break;
                     $.ajax({
                         url: "./controller.php?source=checksteam&twitchGame=" + response[index],
                         statusCode: {
                             200: function (response) {
                                 console.log(response);
+                                response = JSON.parse(response);
+                                top3.push(response.topFive[0]);
                             }
                         }
                     });
                 }
 
-                // Popolo il modal
-                /*let str = '';
+                $(document).on({
+                    ajaxStop: function () {
+                        // Popolo il modal
+                        let str = '';
 
-                for (index in response) {
-                    if (index >= 3) break;
-                    top3.push(response[index]);
-                    str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTop3(' + index + ')">';
-                    str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
-                    str += '<div class="col-md-8"><label>' + response[index].name + '</label></div>';
-                    str += '</div>';
-                }
-                $("#contenutoModalTop3").html(str);
-                $("#modalTop3").modal('show');*/
+                        for (index in top3) {
+                            str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTop3(' + index + ')">';
+                            str += '<div class="col-md-4"><img class="img-responsive" src="' + top3[index].icon + '"/></div>';
+                            str += '<div class="col-md-8"><label>' + top3[index].name + '</label></div>';
+                            str += '</div>';
+                        }
+                        $("#contenutoModalTop3").html(str);
+                        $("#modalTop3").modal('show');
+                        $(document).off();
+                        $(document).on({
+                            ajaxStart: function () {
+                                $body.addClass("loading");
+                            },
+                            ajaxStop: function () {
+                                $body.removeClass("loading");
+                            }
+                        });
+                    }
+                });
             },
             400: function () {
                 console.info("Impossibile caricare top 5");
@@ -600,13 +615,13 @@ function creaChartSteamCharts(avg, max) {
 
 function cercaByTag(index) {
     $("#modalTags").modal('hide');
-    cerca(risultatiTags[index]);
+    cerca(risultatiTags[index].name);
 }
 
 function cercaTags() {
     // Recupero tutti i tag
     let tagSelezionati = $('select').multipleSelect('getSelects');
-    if(tagSelezionati.length == 0){
+    if (tagSelezionati.length == 0) {
         // Vedo se l'utente ha sbagliato a premere
         cerca();
         return;
@@ -619,7 +634,7 @@ function cercaTags() {
             200: function (response) {
                 response = JSON.parse(response);
                 console.log(response.search.result);
-                if(response.search.result == undefined){
+                if (response.search.result == undefined) {
                     toastr.warning("No games found");
                     return;
                 }
@@ -628,7 +643,6 @@ function cercaTags() {
                 let str = "";
                 response = response.search.result;
                 risultatiTags = response;
-                let result = new Array();
                 for (index in response) {
                     str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTag(' + index + ')">';
                     str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
