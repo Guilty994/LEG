@@ -3,6 +3,7 @@
 		$gamesteam = $steam_game_name;
 		
 		$gamenameinput = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($gamesteam));
+		$later = $gamenameinput;
 		$badwords = array('DLC','DCL','ASIA','RU','RUSSIA','TURKEY','CIS');
 		//LINK PARAMETERS
 		//name with the right encode
@@ -43,6 +44,20 @@
 				$gameinstance = $internaldiv->first_child()->first_child();
 				if($internaldiv->class =='Card__headings'){
 					// echo $gameinstance->innertext;
+					////////////
+					$explodedgame = explode(" ",$later);
+					$gamename = $gameinstance->innertext;
+					$rightgame = true;
+					foreach($explodedgame as $word){
+						if (!preg_match('/\b('.$word.')\b/i',$gamename)){
+							$rightgame = false;
+							break;
+						}			
+					}
+					if ($rightgame == false)
+						break;
+						
+					////////////
 					if (preg_match('/\b('.implode($badwords,"|").')\b/i',$gameinstance->innertext)){
 						break;
 					}else{
