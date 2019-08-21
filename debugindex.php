@@ -6,7 +6,11 @@
     // print_r($toReturn);
 
 
-    $_GET['tags']="492%2C19";
-    include "wrappers/wrapper_steam_searchbytag.php";
+    // $_GET['tags']="492%2C19";
+    // include "wrappers/wrapper_steam_searchbytag.php";
+    // print_r($toReturn);
+
+    $game = "super mario";
+    include "wrappers/wrapper_steam_searchOnName.php";
     print_r($toReturn);
 ?>
