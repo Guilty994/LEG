@@ -41,7 +41,7 @@
         break;
     }
     $game_obj = new Game($resultSteam_name, $resultSteam_img);
-
+    $toReturn['topFive'] = array();
     //check matching steam-twitch
     if(strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $resultSteam_name)) == strtolower(preg_replace("/[^a-zA-Z0-9\s]/", "", $twitchGame))){
         array_push($toReturn['topFive'], $game_obj);
