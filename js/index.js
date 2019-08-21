@@ -54,7 +54,6 @@ function top5() {
                         url: "./controller.php?source=checksteam&twitchGame=" + response[index],
                         statusCode: {
                             200: function (response) {
-                                console.log(response);
                                 response = JSON.parse(response);
                                 top3.push(response.topFive[0]);
                             }
@@ -68,6 +67,7 @@ function top5() {
                         let str = '';
 
                         for (index in top3) {
+                            if(index >= 3) break;
                             str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTop3(' + index + ')">';
                             str += '<div class="col-md-4"><img class="img-responsive" src="' + top3[index].icon + '"/></div>';
                             str += '<div class="col-md-8"><label>' + top3[index].name + '</label></div>';
@@ -103,7 +103,12 @@ function caricaRecenti(recenti) {
         if (recenti[r] == undefined) continue;
         let gioco = recenti[r];
         str += '<div class="col-md-4" onclick="recupera(' + r + ')" style="padding:1%">';
-        str += '<img class="img-responsive" src="' + gioco.datiSteam.gameImage + '" alt="Immagine di copertina"><h4 class="text-center">' + gioco.datiSteam.gameName + '</h4>';
+        str += '<img class="img-responsive" src="' + gioco.datiSteam.gameImage + '" alt="Immagine di copertina">';
+        if(gioco.datiSteam.gameName == gioco.datiSteam.gameName.toUpperCase() && gioco.datiSteam.gameName.length > 24){
+            str += '<h5 class="text-center">' + gioco.datiSteam.gameName + '</h5>';
+        }else{
+            str += '<h4 class="text-center">' + gioco.datiSteam.gameName + '</h4>';
+        }
         str += '</div>';
     }
     str += '</div>';
