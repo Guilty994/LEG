@@ -3,6 +3,7 @@ var global_appId;
 var recenti = localStorage.recenti;
 var top3;
 var risultatiTags;
+var risultatiNome;
 
 if (recenti == undefined) {
     $("#recenti").html('<p class="text-muted">You haven\'t searched yet</p>');
@@ -119,7 +120,7 @@ function caricaRecenti(recenti) {
 function handle(e) {
     if (e.keyCode === 13) {
         e.preventDefault();
-        cerca();
+        cercaNome();
     }
 }
 
@@ -129,6 +130,42 @@ function resetCampi() {
     $("#cardPrezziPrincipale").hide(0);
 }
 
+function cercaByName(index){
+    $("#modalTags").modal('hide');
+    cerca(risultatiNome[index].name);
+}
+
+function cercaNome(){
+    risultatiNome = new Array();
+    nome = $("#nomeGioco").val();
+    if(nome == undefined || nome.length == 0) return;
+    $.ajax({
+        url: "./controller.php?game=" + nome + "&source=searchbyname",
+        statusCode: {
+            200: function (response) {
+                console.log(response);
+                response = JSON.parse(response);
+
+                let str = "";
+                response = response.search.result;
+                for (index in response) {
+                    risultatiNome.push(response[index]);
+                    str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByName(' + index + ')">';
+                    str += '<div class="col-md-4"><img class="img-responsive" src="' + response[index].icon + '"/></div>';
+                    str += '<div class="col-md-8"><label>' + response[index].name + '</label></div>';
+                    str += '</div>';
+                }
+                $("#contenutoModalTags").html(str);
+                $("#modalTags").modal('show');
+
+            },
+            404: function(){
+                toastr.warning("No games found");
+            }
+        }
+    });
+}
+
 function cerca(nome) {
     if (nome == undefined) {
         if ($("#nomeGioco").val().length == 0) return;
@@ -136,6 +173,7 @@ function cerca(nome) {
             nome = $("#nomeGioco").val();
     }
     $("#nomeGioco").val('');
+    $('#selectTags').multipleSelect('uncheckAll');
     $.ajax({
         url: "./controller.php?game=" + nome + "&source=steam",
         statusCode: {
@@ -628,7 +666,7 @@ function cercaTags() {
     let tagSelezionati = $('select').multipleSelect('getSelects');
     if (tagSelezionati.length == 0) {
         // Vedo se l'utente ha sbagliato a premere
-        cerca();
+        cercaNome();
         return;
     }
 
