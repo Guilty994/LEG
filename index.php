@@ -26,6 +26,11 @@
   <link rel="stylesheet" href="./css/toastr.css">
   <!-- Multiple select tags -->
   <link rel="stylesheet" href="./css/multiple-select.min.css">
+
+  <!-- favicon -->
+  <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  
 </head>
 
 <body class="hold-transition sidebar-mini">
