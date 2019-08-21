@@ -44,8 +44,7 @@
     </div>
     <div class="col-md-1">
       <!-- Top 3 -->
-      <img class="img-responsive pointer" src="./funghetti.png" onclick="top5()" />
-      <h3>TOP 3</h3>
+      <img class="img-responsive pointer" src="./toppetre.png" onclick="top5()" />
       <!-- <button type="button" class="btn btn-success" onclick="top5()">TOP 3</button> -->
     </div>
   </div>

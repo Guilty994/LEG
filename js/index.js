@@ -18,9 +18,6 @@ function checkRecenti() {
     }
 }
 
-//checkRecenti();
-
-
 function home() {
     $("#ricercheRecenti").show(500);
     $("#risultatiRicerca").hide(500);
@@ -34,12 +31,7 @@ function stampaRecenti() {
     }
 }
 
-function closeTop5() {
-    $('#contenutoModalTop5').html('');
-    $("#modalTop5").attr('active', 'false');
-}
-
-// Solo DEBUG
+// Top 3
 function top5() {
     top3 = new Array();
     $.ajax({
@@ -47,19 +39,10 @@ function top5() {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                console.log(response);
                 response = response.topFive;
-                // Mostro il modal
-                let str = '';
-                /*str += '<ul class="list-group list-group-unbordered mb-3">';
 
-                for(index in response){
-                    str += '<li class="list-group-item">';
-                    str += '<img class="img-responsive" src="' + response[index].icon + '">';
-                    str += '<label>' + response[index].name + '</label>';
-                    str += '</li>';
-                }
-                str += '</ul>';*/
+                // Popolo il modal
+                let str = '';
 
                 for (index in response) {
                     if (index >= 3) break;
@@ -72,10 +55,8 @@ function top5() {
                 console.log(str);
                 $("#contenutoModalTop3").html(str);
 
-                // Simulo il modal
+                // Simulo la pressione di un tasto per far apparire il modal
                 $("#btnShowTop3").click();
-                /*$("#modalTop5").attr('active', 'true');
-                $("#modalTop5").show(500);*/
             },
             400: function () {
                 console.info("Impossibile caricare top 5");
@@ -246,8 +227,6 @@ function creaSlideshow(immagini) {
 
 function stampaDatiSteam(dati) {
 
-    //console.log(dati);
-
     // Nome gioco
     $("#labelNomeGioco").text(dati.gameName);
 
@@ -270,7 +249,6 @@ function stampaDatiSteam(dati) {
     $("#gameDescription").text(dati.gameDescription);
 
     // Trend
-    // Forse è meglio con dei grafici
     let str = "";
     let percentuale;
 
@@ -293,7 +271,6 @@ function stampaDatiSteam(dati) {
         creaChartMetacritic(dati.gameMetacritic);
     }
 
-    //str += '<p class="text-muted">Metacritic: ' + dati.gameMetacritic + '%</p>';
     $("#gameTrend").html(str);
 
     if (dati.gameTrend.length == 0 && dati.gameMetacritic.length == 0) {
@@ -315,7 +292,6 @@ function getFromSteamCharts(steam_appid) {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                //$("#steamCharts").text("AVG 30 days players: " + response.avg + ". The peak is:" + response.peak);
                 creaChartSteamCharts(response.avg, response.peak);
             },
             400: function () {
@@ -381,13 +357,7 @@ function getFromGreenman(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                //let price;
-                /*if (response.greenManPrice.includes('EUR'))
-                    price = response.greenManPrice.replace('EUR', '');
-                else */
-                //price = response.greenManPrice;
                 str += creaDivPrezzo("greenman", response.greenManGameURL, response.greenManPrice);
-                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.greenManGameURL + '"><img style="width:100%;padding-top:25%" src="./logoGreenManGaming.png"></img><br><p class="text-muted">' + price + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -411,7 +381,6 @@ function getFromG2A(steam_name) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
                 str += creaDivPrezzo("g2a", response.G2AGameURL, response.G2AGamePrice.replace('EUR', ''));
-                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.G2AGameURL + '"><img style="width:100%;padding-top:30%" src="./logoG2A.jpg"></img><br><p class="text-muted">' + response.G2AGamePrice.replace('EUR', '') + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -435,7 +404,6 @@ function getFromKinguin(steam_name) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
                 str += creaDivPrezzo("kinguin", response.kinguinGameURL, response.kinguinGamePrice);
-                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.kinguinGameURL + '"><img style="width:100%" src="./logoKinguin.jpg"></img><br><p class="text-muted">' + response.kinguinGamePrice + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
@@ -459,7 +427,6 @@ function getFromG2play(steam_name) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
                 str += creaDivPrezzo("g2play", response.g2playGameURL, response.g2playGamePrice);
-                //str += '<div class="col-md-4" style="text-align:center"><a href="' + response.g2playGameURL + '"><img style="width:100%;padding-top:20%" src="./logoG2play.png"></img><br><p class="text-muted">' + response.g2playGamePrice + '</p></a></div>';
                 $("#cardPrezzi").html(str);
             },
             400: function () {
