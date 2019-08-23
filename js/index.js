@@ -141,6 +141,10 @@ function cercaNome(){
             200: function (response) {
                 console.log(response);
                 response = JSON.parse(response);
+                if(response.search.result == undefined || response.search.result.length == 0){
+                    toastr.warning("Steam non dispone di questo gioco.");
+                    return;
+                }
 
                 let str = "";
                 response = response.search.result;
