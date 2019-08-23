@@ -5,7 +5,9 @@
 		//LINK PARAMETERS
 		//name with the right encode
 		$gamenameinput = rawurlencode($gamesteam);
-		$gamenameinput = preg_replace("/(%20%20)$/","",$gamenameinput);
+		
+		$gamenameinput = preg_replace("/(%20%20.*)$/","",$gamenameinput);
+		
 		$curl = curl_init("https://www.greenmangaming.com/search/".$gamenameinput."?platforms=73&comingSoon=false&released=true&prePurchased=false&bestSelling=false&pageSize=10");
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
 		$response = curl_exec($curl);
@@ -21,7 +23,7 @@
 		$gameprice = NULL;
 		
 		$root = $html->find("ul.table-search-listings,0");
-		foreach($root[0]->children(0)->find("div.media-body") as $div){
+		foreach($root[0]->first_child()->find("div.media-body") as $div){
 			$gameroot = $div->first_child()->first_child();
 			$explodedgame = explode(" ",$gamesteam);
 			$gamename = $gameroot->innertext;
