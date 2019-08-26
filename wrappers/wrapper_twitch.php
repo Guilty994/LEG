@@ -94,6 +94,5 @@
         }
     }
 
-    $toReturn['twitchViewers'] = $viewers;
-    
+    $toReturn['twitchViewers'] = $viewers; 
 ?>
