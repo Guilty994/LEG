@@ -65,7 +65,8 @@
 					}
 				}
 				if($internaldiv->class =='Card__price'){
-					$gamePrice =$internaldiv->first_child()->next_sibling()->innertext;
+					$gamePrice =$internaldiv->first_child()->next_sibling()->plaintext;
+					$gamePrice = preg_replace("/[^0-9.]/","", strtolower($gamePrice));
 				}
 			}
 			if($gameURL != NULL)
