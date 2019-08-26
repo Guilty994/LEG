@@ -1,5 +1,5 @@
 <?php
-    $mod_steam_game_name = preg_replace("/[^a-zA-Z0-9\s\:\,]/", "", $steam_game_name);
+    $mod_steam_game_name = preg_replace("/[^a-zA-Z0-9\s\:\,\']/", "", $steam_game_name);
     $curl = curl_init("https://gamesystemrequirements.com/search?q=".urlencode($mod_steam_game_name));
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     
