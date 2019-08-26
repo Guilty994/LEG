@@ -26,13 +26,6 @@ function home() {
     checkRecenti();
 }
 
-// Solo DEBUG
-function stampaRecenti() {
-    for (r in recenti) {
-        console.log(recenti[r]);
-    }
-}
-
 function cercaByTop3(index) {
     $("#modalTop3").modal('hide');
     cerca(top3[index].name);
@@ -40,7 +33,6 @@ function cercaByTop3(index) {
 
 // Top 3
 function top5() {
-    console.log("top5 click");
     top3 = new Array();
     $.ajax({
         url: "./controller.php?source=topf",
@@ -68,7 +60,7 @@ function top5() {
                         let str = '';
 
                         for (index in top3) {
-                            if(index >= 3) break;
+                            if (index >= 3) break;
                             str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTop3(' + index + ')">';
                             str += '<div class="col-md-4"><img class="img-responsive" src="' + top3[index].icon + '"/></div>';
                             str += '<div class="col-md-8"><label>' + top3[index].name + '</label></div>';
@@ -126,22 +118,21 @@ function resetCampi() {
     $("#cardPrezziPrincipale").hide(0);
 }
 
-function cercaByName(index){
+function cercaByName(index) {
     $("#modalTags").modal('hide');
     cerca(risultatiNome[index].name);
 }
 
-function cercaNome(){
+function cercaNome() {
     risultatiNome = new Array();
     nome = $("#nomeGioco").val();
-    if(nome == undefined || nome.length == 0) return;
+    if (nome == undefined || nome.length == 0) return;
     $.ajax({
         url: "./controller.php?game=" + nome + "&source=searchbyname",
         statusCode: {
             200: function (response) {
-                console.log(response);
                 response = JSON.parse(response);
-                if(response.search.result == undefined || response.search.result.length == 0){
+                if (response.search.result == undefined || response.search.result.length == 0) {
                     toastr.warning("No game found.");
                     return;
                 }
@@ -159,7 +150,7 @@ function cercaNome(){
                 $("#modalTags").modal('show');
 
             },
-            404: function(){
+            404: function () {
                 toastr.warning("No games found");
             }
         }
@@ -195,10 +186,11 @@ function cerca(nome) {
                 getFromYoutube(global_name);
                 getFromSteamCharts(global_appId);
                 getFromTwitch(global_name);
-                getFromGreenman(global_name);
+                getPrezzi(global_name);
+                /*getFromGreenman(global_name);
                 getFromG2A(global_name);
                 getFromKinguin(global_name);
-                getFromG2play(global_name);
+                getFromG2play(global_name);*/
                 stampaDatiSteam(dati);
                 getSystemRequirement(global_name)
 
@@ -268,10 +260,11 @@ function recupera(index) {
     getFromSteamCharts(global_appId);
     getFromTwitch(global_name);
     getFromYoutube(global_name);
-    getFromGreenman(global_name);
+    getPrezzi(global_name);
+    /*getFromGreenman(global_name);
     getFromG2A(global_name);
     getFromKinguin(global_name);
-    getFromG2play(global_name);
+    getFromG2play(global_name);*/
     getSystemRequirement(global_name)
 
     $("#risultatiRicerca").show(500);
@@ -419,6 +412,56 @@ function getFromYoutube(steam_name) {
     });
 }
 
+var arrayPrezzi;
+
+function getPrezzi(steam_name) {
+
+    // Controllo scrupoloso
+    if (steam_name == undefined || steam_name == "") {
+        return;
+    }
+
+    /**
+     * IDEA: Faccio le chiamate alle varie fonti.
+     * Una volta terminate, ordino in base al prezzo inferiore
+     * Poi creo tutti i div
+     */
+
+    arrayPrezzi = new Array();
+    // Chiamata Greenman
+    getFromGreenman(steam_name);
+    //arrayPrezzi.push({sito:"greenman", url:response.greenManGameURL, price:response.greenManPrice});
+    // Chiamata G2A
+    getFromG2A(steam_name);
+    // Chiamata Kinguin
+    getFromKinguin(steam_name);
+    // Chiamata G2play
+    getFromG2play(steam_name);
+
+    $(document).on({
+        ajaxStop: function () {
+            arrayPrezzi.sort(function (a, b) {
+                return Number(a.price) - Number(b.price);
+            });
+            
+            $(document).off();
+            $(document).on({
+                ajaxStart: function () {
+                    $body.addClass("loading");
+                },
+                ajaxStop: function () {
+                    $body.removeClass("loading");
+                }
+            });
+            
+            for(index in arrayPrezzi){
+                $("#cardPrezzi").html($("#cardPrezzi").html() + creaDivPrezzo(arrayPrezzi[index].sito, arrayPrezzi[index].url, arrayPrezzi[index].price));
+            }
+        }
+    });
+
+}
+
 function getFromGreenman(steam_name) {
     $.ajax({
         url: "./controller.php?game=" + steam_name + "&source=greenman",
@@ -426,8 +469,13 @@ function getFromGreenman(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += creaDivPrezzo("greenman", response.greenManGameURL, response.greenManPrice);
-                $("#cardPrezzi").html(str);
+                arrayPrezzi.push({
+                    sito: "greenman",
+                    url: response.greenManGameURL,
+                    price: response.greenManPrice
+                });
+                //str += creaDivPrezzo("greenman", response.greenManGameURL, response.greenManPrice);
+                //$("#cardPrezzi").html(str);
             },
             400: function () {
                 toastr.error("Parametri errati per Greenman");
@@ -449,8 +497,13 @@ function getFromG2A(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += creaDivPrezzo("g2a", response.G2AGameURL, response.G2AGamePrice.replace('EUR', ''));
-                $("#cardPrezzi").html(str);
+                arrayPrezzi.push({
+                    sito: "g2a",
+                    url: response.G2AGameURL,
+                    price: response.G2AGamePrice.replace('EUR', '')
+                });
+                //str += creaDivPrezzo("g2a", response.G2AGameURL, response.G2AGamePrice.replace('EUR', ''));
+                //$("#cardPrezzi").html(str);
             },
             400: function () {
                 toastr.error("Parametri errati per G2A");
@@ -472,8 +525,13 @@ function getFromKinguin(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += creaDivPrezzo("kinguin", response.kinguinGameURL, response.kinguinGamePrice);
-                $("#cardPrezzi").html(str);
+                arrayPrezzi.push({
+                    sito: "kinguin",
+                    url: response.kinguinGameURL,
+                    price: response.kinguinGamePrice
+                });
+                /*str += creaDivPrezzo("kinguin", response.kinguinGameURL, response.kinguinGamePrice);
+                $("#cardPrezzi").html(str);*/
             },
             400: function () {
                 toastr.error("Parametri errati per Kinguin");
@@ -495,8 +553,13 @@ function getFromG2play(steam_name) {
             200: function (response) {
                 response = JSON.parse(response);
                 str = $("#cardPrezzi").html();
-                str += creaDivPrezzo("g2play", response.g2playGameURL, response.g2playGamePrice);
-                $("#cardPrezzi").html(str);
+                arrayPrezzi.push({
+                    sito: "g2play",
+                    url: response.g2playGameURL,
+                    price: response.g2playGamePrice
+                });
+                /*str += creaDivPrezzo("g2play", response.g2playGameURL, response.g2playGamePrice);
+                $("#cardPrezzi").html(str);*/
             },
             400: function () {
                 toastr.error("Parametri errati per G2play");
@@ -676,7 +739,6 @@ function cercaTags() {
         statusCode: {
             200: function (response) {
                 response = JSON.parse(response);
-                console.log(response.search.result);
                 if (response.search.result == undefined) {
                     toastr.warning("No games found");
                     return;
