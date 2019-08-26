@@ -1,6 +1,10 @@
 <?php
     $mod_steam_game_name = preg_replace("/[^a-zA-Z0-9\s\:\,\']/", "", $steam_game_name);
-    $curl = curl_init("https://gamesystemrequirements.com/search?q=".urlencode($mod_steam_game_name));
+    //$mod_steam_game_name = preg_replace("/[^a-zA-Z0-9]/", " ", strtolower($mod_steam_game_name));
+    $mod_steam_game_name = rawurlencode($mod_steam_game_name);
+    $mod_steam_game_name = preg_replace("/(%20%20.*)$/","",$mod_steam_game_name);
+
+    $curl = curl_init("https://gamesystemrequirements.com/search?q=".$mod_steam_game_name);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
     
     $response = curl_exec($curl);
@@ -13,20 +17,23 @@
     $html = new simple_html_dom();
     $html -> load($response);
 
-    foreach($html->find('div') as $div){
-        if($div->class == 'main-container'){
-            foreach($div->find('table') as $table){
-                foreach($table->find('td') as $td){
-                    if($td->class == 'tbl1'){
-                        foreach($td->find('a') as $a){
-                            $link = "https://gamesystemrequirements.com/" . $a->href;
-                            break;
-                        }
-                        break;
-                    }
-                }                
-            }
+    $shortest = -1;
+    foreach($html->find('div.main-panel table tr td.tbl1') as $result){
+        $t = $result->firstChild()->plaintext;
+        $t = rawurlencode($t);
+        $t = preg_replace("/(%20%20.*)$/","",$t);
+        $lev = levenshtein($t, $mod_steam_game_name);
+        if ($lev == 0) {
+            // Trovato
+            $link = "https://gamesystemrequirements.com/" . $result->firstChild()->href;
+            break;
         }
+        if ($lev <= $shortest || $shortest < 0) {
+            // set the closest match, and shortest distance
+            $link = "https://gamesystemrequirements.com/" . $result->firstChild()->href;
+            $shortest = $lev;
+        }
+
     }
 
     if(isset($link)){
