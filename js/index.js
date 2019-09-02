@@ -53,31 +53,20 @@ function top5() {
                         }
                     });
                 }
+                $(document).bind("ajaxStop.callTop3", function () {
+                    // Popolo il modal
+                    let str = '';
 
-                $(document).on({
-                    ajaxStop: function () {
-                        // Popolo il modal
-                        let str = '';
-
-                        for (index in top3) {
-                            if (index >= 3) break;
-                            str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTop3(' + index + ')">';
-                            str += '<div class="col-md-4"><img class="img-responsive" src="' + top3[index].icon + '"/></div>';
-                            str += '<div class="col-md-8"><label>' + top3[index].name + '</label></div>';
-                            str += '</div>';
-                        }
-                        $("#contenutoModalTop3").html(str);
-                        $("#modalTop3").modal('show');
-                        $(document).off();
-                        $(document).on({
-                            ajaxStart: function () {
-                                $body.addClass("loading");
-                            },
-                            ajaxStop: function () {
-                                $body.removeClass("loading");
-                            }
-                        });
+                    for (index in top3) {
+                        if (index >= 3) break;
+                        str += '<div class="row mustHilightOnHover" style="padding-bottom:2%;padding-top:2%" onclick="cercaByTop3(' + index + ')">';
+                        str += '<div class="col-md-4"><img class="img-responsive" src="' + top3[index].icon + '"/></div>';
+                        str += '<div class="col-md-8"><label>' + top3[index].name + '</label></div>';
+                        str += '</div>';
                     }
+                    $("#contenutoModalTop3").html(str);
+                    $("#modalTop3").modal('show');
+                    $(document).unbind(".callTop3");
                 });
             },
             400: function () {
@@ -187,10 +176,6 @@ function cerca(nome) {
                 getFromSteamCharts(global_appId);
                 getFromTwitch(global_name);
                 getPrezzi(global_name);
-                /*getFromGreenman(global_name);
-                getFromG2A(global_name);
-                getFromKinguin(global_name);
-                getFromG2play(global_name);*/
                 stampaDatiSteam(dati);
                 getSystemRequirement(global_name)
 
@@ -261,10 +246,6 @@ function recupera(index) {
     getFromTwitch(global_name);
     getFromYoutube(global_name);
     getPrezzi(global_name);
-    /*getFromGreenman(global_name);
-    getFromG2A(global_name);
-    getFromKinguin(global_name);
-    getFromG2play(global_name);*/
     getSystemRequirement(global_name)
 
     $("#risultatiRicerca").show(500);
@@ -438,26 +419,15 @@ function getPrezzi(steam_name) {
     // Chiamata G2play
     getFromG2play(steam_name);
 
-    $(document).on({
-        ajaxStop: function () {
-            arrayPrezzi.sort(function (a, b) {
-                return Number(a.price) - Number(b.price);
-            });
-            
-            $(document).off();
-            $(document).on({
-                ajaxStart: function () {
-                    $body.addClass("loading");
-                },
-                ajaxStop: function () {
-                    $body.removeClass("loading");
-                }
-            });
-            
-            for(index in arrayPrezzi){
-                $("#cardPrezzi").html($("#cardPrezzi").html() + creaDivPrezzo(arrayPrezzi[index].sito, arrayPrezzi[index].url, arrayPrezzi[index].price));
-            }
+    $(document).bind("ajaxStop.callPrezzi", function () {
+        arrayPrezzi.sort(function (a, b) {
+            return Number(a.price) - Number(b.price);
+        });
+
+        for (index in arrayPrezzi) {
+            $("#cardPrezzi").html($("#cardPrezzi").html() + creaDivPrezzo(arrayPrezzi[index].sito, arrayPrezzi[index].url, arrayPrezzi[index].price));
         }
+        $(document).unbind(".callPrezzi");
     });
 
 }
@@ -530,8 +500,6 @@ function getFromKinguin(steam_name) {
                     url: response.kinguinGameURL,
                     price: response.kinguinGamePrice
                 });
-                /*str += creaDivPrezzo("kinguin", response.kinguinGameURL, response.kinguinGamePrice);
-                $("#cardPrezzi").html(str);*/
             },
             400: function () {
                 toastr.error("Parametri errati per Kinguin");
@@ -558,8 +526,6 @@ function getFromG2play(steam_name) {
                     url: response.g2playGameURL,
                     price: response.g2playGamePrice
                 });
-                /*str += creaDivPrezzo("g2play", response.g2playGameURL, response.g2playGamePrice);
-                $("#cardPrezzi").html(str);*/
             },
             400: function () {
                 toastr.error("Parametri errati per G2play");
@@ -773,13 +739,11 @@ function cercaTags() {
 // Animazione di caricamento
 $body = $("body");
 
-$(document).on({
-    ajaxStart: function () {
-        $body.addClass("loading");
-    },
-    ajaxStop: function () {
-        $body.removeClass("loading");
-    }
+$(document).bind("ajaxStart.loader", function () {
+    $body.addClass("loading");
+});
+$(document).bind("ajaxStop.loader", function () {
+    $body.removeClass("loading");
 });
 
 // Funzioni utili
