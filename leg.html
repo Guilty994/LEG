@@ -12,9 +12,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
-        body{
-            background-color: #5d94fb57;
+        body {
+            background-color: #6b8bffa1;
+            /*background-image: url("./Sfondo.png");*/
         }
+        a{
+            color:black;
+            font-size: 120%;
+        }
+
         @font-face {
             font-family: SuperMario;
             src: url('SuperMario.ttf');
@@ -22,12 +28,12 @@
 
         img.profile-picture {
             border: 1px solid black;
-            border-radius:25%; 
-            width:156px;
+            border-radius: 25%;
+            width: 156px;
             height: 156px;
         }
 
-        div.row.title {
+        .title {
             font-family: SuperMario;
             text-align: center;
             font-size: 50pt
@@ -37,6 +43,13 @@
             display: block;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        div.mattoncino {
+            background-image: url('Mattoncino.png');
+            background-position: round;
+            background-repeat: repeat-x;
+            height: 20px;
         }
     </style>
 </head>
@@ -51,22 +64,32 @@
     <!-- <div class="col-md-1"></div> -->
     <div class="row">
         <div class="col-md-2"></div>
-        <div class="col-md-4">
+        <div class="col-md-4 ">
             <div style="width: 100%; height: 0px; position: relative; padding-bottom: 56.250%;"><iframe
                     src="https://streamable.com/s/kwl7m/fmehrc" frameborder="0" width="100%" height="100%"
                     allowfullscreen style="width: 100%; height: 100%; position: absolute;"></iframe></div>
         </div>
         <div class="col-md-4">
-            <h5>Stanco di dover consultare più siti per avere informazioni su un gioco?</h5>
-            <h5>Finalmente hai acquistato quel gioco che tanto volevi, ma ci giocate solo tu ed il tuo gatto?</h5>
-            <h5>Frustrato di guardare pixel altrimenti gli fps ti abbandonano?</h5>
-            <h5>Stanco di farti in quattro per acquistare un gioco?</h5>
-            <h5><b>Less Effort Gaming</b> è la soluzione a tutti i tuoi problemi!</h5>
+            <h4>Stanco di dover consultare più siti per avere informazioni su un gioco?</h4>
+            <h4>Finalmente hai acquistato quel gioco che tanto volevi, ma ci giocate solo tu ed il tuo gatto?</h4>
+            <h4>Frustrato di guardare pixel altrimenti gli fps ti abbandonano?</h4>
+            <h4>Stanco di farti in quattro per acquistare un gioco?</h4>
+            <h4><b>Less Effort Gaming</b> è la soluzione a tutti i tuoi problemi!</h4>
         </div>
         <div class="col-md-2"></div>
     </div>
-    <div class="row title" style="margin-top:20px">
-    <p style="font-size:40pt">Sviluppato da</p>
+    <div class="row" style="margin-top:20px;">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 mattoncino"></div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row">
+        <p class="title" style="font-size:40pt">Sviluppato da</p>
+    </div>
+    <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10 mattoncino"></div>
+            <div class="col-md-1"></div>
     </div>
     <div class="row" style="margin-top:20px">
         <div class="col-md-2"></div>
@@ -74,20 +97,27 @@
             <div class="col-md-4" style="text-align:center">
                 <img src="./Domenico.jpg" class="img-responsive center profile-picture">
                 <p style="font-family: SuperMario; font-size: 20pt">Domenico Liguori</p>
-                <p><span class="glyphicon glyphicon-envelope"> <a href="mailto:d.liguori13@studenti.unisa.it">d.liguori13@studenti.unisa.it</a></span></p>
-                <p><i style="font-size:24px" class="fa">&#xf09b;</i> <a href="https://github.com/Guilty994" target="_blank"> Guilty994</a></p>
+                <p><span class="glyphicon glyphicon-envelope"> <a
+                            href="mailto:d.liguori13@studenti.unisa.it">d.liguori13@studenti.unisa.it</a></span></p>
+                <p><i style="font-size:24px" class="fa">&#xf09b;</i> <a href="https://github.com/Guilty994"
+                        target="_blank"> Guilty994</a></p>
             </div>
             <div class="col-md-4" style="text-align:center">
                 <img src="./Daniele.jpg" class="img-responsive center profile-picture">
                 <p style="font-family: SuperMario; font-size: 20pt">Daniele Lupo</p>
-                <p><span class="glyphicon glyphicon-envelope"> <a href="mailto:d.lupo1@studenti.unisa.it">d.lupo1@studenti.unisa.it</a></span></p>
-                <p><i style="font-size:24px" class="fa">&#xf09b;</i> <a href="https://github.com/DanieleLupo" target="_blank">DanieleLupo</a></p>
+                <p><span class="glyphicon glyphicon-envelope"> <a
+                            href="mailto:d.lupo1@studenti.unisa.it">d.lupo1@studenti.unisa.it</a></span></p>
+                <p><i style="font-size:24px" class="fa">&#xf09b;</i> <a href="https://github.com/DanieleLupo"
+                        target="_blank">DanieleLupo</a></p>
             </div>
             <div class="col-md-4" style="text-align:center">
-                <img src="https://avatars1.githubusercontent.com/u/16462552?s=400&v=4" class="img-responsive center profile-picture">
+                <img src="https://avatars1.githubusercontent.com/u/16462552?s=400&v=4"
+                    class="img-responsive center profile-picture">
                 <p style="font-family: SuperMario; font-size: 20pt">Simone Petrosino</p>
-                <p><span class="glyphicon glyphicon-envelope"> <a href="mailto:s.petrosino19@studenti.unisa.it">s.petrosino19@studenti.unisa.it</a></span></p>
-                <p><i style="font-size:24px" class="fa">&#xf09b;</i> <a href="https://github.com/simpetr" target="_blank">Simpetr</a></p>
+                <p><span class="glyphicon glyphicon-envelope"> <a
+                            href="mailto:s.petrosino19@studenti.unisa.it">s.petrosino19@studenti.unisa.it</a></span></p>
+                <p><i style="font-size:24px" class="fa">&#xf09b;</i> <a href="https://github.com/simpetr"
+                        target="_blank">Simpetr</a></p>
             </div>
         </div>
         <div class="col-md-2"></div>
