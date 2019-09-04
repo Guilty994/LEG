@@ -38,7 +38,7 @@
   <div class="row searchBar" style="margin-top:1%; margin-bottom:2%">
     <!-- <div class="col-md-1"></div> -->
     <div class="col-md-3">
-      <img class="img-responsive pointer" src="logo_wide.png" onclick="home()" style="width:50%; padding-left:5%"
+      <img class="img-responsive pointer" src="img/logo_wide.png" onclick="home()" style="width:50%; padding-left:5%"
         align="right" />
     </div>
     <div class="col-md-3">
@@ -435,7 +435,7 @@
     </div>
     <div class="col-md-1">
       <!-- Top 3 -->
-      <img class="img-responsive pointer" src="./toppetre.png" onclick="top5()" />
+      <img class="img-responsive pointer" src="img/toppetre.png" onclick="top5()" />
       <!-- <button type="button" class="btn btn-success" onclick="top5()">TOP 3</button> -->
     </div>
   </div>
