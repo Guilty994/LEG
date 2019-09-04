@@ -67,7 +67,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background: rgba(185, 185, 185, 0.568) url('./loading.gif') 50% 50% no-repeat;
+  background: rgba(185, 185, 185, 0.568) url('img/loading.gif') 50% 50% no-repeat;
 }
 
 body.loading #modalCaricamento {
@@ -78,7 +78,7 @@ body.loading #modalCaricamento {
 body{
   width: 100%; height: 100%; top: 0; left: 0;
   /* background: rgba(228, 226, 222, 0.527) url("./legnologo.png") no-repeat center top;  */
-  background: rgba(228, 226, 222, 0.527) url("./wallpaperSuperMarioBros.png") no-repeat center top; 
+  background: rgba(228, 226, 222, 0.527) url("img/wallpaperSuperMarioBros.png") no-repeat center top; 
   position: fixed; 
   z-index: -1;
   -webkit-background-size: cover;

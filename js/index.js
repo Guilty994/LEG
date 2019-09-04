@@ -542,7 +542,7 @@ function getFromG2play(steam_name) {
 
 function creaDivPrezzo(nome, url, prezzo) {
     $("#cardPrezziPrincipale").show(0);
-    return '<div class="col-md-4" style="text-align:center; padding:1%;"><a href="' + url + '" target="_blank"><img class="img-responsive" src="./logo' + nome + '.png"></img><label style="color:black; width:100%; background-color:white">' + prezzo + '€</label></a></div>';
+    return '<div class="col-md-4" style="text-align:center; padding:1%;"><a href="' + url + '" target="_blank"><img class="img-responsive" src="img/logo' + nome + '.png"></img><label style="color:black; width:100%; background-color:white">' + prezzo + '€</label></a></div>';
 }
 
 function getSystemRequirement(steam_name) {
