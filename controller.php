@@ -3,7 +3,6 @@
         Thread lanciati dall'utente, multiple richieste per lanciare multipli wrapper.
 
     */
-    include "usefulFunctions.php";
     include "simple_html_dom.php";
 
     /*header("Qualcosa" . ' 500 Internal Server Error', true, 500);
